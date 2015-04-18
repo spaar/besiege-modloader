@@ -10,8 +10,8 @@ namespace spaar
     class Console : MonoBehaviour
     {
 
-        private Queue<string> logMessages;
-        private readonly int maxLogMessages = 200;
+        private List<string> logMessages;
+        private readonly int maxLogMessages = 150;
 
         private Rect windowRect;
         private Vector2 scrollPosition;
@@ -23,7 +23,7 @@ namespace spaar
         void OnEnable()
         {
             Application.RegisterLogCallback(HandleLog);
-            logMessages = new Queue<string>(maxLogMessages);
+            logMessages = new List<string>(maxLogMessages);
             windowRect = new Rect(50f, 50f, 600f, 600f);
         }
 
@@ -110,12 +110,12 @@ namespace spaar
 
             if (logMessages.Count < maxLogMessages)
             {
-                logMessages.Enqueue(logMessage);
+                logMessages.Add(logMessage);
             }
             else
             {
-                logMessages.Dequeue();
-                logMessages.Enqueue(logMessage);
+                logMessages.RemoveAt(0);
+                logMessages.Add(logMessage);
             }
 
             string logText = "";
