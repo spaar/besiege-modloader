@@ -41,7 +41,7 @@
   <ItemGroup>
     <Reference Include="Assembly-UnityScript, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Besiege_Alpha_Win_v0_02_Dev_1\Besiege_Data\Managed\Assembly-UnityScript.dll</HintPath>
+      <HintPath>..\..\..\Besiege_Alpha_Win_v0_08_Dev_1\Besiege_Data\Managed\Assembly-UnityScript.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,7 +52,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Besiege_Alpha_Win_v0_02_Dev_1\Besiege_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\Besiege_Alpha_Win_v0_08_Dev_1\Besiege_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -63,7 +63,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y $(SolutionDir)ModLoader\bin\Debug\SpaarModLoader.dll $(SolutionDir)..\..\Besiege_Alpha_Win_v0_05_Dev_1\Besiege_Data\Mods\SpaarModLoader.dll</PostBuildEvent>
+    <PostBuildEvent>copy /Y $(SolutionDir)ModLoader\bin\Debug\SpaarModLoader.dll $(SolutionDir)..\..\Besiege_Alpha_Win_v0_08_Dev_1\Besiege_Data\Mods\SpaarModLoader.dll</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
