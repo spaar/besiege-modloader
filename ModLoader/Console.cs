@@ -11,13 +11,11 @@ namespace spaar
     {
 
         private List<string> logMessages;
-        private readonly int maxLogMessages = 150;
+        private readonly int maxLogMessages = 200;
 
         private Rect windowRect;
         private Vector2 scrollPosition;
 
-        private GUIStyle style;
-        private Rect scrollViewRect;
         private bool visible = false;
 
         void OnEnable()
@@ -53,9 +51,6 @@ namespace spaar
         {
             float lineHeight = GUI.skin.box.lineHeight;
 
-            var skin = GUI.skin;
-            style = skin.textArea;
-
             GUILayout.BeginArea(new Rect(5f, lineHeight + 5f, windowRect.width - 10f, windowRect.height - 50f));
             scrollPosition = GUILayout.BeginScrollView(scrollPosition);
             string logText = "";
@@ -65,7 +60,6 @@ namespace spaar
             }
             GUILayout.TextArea(logText);
             GUILayout.EndScrollView();
-            scrollViewRect = GUILayoutUtility.GetLastRect();
 
             GUILayout.TextField("Not yet implemented");
 
@@ -118,12 +112,7 @@ namespace spaar
                 logMessages.Add(logMessage);
             }
 
-            string logText = "";
-            foreach (var s in logMessages)
-            {
-                logText += s + "\n";
-            }
-            scrollPosition.y = style.CalcHeight(new GUIContent(logText), scrollViewRect.width) - scrollViewRect.height;
+            scrollPosition.y = Mathf.Infinity;
         }
 
     }
