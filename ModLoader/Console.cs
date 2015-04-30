@@ -5,10 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+#if DEV_BUILD
+using System.IO;
+#endif
+
 namespace spaar
 {
     class Console : MonoBehaviour
     {
+#if DEV_BUILD
+        private TextWriter tw;
+#endif
 
         private List<string> logMessages;
         private readonly int maxLogMessages = 200;
@@ -28,6 +35,10 @@ namespace spaar
         void OnDisable()
         {
             Application.RegisterLogCallback(null);
+#if DEV_BUILD
+            if (tw != null)
+                tw.Close();
+#endif
         }
 
         void Update()
@@ -111,6 +122,12 @@ namespace spaar
                 logMessages.RemoveAt(0);
                 logMessages.Add(logMessage);
             }
+
+#if DEV_BUILD
+            if (tw == null)
+                tw = new StreamWriter(Application.dataPath + "/Mods/Debug/ConsoleOutput.txt");
+            tw.WriteLine("%s", logMessage);
+#endif
 
             scrollPosition.y = Mathf.Infinity;
         }
