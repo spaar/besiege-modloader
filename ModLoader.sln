@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModLoader", "ModLoader\ModL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModLoader Injector", "ModLoader Injector\ModLoader Injector.csproj", "{E3D04FF6-6B92-43C3-AB91-EA50FB3AD312}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternalModLoader", "InternalModLoader\InternalModLoader.csproj", "{B445C4C1-F3FF-494B-A6A0-C07F7F319070}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,14 @@ Global
 		{E3D04FF6-6B92-43C3-AB91-EA50FB3AD312}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E3D04FF6-6B92-43C3-AB91-EA50FB3AD312}.ReleaseDeveloper|Any CPU.ActiveCfg = Release|Any CPU
 		{E3D04FF6-6B92-43C3-AB91-EA50FB3AD312}.ReleaseDeveloper|Any CPU.Build.0 = Release|Any CPU
+		{B445C4C1-F3FF-494B-A6A0-C07F7F319070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B445C4C1-F3FF-494B-A6A0-C07F7F319070}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B445C4C1-F3FF-494B-A6A0-C07F7F319070}.DebugDeveloper|Any CPU.ActiveCfg = Debug|Any CPU
+		{B445C4C1-F3FF-494B-A6A0-C07F7F319070}.DebugDeveloper|Any CPU.Build.0 = Debug|Any CPU
+		{B445C4C1-F3FF-494B-A6A0-C07F7F319070}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B445C4C1-F3FF-494B-A6A0-C07F7F319070}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B445C4C1-F3FF-494B-A6A0-C07F7F319070}.ReleaseDeveloper|Any CPU.ActiveCfg = Release|Any CPU
+		{B445C4C1-F3FF-494B-A6A0-C07F7F319070}.ReleaseDeveloper|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
