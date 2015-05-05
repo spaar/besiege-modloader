@@ -102,27 +102,34 @@ namespace spaar
             //StartCoroutine(LoadEditorBundle());
 
             FileInfo[] files = (new DirectoryInfo(Application.dataPath + "/Mods")).GetFiles("*.dll");
-            for (int i = 0; i < (int)files.Length; i++)
-            {
-                FileInfo fileInfo = files[i];
-                if (!(fileInfo.Name == "SpaarModLoader.dll"))
-                {
-                    Debug.Log("Trying to load " + fileInfo.FullName);
-                    try
-                    {
-                        var assembly = Assembly.LoadFrom(fileInfo.FullName);
-                        var modType = assembly.GetType("meta.Mod");
-                        root.AddComponent(modType);
-
-                        Debug.Log("Attached and loaded " + fileInfo.Name);
-                    }
-                    catch (Exception exception)
-                    {
-                        Debug.Log("Could not load mod " + fileInfo.Name + ":");
-                        Debug.LogException(exception);
-                    }
-                }
-            }
+            for (int i = 0; i < files.Length; i++)
+			{
+				FileInfo fileInfo = files[i];
+                if (!fileInfo.Name.Contains(".no.dll") && fileInfo.Name != "SpaarModLoader.dll")
+				{
+					Debug.Log(string.Concat("Trying to load ", fileInfo.FullName));
+					try
+					{
+					    Type type = null;
+						Assembly assembly = Assembly.LoadFrom(fileInfo.FullName);
+					    foreach (Type t in assembly.GetTypes())
+					    {
+					        if (t.FullName.Contains("Mod"))
+					        {
+					            type = t;
+					        }
+					    }
+                        gameObject.AddComponent(type);
+						Debug.Log(string.Concat("Attached and loaded ", fileInfo.Name));
+					}
+					catch (Exception exception1)
+					{
+						Exception exception = exception1;
+						Debug.Log(string.Concat("Could not load mod ", fileInfo.Name, ":"));
+						Debug.LogException(exception);
+					}
+				}
+			}
         }
 
         public static void RegisterGameStateObserver(IGameStateObserver observer)
