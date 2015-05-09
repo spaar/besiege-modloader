@@ -122,9 +122,8 @@ namespace spaar
                         gameObject.AddComponent(type);
 						Debug.Log(string.Concat("Attached and loaded ", fileInfo.Name));
 					}
-					catch (Exception exception1)
+					catch (Exception exception)
 					{
-						Exception exception = exception1;
 						Debug.Log(string.Concat("Could not load mod ", fileInfo.Name, ":"));
 						Debug.LogException(exception);
 					}
@@ -137,16 +136,6 @@ namespace spaar
             GameObserver.RegisterGameStateObserver(observer);
         }
 
-    }
-
-    class Proxy : MarshalByRefObject
-    {
-        public void LoadMod(FileInfo file, GameObject root)
-        {
-            var assembly = Assembly.LoadFrom(file.FullName);
-            var modType = assembly.GetType("meta.Mod");
-            root.AddComponent(modType);
-        }
     }
 
     class ModLoaderStats
