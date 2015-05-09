@@ -119,7 +119,7 @@ namespace spaar
 					            type = t;
 					        }
 					    }
-                        gameObject.AddComponent(type);
+                        go.AddComponent(type);
 						Debug.Log(string.Concat("Attached and loaded ", fileInfo.Name));
 					}
 					catch (Exception exception)
