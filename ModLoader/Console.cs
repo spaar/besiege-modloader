@@ -53,7 +53,6 @@ namespace spaar
         {
             if (visible)
             {
-                GUI.skin = ModLoader.GUISkin;
                 windowRect = GUI.Window(-1001, windowRect, OnWindow, "Console");
             }
         }

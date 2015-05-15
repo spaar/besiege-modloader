@@ -56,31 +56,7 @@ namespace spaar
     public class ModLoader : MonoBehaviour
     {
 
-        private static AddPiece addPiece;
-        public static AddPiece AddPiece
-        {
-            get
-            {
-                return addPiece;
-            }
-            internal set
-            {
-                addPiece = value;
-            }
-        }
-
-        private static GUISkin guiSkin;
-        public static GUISkin GUISkin
-        {
-            get
-            {
-                return guiSkin;
-            }
-            private set
-            {
-                guiSkin = value;
-            }
-        }
+        public static AddPiece AddPiece { get; internal set; }
 
         private static GameObserver observer;
 
@@ -98,8 +74,6 @@ namespace spaar
             root.AddComponent<ObjectExplorer>();
             observer = root.AddComponent<GameObserver>();
             stats.WasLoaded = true;
-
-            //StartCoroutine(LoadEditorBundle());
 
             FileInfo[] files = (new DirectoryInfo(Application.dataPath + "/Mods")).GetFiles("*.dll");
             for (int i = 0; i < files.Length; i++)
@@ -150,18 +124,7 @@ namespace spaar
             }
         }
 
-        private bool wasLoaded = false;
-        public bool WasLoaded
-        {
-            get
-            {
-                return wasLoaded;
-            }
-            set
-            {
-                wasLoaded = value;
-            }
-        }
+        public bool WasLoaded { get; set; }
 
         private ModLoaderStats() { }
     }

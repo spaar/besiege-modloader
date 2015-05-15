@@ -64,46 +64,10 @@ namespace spaar
 
         void Update()
         {
-            //if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.U))
-            //{
-            //    if (ModLoader.AddPiece != null)
-            //    {
-            //        ModLoader.AddPiece.Undoy();
-            //    }
-            //}
-            //if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R))
-            //{
-            //    if (ModLoader.AddPiece != null)
-            //    {
-            //        ModLoader.AddPiece.Redoy();
-            //    }
-            //}
-
             if (Input.GetKey(KeyCode.LeftControl) &&  Input.GetKeyDown(KeyCode.O))
             {
                 visible = !visible;
             }
-
-            ////DEBUG
-            //if (Input.GetKeyDown(KeyCode.I))
-            //{
-            //    MouseOrbit mo = Camera.main.GetComponent<MouseOrbit>();
-            //    Debug.Log(mo.target.gameObject.name);
-            //}
-            ////DEBUG
-            //if (Input.GetKeyDown(KeyCode.B))
-            //{
-            //    var addPiece = ModLoader.AddPiece;
-            //    var blockTypes = addPiece.blockTypes;
-            //    for (int i = 0; i < blockTypes.Length; i++)
-            //    {
-            //        Debug.Log(blockTypes[i].gameObject.name + " -> " + blockTypes[i].gameObject.GetComponent<Rigidbody>().mass);
-            //    }
-            //}
-            //if (Input.GetKeyDown(KeyCode.R))
-            //{
-            //    AddPiece.currentBlockType = 45;
-            //}
         }
 
         void OnGUI()
@@ -156,43 +120,6 @@ namespace spaar
                         win.id = 1002 + i;
                         win.rect = new Rect(windowRect.xMax + 10f, (windowRect.yMin + windowRect.height / 2) - 20f, 200f, 300f);
                         openWindows.Add(win);
-
-                        ////DEBUG
-                        ////if (gameObjectList[i].name.StartsWith("FullKnight"))
-                        ////{
-                        //foreach (Transform child in gameObjectList[i].transform)
-                        //{
-                        //    Debug.Log("Child: " + child.gameObject.name);
-                        //    foreach (var comp in child.gameObject.GetComponents<Component>())
-                        //    {
-                        //        Debug.Log(" > " + comp.GetType().Name);
-                        //        if (comp is Rigidbody)
-                        //        {
-                        //            Debug.Log("(Mass: " + ((Rigidbody)comp).mass + ")");
-                        //            Debug.Log("(Drag: " + ((Rigidbody)comp).mass + ")");
-                        //            Debug.Log("(Angular Drag: " + ((Rigidbody)comp).angularDrag + ")");
-                        //        }
-                        //    }
-                        //    foreach (Transform child2 in child)
-                        //    {
-                        //        Debug.Log(" ->Child2: " + child2.gameObject.name);
-                        //        foreach (var comp in child2.gameObject.GetComponents<Component>())
-                        //        {
-                        //            Debug.Log("    > " + comp.GetType().Name);
-                        //            if (comp is Rigidbody)
-                        //            {
-                        //                Debug.Log("(Mass: " + ((Rigidbody)comp).mass + ")");
-                        //                Debug.Log("(Drag: " + ((Rigidbody)comp).mass + ")");
-                        //                Debug.Log("(Angular Drag: " + ((Rigidbody)comp).angularDrag + ")");
-                        //            }
-                        //        }
-                        //        foreach (Transform child3 in child2)
-                        //        {
-                        //            Debug.Log("   ->Child3: " + child3.gameObject.name);
-                        //        }
-                        //    }
-                        //}
-                        ////}
                     }
                 }
             }
@@ -214,14 +141,6 @@ namespace spaar
                 {
                     MouseOrbit mo = Camera.main.GetComponent<MouseOrbit>();
                     mo.target = comp.transform;
-
-                    ////DEBUG
-                    //if (comp is Rigidbody)
-                    //{
-                    //    Debug.Log("Mass: " + ((Rigidbody)comp).mass);
-                    //    Debug.Log("Drag: " + ((Rigidbody)comp).drag);
-                    //    Debug.Log("(Angular Drag: " + ((Rigidbody)comp).angularDrag + ")");
-                    //}
                 }
             }
             if (GUILayout.Button("Close"))
