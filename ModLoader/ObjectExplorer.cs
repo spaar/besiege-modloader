@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+#if DEV_BUILD
 namespace spaar
 {
     class ObjectExplorer : MonoBehaviour
@@ -43,10 +44,6 @@ namespace spaar
                     {
                         gameObjectList.Add(obj);
                     }
-                    if (obj.name == "BUILDER")
-                    {
-                        ModLoader.AddPiece = obj.GetComponent<AddPiece>();
-                    }
                 }
                 searchingComponents = false;
             }
@@ -68,11 +65,14 @@ namespace spaar
             {
                 visible = !visible;
             }
+            if (visible || ModLoader.AddPiece == null)
+            {
+                UpdateGameObjectList();
+            }
         }
 
         void OnGUI()
         {
-            UpdateGameObjectList();
             if (visible)
             {
                 windowRect = GUI.Window(1001, windowRect, OnWindow, "Object explorer");
@@ -153,3 +153,4 @@ namespace spaar
 
     }
 }
+#endif

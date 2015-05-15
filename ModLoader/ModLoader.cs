@@ -56,7 +56,7 @@ namespace spaar
     public class ModLoader : MonoBehaviour
     {
 
-        public static AddPiece AddPiece { get; internal set; }
+        public static AddPiece AddPiece { get; private set; } 
 
         private static GameObserver observer;
 
@@ -70,8 +70,11 @@ namespace spaar
 
             GameObject go = GameObject.FindObjectOfType<GameObject>();
             GameObject root = go.transform.root.gameObject;
+            AddPiece = null;
             root.AddComponent<Console>();
+#if DEV_BUILD
             root.AddComponent<ObjectExplorer>();
+#endif
             observer = root.AddComponent<GameObserver>();
             stats.WasLoaded = true;
 
@@ -93,7 +96,7 @@ namespace spaar
 					            type = t;
 					        }
 					    }
-                        go.AddComponent(type);
+                        root.AddComponent(type);
 						Debug.Log(string.Concat("Attached and loaded ", fileInfo.Name));
 					}
 					catch (Exception exception)
@@ -103,6 +106,21 @@ namespace spaar
 					}
 				}
 			}
+        }
+
+        public void Update()
+        {
+            if (AddPiece == null)
+            {
+                try
+                {
+                    AddPiece = GameObject.Find("BUILDER").GetComponent<AddPiece>();
+                }
+                catch (NullReferenceException e)
+                {
+                    // Probably in menu, no AddPiece there, just fall through
+                }
+            }
         }
 
         public static void RegisterGameStateObserver(IGameStateObserver observer)
