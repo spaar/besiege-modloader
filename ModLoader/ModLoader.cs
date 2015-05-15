@@ -107,7 +107,7 @@ namespace spaar
 						Assembly assembly = Assembly.LoadFrom(fileInfo.FullName);
 					    foreach (Type t in assembly.GetTypes())
 					    {
-					        if (t.FullName.Contains("Mod"))
+					        if (t.Name == "Mod")
 					        {
 					            type = t;
 					        }
