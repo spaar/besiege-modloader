@@ -73,6 +73,8 @@ namespace spaar
         public static AddPiece AddPiece { get; private set; } 
 
         private static GameObserver observer;
+        
+        public static Font guiFont;
 
         void Start()
         {
@@ -122,6 +124,25 @@ namespace spaar
 					}
 				}
 			}
+	    FontFind();
+        }
+
+        public static void FontFind()
+        {
+            UnityEngine.Object[] fontObjectArray = Resources.FindObjectsOfTypeAll(typeof(Font));
+            foreach (UnityEngine.Object fontObject in fontObjectArray)
+            {
+                Font font = (Font)fontObject;
+                if (font.name == "GOST Common")
+                {
+                    guiFont = font;
+                }
+            }
+        }
+        
+        void OnGUI()
+        {
+            GUI.skin.font = guiFont;
         }
 
         public void Update()
