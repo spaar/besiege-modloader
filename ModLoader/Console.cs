@@ -11,9 +11,11 @@ using System.IO;
 
 namespace spaar
 {
-    class Console : MonoBehaviour
+    public class Console : MonoBehaviour
     {
 #if DEV_BUILD
+        // In a developer build, all console messages are also written to Mods/Debug/ConsoleOutput.txt to assist in debuggin.
+        // This is especially useful because the format in output_log.txt is less than ideal for this use-case.
         private TextWriter tw;
 #endif
 

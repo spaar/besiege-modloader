@@ -8,9 +8,9 @@ using UnityEngine;
 #if DEV_BUILD
 namespace spaar
 {
-    class ObjectExplorer : MonoBehaviour
+    public class ObjectExplorer : MonoBehaviour
     {
-
+        // Represents one of the pop-up windows that shows an object in more detail.
         class Window
         {
             public int id;
@@ -27,7 +27,10 @@ namespace spaar
 
         private bool visible = false;
 
-        void UpdateGameObjectList()
+        /// <summary>
+        /// Updates the internal list of game objects, also performing the actual search.
+        /// </summary>
+        private void UpdateGameObjectList()
         {
             GameObject[] objs = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
             gameObjectList = new List<GameObject>();
@@ -65,7 +68,7 @@ namespace spaar
             {
                 visible = !visible;
             }
-            if (visible || ModLoader.AddPiece == null)
+            if (visible)
             {
                 UpdateGameObjectList();
             }

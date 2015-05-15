@@ -10,14 +10,25 @@ using UnityEngine;
 namespace spaar
 {
 
+    /// <summary>
+    /// Interface for being notified of game status changes.
+    /// </summary>
     public interface IGameStateObserver
     {
+        /// <summary>
+        /// Called when the simulation is started, either via the play button or hitting spacebar.
+        /// </summary>
         void SimulationStarted();
     }
 
+    /// <summary>
+    /// Internal class used for notifying of IGameStateObservers.
+    /// The observers are registered through ModLoader, which in turn calls this.
+    /// </summary>
     internal class GameObserver : MonoBehaviour
     {
         private static List<IGameStateObserver> observers;
+        // Whether the observers were already notified for the current simulation
         private static bool notifiedObservers;
 
         void Start()
@@ -55,7 +66,10 @@ namespace spaar
 
     public class ModLoader : MonoBehaviour
     {
-
+        /// <summary>
+        /// A reference to the AddPiece component currently in use.
+        /// AddPiece is used for a variety of purposes in the game and it is often necessary to access it.
+        /// </summary>
         public static AddPiece AddPiece { get; private set; } 
 
         private static GameObserver observer;
@@ -125,6 +139,11 @@ namespace spaar
             }
         }
 
+        /// <summary>
+        /// Register an IGameStateObserver. Every registered observer is always
+        /// notified of the supported status changes that occur in the game.
+        /// </summary>
+        /// <param name="observer">The observer to be registered.</param>
         public static void RegisterGameStateObserver(IGameStateObserver observer)
         {
             GameObserver.RegisterGameStateObserver(observer);
@@ -132,7 +151,10 @@ namespace spaar
 
     }
 
-    class ModLoaderStats
+    /// <summary>
+    /// Basic datastore (singleton) for mod loader statistics.
+    /// </summary>
+    internal class ModLoaderStats
     {
         private static readonly ModLoaderStats instance = new ModLoaderStats();
 
@@ -144,6 +166,11 @@ namespace spaar
             }
         }
 
+        /// <summary>
+        /// Whether or not the loader was already loaded this game session and in turn loaded all mods.
+        /// Due to the way the internal mod loader works, the ModLoader component can be added more than once,
+        /// however the mods and mod loader components should only be added once.
+        /// </summary>
         public bool WasLoaded { get; set; }
 
         private ModLoaderStats() { }
