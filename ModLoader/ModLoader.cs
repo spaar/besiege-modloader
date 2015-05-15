@@ -68,14 +68,16 @@ namespace spaar
                 return;
             }
 
-            GameObject go = GameObject.FindObjectOfType<GameObject>();
-            GameObject root = go.transform.root.gameObject;
             AddPiece = null;
-            root.AddComponent<Console>();
+
+            var modObject = new GameObject("Mods");
+            modObject.AddComponent<DontDestroyOnLoady>();
+
+            modObject.AddComponent<Console>();
 #if DEV_BUILD
-            root.AddComponent<ObjectExplorer>();
+            modObject.AddComponent<ObjectExplorer>();
 #endif
-            observer = root.AddComponent<GameObserver>();
+            observer = modObject.AddComponent<GameObserver>();
             stats.WasLoaded = true;
 
             FileInfo[] files = (new DirectoryInfo(Application.dataPath + "/Mods")).GetFiles("*.dll");
@@ -96,7 +98,7 @@ namespace spaar
 					            type = t;
 					        }
 					    }
-                        root.AddComponent(type);
+                        modObject.AddComponent(type);
 						Debug.Log(string.Concat("Attached and loaded ", fileInfo.Name));
 					}
 					catch (Exception exception)
