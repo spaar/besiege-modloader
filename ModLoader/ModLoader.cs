@@ -84,7 +84,7 @@ namespace spaar
 
             AddPiece = null;
 
-            var modObject = new GameObject("Mods");
+            var modObject = new GameObject("MODLOADERLORD");
             modObject.AddComponent<DontDestroyOnLoady>();
 
             modObject.AddComponent<Console>();
