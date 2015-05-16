@@ -127,7 +127,11 @@ namespace spaar
 #if DEV_BUILD
             if (tw == null)
                 tw = new StreamWriter(Application.dataPath + "/Mods/Debug/ConsoleOutput.txt");
-            tw.WriteLine("%s", logMessage);
+            var lines = logMessage.Split('\n');
+            foreach (var line in lines)
+            {
+                tw.WriteLine(line);
+            }
 #endif
 
             scrollPosition.y = Mathf.Infinity;
