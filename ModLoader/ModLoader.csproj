@@ -74,7 +74,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Settings.cs" />
+    <Compile Include="KeySettings.cs" />
     <Compile Include="Console.cs" />
     <Compile Include="FilePropertyStream.cs" />
     <Compile Include="Keys.cs" />
