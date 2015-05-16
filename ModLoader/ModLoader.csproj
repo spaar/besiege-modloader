@@ -74,7 +74,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurate.cs" />
     <Compile Include="Console.cs" />
+    <Compile Include="FilePropertyStream.cs" />
+    <Compile Include="Keys.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="ModLoader.cs" />
     <Compile Include="ObjectExplorer.cs" />
