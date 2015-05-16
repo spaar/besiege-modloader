@@ -8,7 +8,7 @@ namespace spaar
     {
         private static Key ConsoleK;
         private static Key OEK;
-        private static Key ConfigurateK;
+        private static Key SettingsK;
         private static KeyCode[] keyNames;
         private static string[] fpsKeyNames;
         private static FilePropertyStream fps;
@@ -17,7 +17,7 @@ namespace spaar
         {
             ConsoleK = new Key();
             OEK = new Key();
-            ConfigurateK = new Key();
+            SettingsK = new Key();
             if (!Directory.Exists(Application.dataPath + "/Mods/Config"))
             {
                 Directory.CreateDirectory(Application.dataPath + "/Mods/Config");
@@ -26,8 +26,8 @@ namespace spaar
                 sw.WriteLine("ConsoleK2=K");
                 sw.WriteLine("OEK1=LeftControl");
                 sw.WriteLine("OEK2=O");
-                sw.WriteLine("ConfigurateK1=LeftControl");
-                sw.WriteLine("ConfigurateK2=L");
+                sw.WriteLine("SettingsK1=LeftControl");
+                sw.WriteLine("SettingsK2=L");
                 sw.Close();
             }
 
@@ -39,15 +39,15 @@ namespace spaar
             ConsoleK.addKey(false, fps.get("ConsoleK2"));
             OEK.addKey(true, fps.get("OEK1"));
             OEK.addKey(false, fps.get("OEK2"));
-            ConfigurateK.addKey(true, fps.get("ConfigurateK1"));
-            ConfigurateK.addKey(false, fps.get("ConfigurateK2"));
-            Debug.LogWarning("Assigned");
+            SettingsK.addKey(true, fps.get("SettingsK1"));
+            SettingsK.addKey(false, fps.get("SettingsK2"));
+            Debug.Log("Assigned");
         }
 
         public static void LoadKeysAssigned()
         {
             var i = 0;
-            keyNames = GameObject.Find("MODLOADERLORD").GetComponent<Configurate>().keyCode;
+            keyNames = GameObject.Find("MODLOADERLORD").GetComponent<KeySettings>().keyCode;
             foreach (var keyCodes in keyNames)
             {
                 if (keyCodes != KeyCode.Alpha0)
@@ -77,12 +77,12 @@ namespace spaar
                         }
                         case 4:
                         {
-                            setKey("ConfigurateK1", fpsKeyNames[i]);
+                            setKey("SettingsK1", fpsKeyNames[i]);
                             break;
                         }
                         case 5:
                         {
-                            setKey("ConfigurateK2", fpsKeyNames[i]);
+                            setKey("SettingsK2", fpsKeyNames[i]);
                             break;
                         }
                     }
@@ -116,14 +116,14 @@ namespace spaar
                     OEK.addKey(false, Input);
                     break;
                 }
-                case "ConfigurateK1":
+                case "SettingsK1":
                 {
-                    ConfigurateK.addKey(true, Input);
+                    SettingsK.addKey(true, Input);
                     break;
                 }
-                case "ConfigurateK2":
+                case "SettingsK2":
                 {
-                    ConfigurateK.addKey(false, Input);
+                    SettingsK.addKey(false, Input);
                     break;
                 }
             }
@@ -135,49 +135,48 @@ namespace spaar
             fps.set("ConsoleK2", ConsoleK.getKey(false));
             fps.set("OEK1", OEK.getKey(true));
             fps.set("OEK2", OEK.getKey(false));
-            fps.set("ConfigurateK1", ConfigurateK.getKey(true));
-            fps.set("ConfigurateK2", ConfigurateK.getKey(false));
-            Debug.Log(ConfigurateK.getKey(false));
+            fps.set("SettingsK1", SettingsK.getKey(true));
+            fps.set("SettingsK2", SettingsK.getKey(false));
             fps.Save();
         }
 
         public static KeyCode getKey(string keyName)
         {
-            KeyCode returner = KeyCode.Alpha0;
+            KeyCode key = KeyCode.Alpha0;
             switch (keyName)
             {
                 case "ConsoleK1":
                 {
-                    returner = (KeyCode)System.Enum.Parse(typeof(KeyCode), ConsoleK.getKey(true));
+                    key = (KeyCode)System.Enum.Parse(typeof(KeyCode), ConsoleK.getKey(true));
                     break;
                 }
                 case "ConsoleK2":
                 {
-                    returner = (KeyCode)System.Enum.Parse(typeof(KeyCode), ConsoleK.getKey(false));
+                    key = (KeyCode)System.Enum.Parse(typeof(KeyCode), ConsoleK.getKey(false));
                     break;
                 }
                 case "OEK1":
                 {
-                    returner = (KeyCode)System.Enum.Parse(typeof(KeyCode), OEK.getKey(true));
+                    key = (KeyCode)System.Enum.Parse(typeof(KeyCode), OEK.getKey(true));
                     break;
                 }
                 case "OEK2":
                 {
-                    returner = (KeyCode)System.Enum.Parse(typeof(KeyCode), OEK.getKey(false));
+                    key = (KeyCode)System.Enum.Parse(typeof(KeyCode), OEK.getKey(false));
                     break;
                 }
-                case "ConfigurateK1":
+                case "SettingsK1":
                 {
-                    returner = (KeyCode)System.Enum.Parse(typeof(KeyCode), ConfigurateK.getKey(true));
+                    key = (KeyCode)System.Enum.Parse(typeof(KeyCode), SettingsK.getKey(true));
                     break;
                 }
-                case "ConfigurateK2":
+                case "SettingsK2":
                 {
-                    returner = (KeyCode)System.Enum.Parse(typeof(KeyCode), ConfigurateK.getKey(false));
+                    key = (KeyCode)System.Enum.Parse(typeof(KeyCode), SettingsK.getKey(false));
                     break;
                 }
             }
-            return returner;
+            return key;
         }
     }
 

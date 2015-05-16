@@ -87,12 +87,13 @@ namespace spaar
             Keys.loadKeys();
             var modObject = new GameObject("MODLOADERLORD");
             modObject.AddComponent<DontDestroyOnLoady>();
+
             modObject.AddComponent<Console>();
-            modObject.AddComponent<Configurate>();
+            modObject.AddComponent<KeySettings>();
+            observer = modObject.AddComponent<GameObserver>();
 #if DEV_BUILD
             modObject.AddComponent<ObjectExplorer>();
 #endif
-            observer = modObject.AddComponent<GameObserver>();
             stats.WasLoaded = true;
 
             FileInfo[] files = (new DirectoryInfo(Application.dataPath + "/Mods")).GetFiles("*.dll");

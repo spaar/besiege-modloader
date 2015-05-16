@@ -91,7 +91,7 @@ namespace spaar
 
                     try
                     {
-                        //ignore dublicates
+                        //ignore duplicates
                         list.Add(key, value);
                     }
                     catch
