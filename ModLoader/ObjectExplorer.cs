@@ -86,62 +86,52 @@ namespace spaar
 
         void OnWindow(int windowId)
         {
-            UpdateGameObjectList();
-
             float lineHeight = GUI.skin.box.lineHeight;
 
             GUILayout.BeginArea(new Rect(5f, lineHeight + 20f, 290f, 600f));
 
             GUILayout.Label("Search for objects:");
             searchText = GUILayout.TextField(searchText);
+            UpdateGameObjectList();
 
             scrollPosition = GUILayout.BeginScrollView(scrollPosition);
 
-            try
+            for (int i = 0; i < visibleGameObjects.Count; i++)
             {
-                for (int i = 0; i < visibleGameObjects.Count; i++)
+                bool display = false;
+                if (searchingComponents)
                 {
-                    bool display = false;
-                    if (searchingComponents)
+                    foreach (var comp in visibleGameObjects[i].GetComponents<Component>())
                     {
-                        foreach (var comp in visibleGameObjects[i].GetComponents<Component>())
+                        if (comp.GetType().Name.ToLower().StartsWith(searchText.ToLower().Split(':')[1]))
                         {
-                            if (comp.GetType().Name.ToLower().StartsWith(searchText.ToLower().Split(':')[1]))
-                            {
-                                display = true;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        display = true;
-                    }
-                    if (display)
-                    {
-                        if (GUILayout.Button(visibleGameObjects[i].name))
-                        {
-                            Window win;
-                            if (openWindows.ContainsKey(visibleGameObjects[i]))
-                            {
-                                win = openWindows[visibleGameObjects[i]];
-                            }
-                            else
-                            {
-                                win = new Window();
-                                openWindows[visibleGameObjects[i]] = win;
-                                win.go = visibleGameObjects[i];
-                            }
-                            win.id = 1002 + i;
-                            win.rect = new Rect(windowRect.xMax + 10f, (windowRect.yMin + windowRect.height / 2) - 20f, 200f, 300f);
+                            display = true;
                         }
                     }
                 }
-            }
-            catch (IndexOutOfRangeException e)
-            {
-                // TODO: For some reason whenever you have 'comp:' left in the search box and then remove the ':',
-                // one IndexOutOfRangeException is thrown. Have to figure out why and fix it, luckily it doesn't impact
-                // any functionality of the object explorer.
+                else
+                {
+                    display = true;
+                }
+                if (display)
+                {
+                    if (GUILayout.Button(visibleGameObjects[i].name))
+                    {
+                        Window win;
+                        if (openWindows.ContainsKey(visibleGameObjects[i]))
+                        {
+                            win = openWindows[visibleGameObjects[i]];
+                        }
+                        else
+                        {
+                            win = new Window();
+                            openWindows[visibleGameObjects[i]] = win;
+                            win.go = visibleGameObjects[i];
+                        }
+                        win.id = 1002 + i;
+                        win.rect = new Rect(windowRect.xMax + 10f, (windowRect.yMin + windowRect.height / 2) - 20f, 200f, 300f);
+                    }
+                }
             }
 
             GUILayout.EndScrollView();
