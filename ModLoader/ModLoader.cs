@@ -95,12 +95,11 @@ namespace spaar
             stats.WasLoaded = true;
 
             FileInfo[] files = (new DirectoryInfo(Application.dataPath + "/Mods")).GetFiles("*.dll");
-            for (int i = 0; i < files.Length; i++)
+            foreach (FileInfo fileInfo in files)
 			{
-				FileInfo fileInfo = files[i];
-                if (!fileInfo.Name.Contains(".no.dll") && fileInfo.Name != "SpaarModLoader.dll")
+                if (!fileInfo.Name.EndsWith(".no.dll") && fileInfo.Name != "SpaarModLoader.dll")
 				{
-					Debug.Log(string.Concat("Trying to load ", fileInfo.FullName));
+					Debug.Log("Trying to load " + fileInfo.FullName);
 					try
 					{
 						Assembly assembly = Assembly.LoadFrom(fileInfo.FullName);
@@ -134,11 +133,11 @@ namespace spaar
                             }
                         }
 
-						Debug.Log(string.Concat("Attached and loaded ", fileInfo.Name));
+						Debug.Log("Attached and loaded " + fileInfo.Name);
 					}
 					catch (Exception exception)
 					{
-						Debug.Log(string.Concat("Could not load mod ", fileInfo.Name, ":"));
+						Debug.Log("Could not load mod " + fileInfo.Name + ":");
 						Debug.LogException(exception);
 					}
 				}
