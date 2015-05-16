@@ -84,10 +84,11 @@ namespace spaar
 
             AddPiece = null;
 
+            Keys.loadKeys();
             var modObject = new GameObject("MODLOADERLORD");
             modObject.AddComponent<DontDestroyOnLoady>();
-
             modObject.AddComponent<Console>();
+            modObject.AddComponent<Configurate>();
 #if DEV_BUILD
             modObject.AddComponent<ObjectExplorer>();
 #endif
