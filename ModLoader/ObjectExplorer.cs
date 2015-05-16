@@ -65,7 +65,7 @@ namespace spaar
 
         void Update()
         {
-            if (Input.GetKey(KeyCode.LeftControl) &&  Input.GetKeyDown(KeyCode.O))
+            if (Input.GetKey(Keys.getKey("OEK1")) && Input.GetKeyDown(Keys.getKey("OEK2")))
             {
                 visible = !visible;
             }
