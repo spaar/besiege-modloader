@@ -15,10 +15,11 @@ namespace spaar
         {
             public int id;
             public Rect rect;
+            public GameObject go;
         }
 
-        List<GameObject> gameObjectList;
-        List<Window> openWindows;
+        List<GameObject> visibleGameObjects;
+        Dictionary<GameObject, Window> openWindows;
 
         Vector2 scrollPosition = Vector2.zero;
         Rect windowRect;
@@ -33,10 +34,10 @@ namespace spaar
         private void UpdateGameObjectList()
         {
             GameObject[] objs = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
-            gameObjectList = new List<GameObject>();
+            visibleGameObjects = new List<GameObject>();
             if (searchText.ToLower().StartsWith("comp:"))
             {
-                gameObjectList.AddRange(objs);
+                visibleGameObjects.AddRange(objs);
                 searchingComponents = true;
             }
             else
@@ -45,7 +46,7 @@ namespace spaar
                 {
                     if (obj.name.ToLower().StartsWith(searchText.ToLower()))
                     {
-                        gameObjectList.Add(obj);
+                        visibleGameObjects.Add(obj);
                     }
                 }
                 searchingComponents = false;
@@ -59,7 +60,7 @@ namespace spaar
 
             windowRect = new Rect(50, 50, 300, 600);
 
-            openWindows = new List<Window>();
+            openWindows = new Dictionary<GameObject, Window>();
         }
 
         void Update()
@@ -67,10 +68,6 @@ namespace spaar
             if (Input.GetKey(KeyCode.LeftControl) &&  Input.GetKeyDown(KeyCode.O))
             {
                 visible = !visible;
-            }
-            if (visible)
-            {
-                UpdateGameObjectList();
             }
         }
 
@@ -80,15 +77,17 @@ namespace spaar
             {
                 windowRect = GUI.Window(1001, windowRect, OnWindow, "Object explorer");
 
-                for (int i = 0; i < openWindows.Count; i++)
+                foreach (var window in openWindows.Values)
                 {
-                    openWindows[i].rect = GUILayout.Window(openWindows[i].id, openWindows[i].rect, OnPopupWindow, gameObjectList[openWindows[i].id - 1002].name);
+                    window.rect = GUILayout.Window(window.id, window.rect, OnPopupWindow, window.go.name);
                 }
             }
         }
 
         void OnWindow(int windowId)
         {
+            UpdateGameObjectList();
+
             float lineHeight = GUI.skin.box.lineHeight;
 
             GUILayout.BeginArea(new Rect(5f, lineHeight + 20f, 290f, 600f));
@@ -98,33 +97,51 @@ namespace spaar
 
             scrollPosition = GUILayout.BeginScrollView(scrollPosition);
 
-            for (int i = 0; i < gameObjectList.Count; i++)
+            try
             {
-                bool display = false;
-                if (searchingComponents)
+                for (int i = 0; i < visibleGameObjects.Count; i++)
                 {
-                    foreach (var comp in gameObjectList[i].GetComponents<Component>())
+                    bool display = false;
+                    if (searchingComponents)
                     {
-                        if (comp.GetType().Name.ToLower().StartsWith(searchText.ToLower().Split(':')[1]))
+                        foreach (var comp in visibleGameObjects[i].GetComponents<Component>())
                         {
-                            display = true;
+                            if (comp.GetType().Name.ToLower().StartsWith(searchText.ToLower().Split(':')[1]))
+                            {
+                                display = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        display = true;
+                    }
+                    if (display)
+                    {
+                        if (GUILayout.Button(visibleGameObjects[i].name))
+                        {
+                            Window win;
+                            if (openWindows.ContainsKey(visibleGameObjects[i]))
+                            {
+                                win = openWindows[visibleGameObjects[i]];
+                            }
+                            else
+                            {
+                                win = new Window();
+                                openWindows[visibleGameObjects[i]] = win;
+                                win.go = visibleGameObjects[i];
+                            }
+                            win.id = 1002 + i;
+                            win.rect = new Rect(windowRect.xMax + 10f, (windowRect.yMin + windowRect.height / 2) - 20f, 200f, 300f);
                         }
                     }
                 }
-                else
-                {
-                    display = true;
-                }
-                if (display)
-                {
-                    if (GUILayout.Button(gameObjectList[i].name))
-                    {
-                        Window win = new Window();
-                        win.id = 1002 + i;
-                        win.rect = new Rect(windowRect.xMax + 10f, (windowRect.yMin + windowRect.height / 2) - 20f, 200f, 300f);
-                        openWindows.Add(win);
-                    }
-                }
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                // TODO: For some reason whenever you have 'comp:' left in the search box and then remove the ':',
+                // one IndexOutOfRangeException is thrown. Have to figure out why and fix it, luckily it doesn't impact
+                // any functionality of the object explorer.
             }
 
             GUILayout.EndScrollView();
@@ -135,21 +152,35 @@ namespace spaar
 
         void OnPopupWindow(int windowId)
         {
-            GameObject go = gameObjectList[windowId - 1002];
+            Window win = null;
 
-            var components = go.GetComponents<Component>();
+            var values = openWindows.Values;
+            foreach (var val in values)
+            {
+                if (val.id == windowId)
+                {
+                    win = val;
+                }
+            }
+            if (win == null)
+            {
+                Debug.LogError("[ObjectExplorer] OnPopupWindow for window without entry in openWindows!");
+                return;
+            }
+
+            var components = win.go.GetComponents<Component>();
             foreach (var comp in components)
             {
                 if (GUILayout.Button(comp.GetType().Name))
                 {
                     MouseOrbit mo = Camera.main.GetComponent<MouseOrbit>();
+                    Debug.Log(mo);
                     mo.target = comp.transform;
                 }
             }
             if (GUILayout.Button("Close"))
             {
-                int index = openWindows.FindIndex((Window w) => { return w.id == windowId; });
-                openWindows.RemoveAt(index);
+                openWindows.Remove(win.go);
             }
             GUI.DragWindow();
         }
