@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Console.cs" />
+    <Compile Include="Mod.cs" />
     <Compile Include="ModLoader.cs" />
     <Compile Include="ObjectExplorer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

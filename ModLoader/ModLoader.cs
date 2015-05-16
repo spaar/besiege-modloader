@@ -103,16 +103,37 @@ namespace spaar
 					Debug.Log(string.Concat("Trying to load ", fileInfo.FullName));
 					try
 					{
-					    Type type = null;
 						Assembly assembly = Assembly.LoadFrom(fileInfo.FullName);
-					    foreach (Type t in assembly.GetTypes())
-					    {
-					        if (t.Name == "Mod")
-					        {
-					            type = t;
-					        }
-					    }
-                        modObject.AddComponent(type);
+                        var types = assembly.GetTypes();
+
+                        bool foundAttrib = false;
+
+                        foreach (var type in types)
+                        {
+                            var attrib = Attribute.GetCustomAttribute(type, typeof(Mod)) as Mod;
+                            if (attrib != null)
+                            {
+                                modObject.AddComponent(type);
+                                Debug.Log("Attached " + attrib.Name() + " (" + attrib.version + ") by " + attrib.author);
+                                foundAttrib = true;
+                            }
+                        }
+
+                        if (!foundAttrib)
+                        {
+                            // Continue to load a Mod class if not Mod attribute is found for now.
+                            // Otherwise all current mods would break and require an update.
+                            // TODO: Remove this fall-back after most mods have updated
+                            foreach (var type in types)
+                            {
+                                if (type.Name == "Mod")
+                                {
+                                    modObject.AddComponent(type);
+                                    break;
+                                }
+                            }
+                        }
+
 						Debug.Log(string.Concat("Attached and loaded ", fileInfo.Name));
 					}
 					catch (Exception exception)
