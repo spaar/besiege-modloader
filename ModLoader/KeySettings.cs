@@ -74,7 +74,7 @@ namespace spaar
                         keyCode[0] = e.keyCode;
                     }
                 }
-                if (!Key2Pressed)
+                else if (!Key2Pressed)
                 {
                     GUI.TextField(textRect, "Please Press Key 2");
                     if (e.isKey && e.keyCode != keyCode[0])
@@ -98,7 +98,7 @@ namespace spaar
                         keyCode[2] = e.keyCode;
                     }
                 }
-                if (!Key2Pressed)
+                else if (!Key2Pressed)
                 {
                     GUI.TextField(textRect, "Please Press Key 2");
                     if (e.isKey && e.keyCode != keyCode[2])
@@ -122,7 +122,7 @@ namespace spaar
                         keyCode[4] = e.keyCode;
                     }
                 }
-                if (!Key2Pressed)
+                else if (!Key2Pressed)
                 {
                     GUI.TextField(textRect, "Please Press Key 2");
                     if (e.isKey && e.keyCode != keyCode[4])
