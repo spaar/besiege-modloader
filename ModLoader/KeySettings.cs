@@ -8,7 +8,7 @@ namespace spaar
         private readonly bool[] buttons = new bool[3];
         private bool Key1Pressed;
         private bool Key2Pressed = true;
-        public KeyCode[] keyCode = new KeyCode[6];
+        public string[] keyCode = new string[6];
         private bool visible;
         private bool waitingForKey1;
         private bool waitingForKey2;
@@ -18,12 +18,12 @@ namespace spaar
 
         public KeySettings()
         {
-            keyCode[0] = KeyCode.Alpha0;
-            keyCode[1] = KeyCode.Alpha0;
-            keyCode[2] = KeyCode.Alpha0;
-            keyCode[3] = KeyCode.Alpha0;
-            keyCode[4] = KeyCode.Alpha0;
-            keyCode[5] = KeyCode.Alpha0;
+            keyCode[0] = "LeftControl";
+            keyCode[1] = "K";
+            keyCode[2] = "LeftControl";
+            keyCode[3] = "O";
+            keyCode[4] = "LeftControl";
+            keyCode[5] = "L";
         }
 
         private void OnEnable()
@@ -71,17 +71,17 @@ namespace spaar
                     {
                         Key1Pressed = true;
                         Key2Pressed = false;
-                        keyCode[0] = e.keyCode;
+                        keyCode[0] = e.keyCode.ToString();
                     }
                 }
                 else if (!Key2Pressed)
                 {
                     GUI.TextField(textRect, "Please Press Key 2");
-                    if (e.isKey && e.keyCode != keyCode[0])
+                    if (e.isKey && e.keyCode.ToString() != keyCode[0])
                     {
                         Key2Pressed = true;
                         waitingForKey1 = false;
-                        keyCode[1] = e.keyCode;
+                        keyCode[1] = e.keyCode.ToString();
                     }
                 }
             }
@@ -95,17 +95,17 @@ namespace spaar
                     {
                         Key1Pressed = true;
                         Key2Pressed = false;
-                        keyCode[2] = e.keyCode;
+                        keyCode[2] = e.keyCode.ToString();
                     }
                 }
                 else if (!Key2Pressed)
                 {
                     GUI.TextField(textRect, "Please Press Key 2");
-                    if (e.isKey && e.keyCode != keyCode[2])
+                    if (e.isKey && e.keyCode.ToString() != keyCode[2])
                     {
                         Key2Pressed = true;
                         waitingForKey2 = false;
-                        keyCode[3] = e.keyCode;
+                        keyCode[3] = e.keyCode.ToString();
                     }
                 }
             }
@@ -119,17 +119,17 @@ namespace spaar
                     {
                         Key1Pressed = true;
                         Key2Pressed = false;
-                        keyCode[4] = e.keyCode;
+                        keyCode[4] = e.keyCode.ToString();
                     }
                 }
                 else if (!Key2Pressed)
                 {
                     GUI.TextField(textRect, "Please Press Key 2");
-                    if (e.isKey && e.keyCode != keyCode[4])
+                    if (e.isKey && e.keyCode.ToString() != keyCode[4])
                     {
                         Key2Pressed = true;
                         waitingForKey3 = false;
-                        keyCode[5] = e.keyCode;
+                        keyCode[5] = e.keyCode.ToString();
                     }
                 }
             }
@@ -139,12 +139,12 @@ namespace spaar
                 Key2Pressed = false;
 
                 Configuration c = ModLoader.Configuration;
-                c.ConsoleK1 = Enum.GetName(typeof(KeyCode), keyCode[0]);
-                c.ConsoleK2 = Enum.GetName(typeof(KeyCode), keyCode[1]);
-                c.OEK1 = Enum.GetName(typeof(KeyCode), keyCode[2]);
-                c.OEK2 = Enum.GetName(typeof(KeyCode), keyCode[3]);
-                c.SettingsK1 = Enum.GetName(typeof(KeyCode), keyCode[4]);
-                c.SettingsK2 = Enum.GetName(typeof(KeyCode), keyCode[5]);
+                c.ConsoleK1 = keyCode[0];
+                c.ConsoleK2 = keyCode[1];
+                c.OEK1 = keyCode[2];
+                c.OEK2 = keyCode[3];
+                c.SettingsK1 = keyCode[4];
+                c.SettingsK2 = keyCode[5];
                 Configuration.SaveConfig(Configuration.DefaultFileName, c);
                 Keys.LoadKeys();
             }
