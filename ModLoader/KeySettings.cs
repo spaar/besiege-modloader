@@ -30,9 +30,6 @@ namespace spaar
 
         private void OnEnable()
         {
-            //Modular windowRect to fit to screen
-            //Don't use old one
-            //windowRect = new Rect(700f, 300f, 210f, 400f);
             windowRect = new Rect(Screen.width - 210.0f, Screen.height - 305.0f, 210.0f, 305.0f);
             textRect = new Rect(5.0f, 20.0f, 200.0f, 100.0f);
         }
