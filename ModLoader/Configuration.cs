@@ -1,4 +1,5 @@
 using System.IO;
+using UnityEngine;
 
 /*
 Example of usage:
@@ -21,6 +22,8 @@ namespace spaar
 {
     public class Configuration
     {
+        public static readonly string DefaultFileName = Application.dataPath + "/Mods/Config/ModLoader.xml";
+
         public string ConsoleK1;
         public string ConsoleK2;
         public string OEK1;
@@ -43,6 +46,26 @@ namespace spaar
             Configuration c = (Configuration)xs.Deserialize(reader);
             reader.Close();
             return c;
+        }
+
+        public static Configuration LoadOrCreateDefault(string fileName)
+        {
+            if (File.Exists(fileName))
+            {
+                return LoadConfig(fileName);
+            }
+            else
+            {
+                Configuration config = new Configuration();
+                config.ConsoleK1 = "LeftControl";
+                config.ConsoleK2 = "K";
+                config.OEK1 = "LeftControl";
+                config.OEK2 = "O";
+                config.SettingsK1 = "LeftControl";
+                config.SettingsK2 = "L";
+                SaveConfig(fileName, config);
+                return config;
+            }
         }
     }
 }

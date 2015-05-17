@@ -39,7 +39,7 @@ namespace spaar
         {
             if (visible)
             {
-                windowRect = GUI.Window(-1002, windowRect, OnWindow, "Config");
+                windowRect = GUI.Window(-1002, windowRect, OnWindow, "Settings");
             }
         }
 
@@ -137,14 +137,23 @@ namespace spaar
             {
                 Key1Pressed = false;
                 Key2Pressed = false;
-                Keys.LoadKeysAssigned();
+
+                Configuration c = ModLoader.Configuration;
+                c.ConsoleK1 = Enum.GetName(typeof(KeyCode), keyCode[0]);
+                c.ConsoleK2 = Enum.GetName(typeof(KeyCode), keyCode[1]);
+                c.OEK1 = Enum.GetName(typeof(KeyCode), keyCode[2]);
+                c.OEK2 = Enum.GetName(typeof(KeyCode), keyCode[3]);
+                c.SettingsK1 = Enum.GetName(typeof(KeyCode), keyCode[4]);
+                c.SettingsK2 = Enum.GetName(typeof(KeyCode), keyCode[5]);
+                Configuration.SaveConfig(Configuration.DefaultFileName, c);
+                Keys.LoadKeys();
             }
             GUI.DragWindow();
         }
 
         private void Update()
         {
-            if (Input.GetKey(Keys.getKey("SettingsK1")) && Input.GetKeyDown(Keys.getKey("SettingsK2")))
+            if (Input.GetKey(Keys.getKey("Settings").Modifier) && Input.GetKeyDown(Keys.getKey("Settings").Trigger))
             {
                 visible = !visible;
             }

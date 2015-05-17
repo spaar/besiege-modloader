@@ -45,7 +45,7 @@ namespace spaar
 
         void Update()
         {
-            if (Input.GetKey(Keys.getKey("ConsoleK1")) && Input.GetKeyDown(Keys.getKey("ConsoleK2")))
+            if (Input.GetKey(Keys.getKey("Console").Modifier) && Input.GetKeyDown(Keys.getKey("Console").Trigger))
             {
                 visible = !visible;
             }

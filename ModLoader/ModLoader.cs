@@ -74,6 +74,8 @@ namespace spaar
 
         private static GameObserver observer;
 
+        internal static Configuration Configuration { get; set; }
+
         void Start()
         {
             ModLoaderStats stats = ModLoaderStats.Instance;
@@ -84,7 +86,9 @@ namespace spaar
 
             AddPiece = null;
 
-            Keys.loadKeys();
+            Configuration = Configuration.LoadOrCreateDefault(Configuration.DefaultFileName);
+            Keys.LoadKeys();
+
             var modObject = new GameObject("MODLOADERLORD");
             modObject.AddComponent<DontDestroyOnLoady>();
 
