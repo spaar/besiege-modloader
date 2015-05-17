@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace spaar
@@ -9,21 +8,24 @@ namespace spaar
         private bool Key1Pressed;
         private bool Key2Pressed = true;
         public KeyCode[] keyCode = new KeyCode[6];
+        private bool keysLoaded;
+        private Vector2 scrollPosition;
+        private Rect textRect;
         private bool visible;
         private bool waitingForKey1;
         private bool waitingForKey2;
         private bool waitingForKey3;
         private Rect windowRect;
-        private Rect textRect;
 
         public KeySettings()
         {
-            keyCode[0] = KeyCode.Alpha0;
-            keyCode[1] = KeyCode.Alpha0;
-            keyCode[2] = KeyCode.Alpha0;
-            keyCode[3] = KeyCode.Alpha0;
-            keyCode[4] = KeyCode.Alpha0;
-            keyCode[5] = KeyCode.Alpha0;
+            KeyManager.LoadKeys();
+            keyCode[0] = KeyGetter.getKey("ConsoleK").Modifier;
+            keyCode[1] = KeyGetter.getKey("ConsoleK").Trigger;
+            keyCode[2] = KeyGetter.getKey("OEK").Modifier;
+            keyCode[3] = KeyGetter.getKey("OEK").Trigger;
+            keyCode[4] = KeyGetter.getKey("SettingsK").Modifier;
+            keyCode[5] = KeyGetter.getKey("SettingsK").Trigger;
         }
 
         private void OnEnable()
@@ -39,7 +41,7 @@ namespace spaar
         {
             if (visible)
             {
-                windowRect = GUI.Window(-1002, windowRect, OnWindow, "Settings");
+                windowRect = GUI.Window(-1002, windowRect, OnWindow, "KeySettings");
             }
         }
 
@@ -47,7 +49,7 @@ namespace spaar
         {
             buttons[0] = GUI.Button(new Rect(5.0f, 150.0f, 200.0f, 50.0f), "Console Keys");
             buttons[1] = GUI.Button(new Rect(5.0f, 200.0f, 200.0f, 50.0f), "Object Explorer Keys");
-            buttons[2] = GUI.Button(new Rect(5.0f, 250.0f, 200.0f, 50.0f), "Settings Keys");
+            buttons[2] = GUI.Button(new Rect(5.0f, 250.0f, 200.0f, 50.0f), "KeySettings Keys");
             if (buttons[0])
             {
                 waitingForKey1 = true;
@@ -66,7 +68,7 @@ namespace spaar
                 var e = Event.current;
                 if (!Key1Pressed)
                 {
-                    GUI.TextField(textRect, "Please Press Key 1");
+                    GUI.TextField(textRect, "Please Press Key No.1");
                     if (e.isKey)
                     {
                         Key1Pressed = true;
@@ -74,13 +76,14 @@ namespace spaar
                         keyCode[0] = e.keyCode;
                     }
                 }
-                else if (!Key2Pressed)
+                if (!Key2Pressed)
                 {
-                    GUI.TextField(textRect, "Please Press Key 2");
+                    GUI.TextField(textRect, "Please Press Key No.2");
                     if (e.isKey && e.keyCode != keyCode[0])
                     {
                         Key2Pressed = true;
                         waitingForKey1 = false;
+                        buttons[0] = false;
                         keyCode[1] = e.keyCode;
                     }
                 }
@@ -90,7 +93,7 @@ namespace spaar
                 var e = Event.current;
                 if (!Key1Pressed)
                 {
-                    GUI.TextField(textRect, "Please Press Key 1");
+                    GUI.TextField(textRect, "Please Press Key No.1");
                     if (e.isKey)
                     {
                         Key1Pressed = true;
@@ -98,13 +101,14 @@ namespace spaar
                         keyCode[2] = e.keyCode;
                     }
                 }
-                else if (!Key2Pressed)
+                if (!Key2Pressed)
                 {
-                    GUI.TextField(textRect, "Please Press Key 2");
+                    GUI.TextField(textRect, "Please Press Key No.2");
                     if (e.isKey && e.keyCode != keyCode[2])
                     {
                         Key2Pressed = true;
                         waitingForKey2 = false;
+                        buttons[1] = false;
                         keyCode[3] = e.keyCode;
                     }
                 }
@@ -114,7 +118,7 @@ namespace spaar
                 var e = Event.current;
                 if (!Key1Pressed)
                 {
-                    GUI.TextField(textRect, "Please Press Key 1");
+                    GUI.TextField(textRect, "Please Press Key No.1");
                     if (e.isKey)
                     {
                         Key1Pressed = true;
@@ -122,13 +126,14 @@ namespace spaar
                         keyCode[4] = e.keyCode;
                     }
                 }
-                else if (!Key2Pressed)
+                if (!Key2Pressed)
                 {
-                    GUI.TextField(textRect, "Please Press Key 2");
+                    GUI.TextField(textRect, "Please Press Key No.2");
                     if (e.isKey && e.keyCode != keyCode[4])
                     {
                         Key2Pressed = true;
                         waitingForKey3 = false;
+                        buttons[2] = false;
                         keyCode[5] = e.keyCode;
                     }
                 }
@@ -136,27 +141,24 @@ namespace spaar
             if (Key1Pressed && Key2Pressed)
             {
                 Key1Pressed = false;
-                Key2Pressed = false;
-
-                Configuration c = ModLoader.Configuration;
-                c.ConsoleK1 = Enum.GetName(typeof(KeyCode), keyCode[0]);
-                c.ConsoleK2 = Enum.GetName(typeof(KeyCode), keyCode[1]);
-                c.OEK1 = Enum.GetName(typeof(KeyCode), keyCode[2]);
-                c.OEK2 = Enum.GetName(typeof(KeyCode), keyCode[3]);
-                c.SettingsK1 = Enum.GetName(typeof(KeyCode), keyCode[4]);
-                c.SettingsK2 = Enum.GetName(typeof(KeyCode), keyCode[5]);
-                Configuration.SaveConfig(Configuration.DefaultFileName, c);
-                Keys.LoadKeys();
+                Key2Pressed = true;
+                KeyGetter.saveKeys();
             }
             GUI.DragWindow();
         }
 
         private void Update()
         {
-            if (Input.GetKey(Keys.getKey("Settings").Modifier) && Input.GetKeyDown(Keys.getKey("Settings").Trigger))
+            if (Input.GetKey(KeyGetter.getKey("SettingsK").Modifier) &&
+                Input.GetKeyDown(KeyGetter.getKey("SettingsK").Trigger))
             {
                 visible = !visible;
             }
+        }
+
+        private void OnApplicationQuit()
+        {
+            KeyManager.saveKeys();
         }
     }
 }
