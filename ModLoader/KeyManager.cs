@@ -8,12 +8,7 @@ namespace spaar
 {
     public class KeyConfig
     {
-        public string CK1;
-        public string CK2;
-        public string OK1;
-        public string OK2;
-        public string SK1;
-        public string SK2;
+        public string CK1, CK2, OK1, OK2, SK1, SK2;
     }
 
     internal class Key
@@ -92,12 +87,12 @@ namespace spaar
         public static void LoadKeys()
         {
             var kc = loadKeys();
-            KeyGetter.saveKeys("ConsoleK", (KeyCode) Enum.Parse(typeof (KeyCode), kc.CK1),
-                (KeyCode) Enum.Parse(typeof (KeyCode), kc.CK2));
-            KeyGetter.saveKeys("OEK", (KeyCode) Enum.Parse(typeof (KeyCode), kc.OK1),
-                (KeyCode) Enum.Parse(typeof (KeyCode), kc.OK2));
-            KeyGetter.saveKeys("SettingsK", (KeyCode) Enum.Parse(typeof (KeyCode), kc.SK1),
-                (KeyCode) Enum.Parse(typeof (KeyCode), kc.SK2));
+            KeyGetter.saveKeys("ConsoleK", (KeyCode)Enum.Parse(typeof(KeyCode), kc.CK1),
+                (KeyCode)Enum.Parse(typeof(KeyCode), kc.CK2));
+            KeyGetter.saveKeys("OEK", (KeyCode)Enum.Parse(typeof(KeyCode), kc.OK1),
+                (KeyCode)Enum.Parse(typeof(KeyCode), kc.OK2));
+            KeyGetter.saveKeys("SettingsK", (KeyCode)Enum.Parse(typeof(KeyCode), kc.SK1),
+                (KeyCode)Enum.Parse(typeof(KeyCode), kc.SK2));
         }
 
         /// <summary>
@@ -106,18 +101,17 @@ namespace spaar
         /// <returns>KeyConfig</returns>
         private static KeyConfig loadKeys()
         {
-            if (!Directory.Exists(Application.dataPath + "/Mods/Config") ||
-                !File.Exists(Application.dataPath + "/Mods/Config/Keys.txt"))
+            if (!Directory.Exists(Application.dataPath + "/Mods/Config") || !File.Exists(Application.dataPath + "/Mods/Config/Keys.txt"))
             {
                 Directory.CreateDirectory(Application.dataPath + "/Mods/Config");
-                var k = new KeyConfig();
-                k.CK1 = "LeftControl";
-                k.CK2 = "K";
-                k.OK1 = "LeftControl";
-                k.OK2 = "O";
-                k.SK1 = "LeftControl";
-                k.SK2 = "L";
-                return k;
+                var keyConfig = new KeyConfig();
+                keyConfig.CK1 = "LeftControl";
+                keyConfig.CK2 = "K";
+                keyConfig.OK1 = "LeftControl";
+                keyConfig.OK2 = "O";
+                keyConfig.SK1 = "LeftControl";
+                keyConfig.SK2 = "L";
+                return keyConfig;
             }
             return LoadKeys(string.Concat(Application.dataPath, "/Mods/Config/Keys.txt"));
         }
@@ -134,9 +128,9 @@ namespace spaar
         private static KeyConfig LoadKeys(string fileName)
         {
             var xs =
-                new XmlSerializer(typeof (KeyConfig));
+                new XmlSerializer(typeof(KeyConfig));
             var reader = File.OpenText(fileName);
-            var kc = (KeyConfig) xs.Deserialize(reader);
+            var kc = (KeyConfig)xs.Deserialize(reader);
             reader.Close();
             return kc;
         }

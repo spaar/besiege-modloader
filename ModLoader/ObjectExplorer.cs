@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 #if DEV_BUILD
@@ -113,6 +109,7 @@ namespace spaar
                 {
                     display = true;
                 }
+
                 if (display)
                 {
                     if (GUILayout.Button(visibleGameObjects[i].name))
@@ -135,7 +132,6 @@ namespace spaar
             }
 
             GUILayout.EndScrollView();
-
             GUILayout.EndArea();
             GUI.DragWindow();
         }

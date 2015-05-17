@@ -8,8 +8,8 @@ namespace spaar
         private bool Key1Pressed;
         private bool Key2Pressed = true;
         public KeyCode[] keyCode = new KeyCode[6];
-        private bool keysLoaded;
-        private Vector2 scrollPosition;
+        // private bool keysLoaded;
+        // private Vector2 scrollPosition;
         private Rect textRect;
         private bool visible;
         private bool waitingForKey1;
@@ -146,8 +146,7 @@ namespace spaar
 
         private void Update()
         {
-            if (Input.GetKey(KeyGetter.getKey("SettingsK").Modifier) &&
-                Input.GetKeyDown(KeyGetter.getKey("SettingsK").Trigger))
+            if (Input.GetKey(KeyGetter.getKey("SettingsK").Modifier) && Input.GetKeyDown(KeyGetter.getKey("SettingsK").Trigger))
             {
                 visible = !visible;
             }

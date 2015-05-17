@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 #if DEV_BUILD
@@ -64,7 +60,7 @@ namespace spaar
         {
             float lineHeight = GUI.skin.box.lineHeight;
 
-            GUILayout.BeginArea(new Rect(5f, lineHeight + 5f, windowRect.width - 10f, windowRect.height - 50f));
+            GUILayout.BeginArea(new Rect(5f, lineHeight + 5f, windowRect.width - 10f, windowRect.height - 30f));
             scrollPosition = GUILayout.BeginScrollView(scrollPosition);
             string logText = "";
             foreach (var s in logMessages)
