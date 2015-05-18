@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace spaar
@@ -138,14 +137,14 @@ namespace spaar
                 Key1Pressed = false;
                 Key2Pressed = false;
 
-                Configuration c = ModLoader.Configuration;
-                c.ConsoleK1 = keyCode[0];
-                c.ConsoleK2 = keyCode[1];
-                c.OEK1 = keyCode[2];
-                c.OEK2 = keyCode[3];
-                c.SettingsK1 = keyCode[4];
-                c.SettingsK2 = keyCode[5];
-                Configuration.SaveConfig(Configuration.DefaultFileName, c);
+                Configuration configuration = ModLoader.Configuration;
+                configuration.ConsoleK1 = keyCode[0];
+                configuration.ConsoleK2 = keyCode[1];
+                configuration.OEK1 = keyCode[2];
+                configuration.OEK2 = keyCode[3];
+                configuration.SettingsK1 = keyCode[4];
+                configuration.SettingsK2 = keyCode[5];
+                Configuration.SaveConfig(Configuration.CONFIG_FILE_NAME, configuration);
                 Keys.LoadKeys();
             }
             GUI.DragWindow();

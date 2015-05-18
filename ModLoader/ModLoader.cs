@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
@@ -70,7 +67,7 @@ namespace spaar
         /// A reference to the AddPiece component currently in use.
         /// AddPiece is used for a variety of purposes in the game and it is often necessary to access it.
         /// </summary>
-        public static AddPiece AddPiece { get; private set; } 
+        public static AddPiece AddPiece { get; private set; }
 
         private static GameObserver observer;
 
@@ -86,12 +83,11 @@ namespace spaar
 
             AddPiece = null;
 
-            Configuration = Configuration.LoadOrCreateDefault(Configuration.DefaultFileName);
+            Configuration = Configuration.LoadOrCreateDefault(Configuration.CONFIG_FILE_NAME);
             Keys.LoadKeys();
 
             var modObject = new GameObject("MODLOADERLORD");
             modObject.AddComponent<DontDestroyOnLoady>();
-
             modObject.AddComponent<Console>();
             modObject.AddComponent<KeySettings>();
             observer = modObject.AddComponent<GameObserver>();
@@ -102,13 +98,13 @@ namespace spaar
 
             FileInfo[] files = (new DirectoryInfo(Application.dataPath + "/Mods")).GetFiles("*.dll");
             foreach (FileInfo fileInfo in files)
-			{
+            {
                 if (!fileInfo.Name.EndsWith(".no.dll") && fileInfo.Name != "SpaarModLoader.dll")
-				{
-					Debug.Log("Trying to load " + fileInfo.FullName);
-					try
-					{
-						Assembly assembly = Assembly.LoadFrom(fileInfo.FullName);
+                {
+                    Debug.Log("Trying to load " + fileInfo.FullName);
+                    try
+                    {
+                        Assembly assembly = Assembly.LoadFrom(fileInfo.FullName);
                         var types = assembly.GetTypes();
 
                         bool foundAttrib = false;
@@ -119,7 +115,7 @@ namespace spaar
                             if (attrib != null)
                             {
                                 modObject.AddComponent(type);
-                                Debug.Log("Attached " + attrib.Name() + " (" + attrib.version + ") by " + attrib.author);
+                                Debug.Log("Successfully loaded " + attrib.Name() + " (" + attrib.version + ") by " + attrib.author);
                                 foundAttrib = true;
                             }
                         }
@@ -139,15 +135,15 @@ namespace spaar
                             }
                         }
 
-						Debug.Log("Attached and loaded " + fileInfo.Name);
-					}
-					catch (Exception exception)
-					{
-						Debug.Log("Could not load mod " + fileInfo.Name + ":");
-						Debug.LogException(exception);
-					}
-				}
-			}
+                        Debug.Log("Successfully loaded " + fileInfo.Name);
+                    }
+                    catch (Exception exception)
+                    {
+                        Debug.Log("Could not load " + fileInfo.Name + ":");
+                        Debug.LogException(exception);
+                    }
+                }
+            }
         }
 
         public void Update()

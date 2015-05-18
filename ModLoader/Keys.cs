@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 namespace spaar
@@ -12,12 +11,12 @@ namespace spaar
 
         public static void LoadKeys()
         {
-            Configuration c = ModLoader.Configuration;
+            Configuration configuration = ModLoader.Configuration;
             Keymap = new Dictionary<string, Key>();
 
-            Keymap["Console"] = new Key(c.ConsoleK1, c.ConsoleK2);
-            Keymap["ObjectExplorer"] = new Key(c.OEK2, c.OEK2);
-            Keymap["Settings"] = new Key(c.SettingsK1, c.SettingsK2);
+            Keymap["Console"] = new Key(configuration.ConsoleK1, configuration.ConsoleK2);
+            Keymap["ObjectExplorer"] = new Key(configuration.OEK2, configuration.OEK2);
+            Keymap["Settings"] = new Key(configuration.SettingsK1, configuration.SettingsK2);
         }
 
         public static Key getKey(string keyName)
