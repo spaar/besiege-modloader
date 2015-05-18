@@ -170,7 +170,6 @@ namespace spaar
             }
             GUI.DragWindow();
         }
-
     }
 }
 #endif
