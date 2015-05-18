@@ -1,35 +1,13 @@
 using System.IO;
 using UnityEngine;
 
-/*
-Example of usage:
-
-Configuration myconfig = new Configuration();
-            myconfig.ConsoleK1 = "LeftControl";
-            myconfig.ConsoleK2 = "K";
-            myconfig.OEK1 = "LeftControl";
-            myconfig.OEK2 = "O";
-            myconfig.SettingsK1 = "LeftControl";
-            myconfig.SettingsK2 = "L";
-            Configuration.SaveConfig("123.txt", myconfig);
-
-            Configuration loadconfig = new Configuration();
-            loadconfig = Configuration.LoadConfig("123.txt");
-            Debug.Log("\n" + loadconfig.ConsoleK1 + "\n" + loadconfig.ConsoleK2 + "\n" + loadconfig.OEK1 + "\n" + loadconfig.OEK2 + "\n" + loadconfig.SettingsK1 + "\n" + loadconfig.SettingsK2);
-*/
-
 namespace spaar
 {
     public class Configuration
     {
-        public static readonly string DefaultFileName = Application.dataPath + "/Mods/Config/ModLoader.xml";
+        public static readonly string CONFIG_FILE_NAME = Application.dataPath + "/Mods/Config/ModLoader.xml";
 
-        public string ConsoleK1;
-        public string ConsoleK2;
-        public string OEK1;
-        public string OEK2;
-        public string SettingsK1;
-        public string SettingsK2;
+        public string ConsoleK1, ConsoleK2, OEK1, OEK2, SettingsK1, SettingsK2;
 
         public static void SaveConfig(string fileName, Configuration c)
         {
