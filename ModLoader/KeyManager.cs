@@ -77,11 +77,12 @@ namespace spaar
         {
             var kc = new KeyConfig();
             kc.CK1 = KeyGetter.getKey("ConsoleK").Modifier.ToString();
-            kc.CK2 = KeyGetter.getKey("ConsoleK").Trigger.ToString();
-            kc.OK1 = KeyGetter.getKey("OEK").Modifier.ToString();
-            kc.OK2 = KeyGetter.getKey("OEK").Trigger.ToString();
-            kc.SK1 = KeyGetter.getKey("SettingsK").Modifier.ToString();
-            kc.SK2 = KeyGetter.getKey("SettingsK").Trigger.ToString();
+            //kc.CK1 = Enum.GetName(typeof (KeyCode), KeyGetter.getKey("ConsoleK").Modifier);
+            kc.CK2 = Enum.GetName(typeof (KeyCode), KeyGetter.getKey("ConsoleK").Trigger);
+            kc.OK1 = Enum.GetName(typeof (KeyCode), KeyGetter.getKey("OEK").Modifier);
+            kc.OK2 = Enum.GetName(typeof (KeyCode), KeyGetter.getKey("OEK").Trigger);
+            kc.SK1 = Enum.GetName(typeof (KeyCode), KeyGetter.getKey("SettingsK").Modifier);
+            kc.SK2 = Enum.GetName(typeof (KeyCode), KeyGetter.getKey("SettingsK").Trigger);
             SaveKeys(Application.dataPath + "/Mods/Config/Keys.txt", kc);
         }
 
