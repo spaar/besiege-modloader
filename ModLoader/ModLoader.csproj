@@ -75,11 +75,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
+    <Compile Include="GameObserver.cs" />
+    <Compile Include="Key.cs" />
     <Compile Include="KeySettings.cs" />
     <Compile Include="Console.cs" />
     <Compile Include="Keys.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="ModLoader.cs" />
+    <Compile Include="ModLoaderStats.cs" />
     <Compile Include="ObjectExplorer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
