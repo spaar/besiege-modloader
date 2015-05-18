@@ -28,7 +28,7 @@ namespace spaar
 
         public static Configuration LoadOrCreateDefault(string fileName)
         {
-            if (File.Exists(fileName))
+            if (Directory.Exists(Application.dataPath + "/Mods/Config") && File.Exists(fileName))
             {
                 return LoadConfig(fileName);
             }
@@ -41,6 +41,7 @@ namespace spaar
                 config.OEK2 = "O";
                 config.SettingsK1 = "LeftControl";
                 config.SettingsK2 = "L";
+                Directory.CreateDirectory(Application.dataPath + "/Mods/Config");
                 SaveConfig(fileName, config);
                 return config;
             }
