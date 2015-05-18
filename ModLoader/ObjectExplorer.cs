@@ -65,7 +65,7 @@ namespace spaar
 
         void Update()
         {
-            if (Input.GetKey(KeyGetter.getKey("OEK").Modifier) && Input.GetKeyDown(KeyGetter.getKey("OEK").Trigger))
+            if (Input.GetKey(Keys.getKey("ObjectExplorer").Modifier) && Input.GetKeyDown(Keys.getKey("ObjectExplorer").Trigger))
             {
                 visible = !visible;
             }
