@@ -74,9 +74,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration.cs" />
     <Compile Include="KeySettings.cs" />
     <Compile Include="Console.cs" />
-    <Compile Include="KeyManager.cs" />
+    <Compile Include="Keys.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="ModLoader.cs" />
     <Compile Include="ObjectExplorer.cs" />
