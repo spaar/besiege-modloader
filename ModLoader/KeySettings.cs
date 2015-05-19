@@ -30,23 +30,23 @@ namespace spaar
             //Modular windowRect to fit to screen
             //Don't use old one
             //windowRect = new Rect(700f, 300f, 210f, 400f);
-            windowRect = new Rect(Screen.width - 210.0f, Screen.height - 305.0f, 210.0f, 305.0f);
-            textRect = new Rect(5.0f, 20.0f, 200.0f, 100.0f);
+            windowRect = new Rect(Screen.width - 210.0f, Screen.height - 205.0f, 210.0f, 205.0f);
+            textRect = new Rect(5.0f, 20.0f, 200.0f, 30.0f);
         }
 
         private void OnGUI()
         {
             if (visible)
             {
-                windowRect = GUI.Window(-1002, windowRect, OnWindow, "Settings");
+                windowRect = GUI.Window(-1002, windowRect, OnWindow, "Keyboard Shortcuts Settings");
             }
         }
 
         private void OnWindow(int windowID)
         {
-            buttons[0] = GUI.Button(new Rect(5.0f, 150.0f, 200.0f, 50.0f), "Console Keys");
-            buttons[1] = GUI.Button(new Rect(5.0f, 200.0f, 200.0f, 50.0f), "Object Explorer Keys");
-            buttons[2] = GUI.Button(new Rect(5.0f, 250.0f, 200.0f, 50.0f), "Settings Keys");
+            buttons[0] = GUI.Button(new Rect(5.0f, 50.0f, 200.0f, 50.0f), "Console\n(" + Keys.getKey("Console").Modifier + " + " + Keys.getKey("Console").Trigger + ")");
+            buttons[1] = GUI.Button(new Rect(5.0f, 100.0f, 200.0f, 50.0f), "Object Explorer\n(" + Keys.getKey("ObjectExplorer").Modifier + " + " + Keys.getKey("ObjectExplorer").Trigger + ")");
+            buttons[2] = GUI.Button(new Rect(5.0f, 150.0f, 200.0f, 50.0f), "Settings\n(" + Keys.getKey("Settings").Modifier + " + " + Keys.getKey("Settings").Trigger + ")");
             if (buttons[0])
             {
                 waitingForKey1 = true;
