@@ -7,12 +7,12 @@ namespace spaar
     {
         public static readonly string CONFIG_FILE_NAME = Application.dataPath + "/Mods/Config/ModLoader.xml";
 
-        public string ConsoleK1 = "LeftControl";
-        public string ConsoleK2 = "K";
-        public string OEK1 = "LeftControl";
-        public string OEK2 = "O";
-        public string SettingsK1 = "LeftControl";
-        public string SettingsK2 = "L";
+        public string consoleK1 = "LeftControl";
+        public string consoleK2 = "K";
+        public string objExpK1 = "LeftControl";
+        public string objExpK2 = "O";
+        public string settingsK1 = "LeftControl";
+        public string settingsK2 = "L";
 
         public static void SaveConfig(string fileName, Configuration c)
         {

@@ -13,9 +13,9 @@ namespace spaar
             Configuration configuration = ModLoader.Configuration;
             Keymap = new Dictionary<string, Key>();
 
-            Keymap["Console"] = new Key(configuration.ConsoleK1, configuration.ConsoleK2);
-            Keymap["ObjectExplorer"] = new Key(configuration.OEK1, configuration.OEK2);
-            Keymap["Settings"] = new Key(configuration.SettingsK1, configuration.SettingsK2);
+            Keymap["Console"] = new Key(configuration.consoleK1, configuration.consoleK2);
+            Keymap["ObjectExplorer"] = new Key(configuration.objExpK1, configuration.objExpK2);
+            Keymap["Settings"] = new Key(configuration.settingsK1, configuration.settingsK2);
         }
 
         public static Key getKey(string keyName)
