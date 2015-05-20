@@ -7,7 +7,12 @@ namespace spaar
     {
         public static readonly string CONFIG_FILE_NAME = Application.dataPath + "/Mods/Config/ModLoader.xml";
 
-        public string ConsoleK1, ConsoleK2, OEK1, OEK2, SettingsK1, SettingsK2;
+        public string ConsoleK1 = "LeftControl";
+        public string ConsoleK2 = "K";
+        public string OEK1 = "LeftControl";
+        public string OEK2 = "O";
+        public string SettingsK1 = "LeftControl";
+        public string SettingsK2 = "L";
 
         public static void SaveConfig(string fileName, Configuration c)
         {
@@ -35,12 +40,6 @@ namespace spaar
             else
             {
                 Configuration config = new Configuration();
-                config.ConsoleK1 = "LeftControl";
-                config.ConsoleK2 = "K";
-                config.OEK1 = "LeftControl";
-                config.OEK2 = "O";
-                config.SettingsK1 = "LeftControl";
-                config.SettingsK2 = "L";
                 Directory.CreateDirectory(Application.dataPath + "/Mods/Config");
                 SaveConfig(fileName, config);
                 return config;

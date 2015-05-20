@@ -85,12 +85,11 @@ namespace spaar
                                 if (type.Name == "Mod")
                                 {
                                     modObject.AddComponent(type);
+									Debug.Log("Successfully loaded " + fileInfo.Name);
                                     break;
                                 }
                             }
                         }
-
-                        Debug.Log("Successfully loaded " + fileInfo.Name);
                     }
                     catch (Exception exception)
                     {
