@@ -38,17 +38,19 @@ namespace spaar
 
             AddPiece = null;
 
+            var modObject = new GameObject("MODLOADERLORD");
+            modObject.AddComponent<DontDestroyOnLoady>();
+            var console = modObject.AddComponent<Console>(); // Attach the console before loading the config so it can display possible errors
+
             Configuration = Configuration.LoadOrCreateDefault(Configuration.CONFIG_FILE_NAME);
             Keys.LoadKeys();
 
-            var modObject = new GameObject("MODLOADERLORD");
-            modObject.AddComponent<DontDestroyOnLoady>();
-            modObject.AddComponent<Console>();
             modObject.AddComponent<KeySettings>();
             observer = modObject.AddComponent<GameObserver>();
 #if DEV_BUILD
             modObject.AddComponent<ObjectExplorer>();
 #endif
+            console.EnableInterface(); // Enable the console interface since it can now ask the configuration for the correct keys to use
             stats.WasLoaded = true;
 
             FileInfo[] files = (new DirectoryInfo(Application.dataPath + "/Mods")).GetFiles("*.dll");

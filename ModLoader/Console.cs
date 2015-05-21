@@ -22,6 +22,12 @@ namespace spaar
         private Vector2 scrollPosition;
 
         private bool visible = false;
+        private bool interfaceEnabled;
+
+        public Console()
+        {
+            interfaceEnabled = false;
+        }
 
         void OnEnable()
         {
@@ -39,9 +45,17 @@ namespace spaar
 #endif
         }
 
+        /// <summary>
+        /// Enables the interface which is disabled by default after creating the Console.
+        /// </summary>
+        public void EnableInterface()
+        {
+            interfaceEnabled = true;
+        }
+
         void Update()
         {
-            if (Input.GetKey(Keys.getKey("Console").Modifier) && Input.GetKeyDown(Keys.getKey("Console").Trigger))
+            if (interfaceEnabled && Input.GetKey(Keys.getKey("Console").Modifier) && Input.GetKeyDown(Keys.getKey("Console").Trigger))
             {
                 visible = !visible;
             }

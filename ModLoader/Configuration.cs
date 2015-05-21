@@ -1,4 +1,6 @@
+using System;
 using System.IO;
+using System.Xml.Serialization;
 using UnityEngine;
 
 namespace spaar
@@ -16,7 +18,7 @@ namespace spaar
 
         public static void SaveConfig(string fileName, Configuration c)
         {
-            System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(c.GetType());
+            XmlSerializer xs = new XmlSerializer(c.GetType());
             StreamWriter writer = File.CreateText(fileName);
             xs.Serialize(writer, c);
             writer.Flush();
@@ -24,11 +26,27 @@ namespace spaar
         }
         public static Configuration LoadConfig(string fileName)
         {
-            System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(Configuration));
-            StreamReader reader = File.OpenText(fileName);
-            Configuration c = (Configuration)xs.Deserialize(reader);
-            reader.Close();
-            return c;
+            StreamReader reader = null;
+            try
+            {
+                XmlSerializer xs = new XmlSerializer(typeof(Configuration));
+                xs.UnknownElement += new XmlElementEventHandler(Serializer_UnknownElement);
+                reader = File.OpenText(fileName);
+                Configuration c = (Configuration)xs.Deserialize(reader);
+                reader.Close();
+                return c;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Loading of configuration failed! Details:");
+                Debug.LogError(e.Message);
+                Debug.LogWarning("A default configuration will be created.");
+                if (reader != null)
+                    reader.Close();
+
+                File.Delete(fileName);
+                return LoadOrCreateDefault(fileName);
+            }
         }
 
         public static Configuration LoadOrCreateDefault(string fileName)
@@ -44,6 +62,14 @@ namespace spaar
                 SaveConfig(fileName, config);
                 return config;
             }
+        }
+
+        private static void Serializer_UnknownElement(object sender, XmlElementEventArgs e)
+        {
+            Debug.LogWarning("Configuration: Unknown element: " + e.Element.Name);
+            Debug.LogWarning("Is your configuration syntax invalid?");
+            Debug.LogWarning("The default values will be used for all values that cannot be read.");
+            Debug.LogWarning("You can genereate a new valid configuration by deleting the old one.");
         }
     }
 }
