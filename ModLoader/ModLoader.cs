@@ -38,17 +38,15 @@ namespace spaar
 
             AddPiece = null;
 
-            var modObject = new GameObject("MODLOADERLORD");
-            modObject.AddComponent<DontDestroyOnLoady>();
-            var console = modObject.AddComponent<Console>(); // Attach the console before loading the config so it can display possible errors
+            var console = gameObject.AddComponent<Console>(); // Attach the console before loading the config so it can display possible errors
 
             Configuration = Configuration.LoadOrCreateDefault(Configuration.CONFIG_FILE_NAME);
             Keys.LoadKeys();
 
-            modObject.AddComponent<KeySettings>();
-            observer = modObject.AddComponent<GameObserver>();
+            gameObject.AddComponent<KeySettings>();
+            observer = gameObject.AddComponent<GameObserver>();
 #if DEV_BUILD
-            modObject.AddComponent<ObjectExplorer>();
+            gameObject.AddComponent<ObjectExplorer>();
 #endif
             console.EnableInterface(); // Enable the console interface since it can now ask the configuration for the correct keys to use
             stats.WasLoaded = true;
@@ -71,7 +69,7 @@ namespace spaar
                             var attrib = Attribute.GetCustomAttribute(type, typeof(Mod)) as Mod;
                             if (attrib != null)
                             {
-                                modObject.AddComponent(type);
+                                gameObject.AddComponent(type);
                                 Debug.Log("Successfully loaded " + attrib.Name() + " (" + attrib.version + ") by " + attrib.author);
                                 foundAttrib = true;
                             }
@@ -86,7 +84,7 @@ namespace spaar
                             {
                                 if (type.Name == "Mod")
                                 {
-                                    modObject.AddComponent(type);
+                                    gameObject.AddComponent(type);
 									Debug.Log("Successfully loaded " + fileInfo.Name);
                                     break;
                                 }
