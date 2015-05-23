@@ -28,7 +28,11 @@ namespace spaar
             //Modular windowRect to fit to screen
             //Don't use old one
             //windowRect = new Rect(700f, 300f, 210f, 400f);
+#if DEV_BUILD
             windowRect = new Rect(Screen.width - 210.0f, Screen.height - 205.0f, 210.0f, 205.0f);
+#else
+            windowRect = new Rect(Screen.width - 210.0f, Screen.height - 155.0f, 210.0f, 155.0f);
+#endif
             textRect = new Rect(5.0f, 20.0f, 200.0f, 30.0f);
         }
 
@@ -43,8 +47,13 @@ namespace spaar
         private void OnWindow(int windowID)
         {
             consoleButton = GUI.Button(new Rect(5.0f, 50.0f, 200.0f, 50.0f), "Console\n(" + Keys.getKey("Console").Modifier + " + " + Keys.getKey("Console").Trigger + ")");
+#if DEV_BUILD
             objExpButton = GUI.Button(new Rect(5.0f, 100.0f, 200.0f, 50.0f), "Object Explorer\n(" + Keys.getKey("ObjectExplorer").Modifier + " + " + Keys.getKey("ObjectExplorer").Trigger + ")");
             settingsButton = GUI.Button(new Rect(5.0f, 150.0f, 200.0f, 50.0f), "Settings\n(" + Keys.getKey("Settings").Modifier + " + " + Keys.getKey("Settings").Trigger + ")");
+#else
+            objExpButton = false;
+            settingsButton = GUI.Button(new Rect(5.0f, 100.0f, 200.0f, 50.0f), "Settings\n(" + Keys.getKey("Settings").Modifier + " + " + Keys.getKey("Settings").Trigger + ")");
+#endif
             if (consoleButton)
             {
                 waitingForConsoleKey = true;
