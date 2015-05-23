@@ -60,7 +60,7 @@ namespace spaar
                     try
                     {
                         Assembly assembly = Assembly.LoadFrom(fileInfo.FullName);
-                        var types = assembly.GetTypes();
+                        var types = assembly.GetExportedTypes();
 
                         bool foundAttrib = false;
 
