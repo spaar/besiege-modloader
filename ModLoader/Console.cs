@@ -48,6 +48,7 @@ namespace spaar
         // Map commands the user can enter to all Command's registered with that name. Mapping to multiple Commands
         // is necessary so that multiple mods can register the same command
         private static Dictionary<string, List<Command>> commands = new Dictionary<string, List<Command>>();
+        private static Dictionary<Mod, string> helpMessages = new Dictionary<Mod, string>();
 
         public Console()
         {
@@ -60,6 +61,12 @@ namespace spaar
             logMessages = new List<string>(maxLogMessages);
             windowRect = new Rect(50f, 50f, 600f, 600f);
 
+            initMessageFiltering();
+            initHelp();
+        }
+
+        private void initMessageFiltering()
+        {
             messageFilter = new Dictionary<LogType, bool>();
             messageFilter.Add(LogType.Assert, true);
             messageFilter.Add(LogType.Error, true);
@@ -86,6 +93,31 @@ namespace spaar
                     }
                 }
                 return "Successfully updated console message filter.";
+            });
+        }
+
+        private void initHelp()
+        {
+            Console.RegisterCommand("help", (string[] args) =>
+            {
+                if (args.Length == 0)
+                {
+                    return @"List of built-in commands: 
+setMessageFilter - Filter console messages by type
+listMods - List all loaded mods, along with their author and version
+version - Prints the current version
+help <modname> - Prints help information about the specified mod, if available
+help - Prints this help message";
+                }
+                
+                if (ModLoader.LoadedMods.Exists(m => m.Name() == args[0]))
+                {
+                    return helpMessages[ModLoader.LoadedMods.Find(m => m.Name() == args[0])];
+                }
+                else
+                {
+                    return "No help for " + args[0] + " could be found.";
+                }
             });
         }
 
@@ -229,7 +261,8 @@ namespace spaar
             Command com = new Command();
             com.callback = callback;
             var callingAssembly = Assembly.GetCallingAssembly();
-            com.mod = ModLoader.LoadedMods.Find((Mod mod) => {
+            com.mod = ModLoader.LoadedMods.Find((Mod mod) =>
+            {
                 return mod.assembly.Equals(callingAssembly);
             });
             if (com.mod == null)
@@ -248,6 +281,21 @@ namespace spaar
                 commands.Add(command, newList);
             }
             return true;
+        }
+
+        /// <summary>
+        /// Register a help message for your mod to be displayed with the 'help' command.
+        /// </summary>
+        /// <param name="message">The help message</param>
+        public static void RegisterHelpMessage(string message)
+        {
+            var callingAssembly = Assembly.GetCallingAssembly();
+            var mod = ModLoader.LoadedMods.Find((Mod m) =>
+            {
+                return m.assembly.Equals(callingAssembly);
+            });
+
+            helpMessages[mod] = message;
         }
 
         private void HandleCommand(string input)

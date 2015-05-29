@@ -108,14 +108,17 @@ namespace spaar
                 }
             }
 
-            Console.RegisterCommand("version", (args) => { return "spaar's Mod Loader version 0.2.2, Besiege v0.09"; });
-            Console.RegisterCommand("help", (args) =>
+            Console.RegisterCommand("listMods", (args) =>
             {
-                return @"List of built-in commands: 
-setMessageFilter - Filter console messages by type
-version - Prints the current version
-help - Prints this help message";
+                var result = "Loaded mods: ";
+                for (int i = 1; i < LoadedMods.Count; i++)
+                {
+                    var mod = LoadedMods[i];
+                    result += "\n " + mod.Name() + " (" + mod.version + ") by " + mod.author;
+                }
+                return result;
             });
+            Console.RegisterCommand("version", (args) => { return "spaar's Mod Loader version 0.2.2, Besiege v0.09"; });
         }
 
         public void Update()
