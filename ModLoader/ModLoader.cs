@@ -98,6 +98,14 @@ namespace spaar
                     }
                 }
             }
+
+            Console.RegisterCommand("version", (args) => { return "spaar's Mod Loader version 0.2.2, Besiege v0.09"; });
+            Console.RegisterCommand("help", (args) =>
+            {
+                return @"List of built-in commands: 
+version - Prints the current version
+help - Prints this help message";
+            });
         }
 
         public void Update()
@@ -108,7 +116,7 @@ namespace spaar
                 {
                     AddPiece = GameObject.Find("BUILDER").GetComponent<AddPiece>();
                 }
-                catch (NullReferenceException e)
+                catch (NullReferenceException)
                 {
                     // Probably in menu, no AddPiece there, just fall through
                 }

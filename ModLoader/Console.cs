@@ -9,6 +9,9 @@ namespace spaar
 {
     public class Console : MonoBehaviour
     {
+        
+        public delegate string CommandCallback(string[] args);
+
 #if DEV_BUILD
         // In a developer build, all console messages are also written to Mods/Debug/ConsoleOutput.txt to assist in debuggin.
         // This is especially useful because the format in output_log.txt is less than ideal for this use-case.
@@ -20,9 +23,14 @@ namespace spaar
 
         private Rect windowRect;
         private Vector2 scrollPosition;
+        private string commandText = "";
+
+        private char[] newLine = { '\n', '\r' };
 
         private bool visible = false;
         private bool interfaceEnabled;
+
+        private static Dictionary<string, CommandCallback> commands = new Dictionary<string, CommandCallback>();
 
         public Console()
         {
@@ -83,7 +91,16 @@ namespace spaar
             GUILayout.TextArea(logText);
             GUILayout.EndScrollView();
 
-            GUILayout.TextField("Not yet implemented");
+            string input = GUILayout.TextField(commandText, 100, GUI.skin.textField);
+
+            if (input.IndexOfAny(newLine) != -1)
+            {
+                HandleCommand(input.Replace("\n", "").Replace("\r", ""));
+            }
+            else
+            {
+                commandText = input;
+            }
 
             GUILayout.EndArea();
 
@@ -124,6 +141,11 @@ namespace spaar
                 logMessage = typeString + logString;
             }
 
+            AddLogMessage(logMessage);
+        }
+
+        private void AddLogMessage(string logMessage)
+        {
             if (logMessages.Count < maxLogMessages)
             {
                 logMessages.Add(logMessage);
@@ -147,5 +169,35 @@ namespace spaar
             scrollPosition.y = Mathf.Infinity;
         }
 
+        public static void RegisterCommand(string command, CommandCallback callback)
+        {
+            commands.Add(command, callback);
+        }
+
+        private void HandleCommand(string input)
+        {
+            commandText = "";
+            var result = "";
+
+            var parts = input.Split(' ');
+            var command = parts[0];
+            var args = new string[parts.Length - 1];
+            for (int i = 1; i < parts.Length; i++)
+            {
+                args[i - 1] = parts[i];
+            }
+
+            if (commands.ContainsKey(command))
+            {
+                result = commands[command](args);
+            }
+            else
+            {
+                result = "No such command: " + command;
+            }
+
+            AddLogMessage("[Command] >" + input);
+            AddLogMessage("[Command] " + result);
+        }
     }
 }
