@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
@@ -42,6 +43,7 @@ namespace spaar
 
         private bool visible = false;
         private bool interfaceEnabled;
+        private Dictionary<LogType, bool> messageFilter;
 
         // Map commands the user can enter to all Command's registered with that name. Mapping to multiple Commands
         // is necessary so that multiple mods can register the same command
@@ -57,6 +59,34 @@ namespace spaar
             Application.RegisterLogCallback(HandleLog);
             logMessages = new List<string>(maxLogMessages);
             windowRect = new Rect(50f, 50f, 600f, 600f);
+
+            messageFilter = new Dictionary<LogType, bool>();
+            messageFilter.Add(LogType.Assert, true);
+            messageFilter.Add(LogType.Error, true);
+            messageFilter.Add(LogType.Exception, true);
+            messageFilter.Add(LogType.Log, true);
+            messageFilter.Add(LogType.Warning, true);
+
+            RegisterCommand("setMessageFilter", (string[] args) =>
+            {
+                foreach (var arg in args)
+                {
+                    bool val = !arg.StartsWith("!");
+                    string key = arg;
+                    if (!val) key = arg.Substring(1);
+                    try
+                    {
+                        var type = (LogType)Enum.Parse(typeof(LogType), key);
+                        Debug.Log("Setting " + type + " to " + val);
+                        messageFilter[type] = val;
+                    }
+                    catch (ArgumentException)
+                    {
+                        Debug.LogError("Not a valid filter setting: " + arg);
+                    }
+                }
+                return "Successfully updated console message filter.";
+            });
         }
 
         void OnDisable()
@@ -125,6 +155,9 @@ namespace spaar
 
         void HandleLog(string logString, string stackTrace, LogType type)
         {
+            if (!messageFilter[type])
+                return;
+
             var typeString = "[";
             switch (type)
             {

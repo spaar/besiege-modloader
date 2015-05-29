@@ -41,6 +41,10 @@ namespace spaar
 
             AddPiece = null;
 
+            LoadedMods = new List<Mod>();
+            LoadedMods.Add(new Mod("ModLoader")); // Needed so the mod loader can actually register commands itself
+            LoadedMods[0].assembly = Assembly.GetExecutingAssembly();
+
             var console = gameObject.AddComponent<Console>(); // Attach the console before loading the config so it can display possible errors
 
             Configuration = Configuration.LoadOrCreateDefault(Configuration.CONFIG_FILE_NAME);
@@ -53,11 +57,6 @@ namespace spaar
 #endif
             console.EnableInterface(); // Enable the console interface since it can now ask the configuration for the correct keys to use
             stats.WasLoaded = true;
-
-            LoadedMods = new List<Mod>();
-
-            LoadedMods.Add(new Mod("ModLoader")); // Needed so the mod loader can actually register commands itself
-            LoadedMods[0].assembly = Assembly.GetExecutingAssembly();
 
             FileInfo[] files = (new DirectoryInfo(Application.dataPath + "/Mods")).GetFiles("*.dll");
             foreach (FileInfo fileInfo in files)
@@ -113,6 +112,7 @@ namespace spaar
             Console.RegisterCommand("help", (args) =>
             {
                 return @"List of built-in commands: 
+setMessageFilter - Filter console messages by type
 version - Prints the current version
 help - Prints this help message";
             });
