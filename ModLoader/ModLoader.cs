@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
@@ -23,6 +24,8 @@ namespace spaar
         /// AddPiece is used for a variety of purposes in the game and it is often necessary to access it.
         /// </summary>
         public static AddPiece AddPiece { get; private set; }
+
+        public static List<Mod> LoadedMods { get; private set; }
 
         private static GameObserver observer;
 
@@ -51,6 +54,11 @@ namespace spaar
             console.EnableInterface(); // Enable the console interface since it can now ask the configuration for the correct keys to use
             stats.WasLoaded = true;
 
+            LoadedMods = new List<Mod>();
+
+            LoadedMods.Add(new Mod("ModLoader")); // Needed so the mod loader can actually register commands itself
+            LoadedMods[0].assembly = Assembly.GetExecutingAssembly();
+
             FileInfo[] files = (new DirectoryInfo(Application.dataPath + "/Mods")).GetFiles("*.dll");
             foreach (FileInfo fileInfo in files)
             {
@@ -70,6 +78,8 @@ namespace spaar
                             if (attrib != null)
                             {
                                 gameObject.AddComponent(type);
+                                attrib.assembly = assembly;
+                                LoadedMods.Add(attrib);
                                 Debug.Log("Successfully loaded " + attrib.Name() + " (" + attrib.version + ") by " + attrib.author);
                                 foundAttrib = true;
                             }

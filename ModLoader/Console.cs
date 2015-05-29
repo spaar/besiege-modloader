@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 #if DEV_BUILD
@@ -10,7 +11,19 @@ namespace spaar
     public class Console : MonoBehaviour
     {
         
+        /// <summary>
+        /// Delegate to use with registering commands.
+        /// </summary>
+        /// <param name="args">The arguments passed on the command line</param>
+        /// <returns>Result of the command, will be printed to the console, if not null or empty string</returns>
         public delegate string CommandCallback(string[] args);
+
+        // Simple struct for representing all information needed about a command
+        private struct Command
+        {
+            public Mod mod;
+            public CommandCallback callback;
+        }
 
 #if DEV_BUILD
         // In a developer build, all console messages are also written to Mods/Debug/ConsoleOutput.txt to assist in debuggin.
@@ -30,7 +43,9 @@ namespace spaar
         private bool visible = false;
         private bool interfaceEnabled;
 
-        private static Dictionary<string, CommandCallback> commands = new Dictionary<string, CommandCallback>();
+        // Map commands the user can enter to all Command's registered with that name. Mapping to multiple Commands
+        // is necessary so that multiple mods can register the same command
+        private static Dictionary<string, List<Command>> commands = new Dictionary<string, List<Command>>();
 
         public Console()
         {
@@ -169,9 +184,37 @@ namespace spaar
             scrollPosition.y = Mathf.Infinity;
         }
 
-        public static void RegisterCommand(string command, CommandCallback callback)
+        /// <summary>
+        /// Register a console command. The passed callback will be called when the user enters
+        /// the command in the console.
+        /// </summary>
+        /// <param name="command">The command to register</param>
+        /// <param name="callback">The callback to be called when the command is entered</param>
+        /// <returns>True if registration succeeded, false otherwise</returns>
+        public static bool RegisterCommand(string command, CommandCallback callback)
         {
-            commands.Add(command, callback);
+            Command com = new Command();
+            com.callback = callback;
+            var callingAssembly = Assembly.GetCallingAssembly();
+            com.mod = ModLoader.LoadedMods.Find((Mod mod) => {
+                return mod.assembly.Equals(callingAssembly);
+            });
+            if (com.mod == null)
+            {
+                Debug.LogError("Could not identify mod trying to register command " + command + "!");
+                return false;
+            }
+            if (commands.ContainsKey(command))
+            {
+                commands[command].Add(com);
+            }
+            else
+            {
+                List<Command> newList = new List<Command>();
+                newList.Add(com);
+                commands.Add(command, newList);
+            }
+            return true;
         }
 
         private void HandleCommand(string input)
@@ -179,8 +222,18 @@ namespace spaar
             commandText = "";
             var result = "";
 
+            // Input parsing
             var parts = input.Split(' ');
-            var command = parts[0];
+            var command = "";
+
+            if (parts[0].Contains(":"))
+                command = parts[0].Split(':')[1];
+            else
+                command = parts[0];
+
+            // TODO: improve argument parsing
+            // possibly some kind of named paramters?
+            // at least make it possible for arguments to have spaces in them if they are enclosed in quotes
             var args = new string[parts.Length - 1];
             for (int i = 1; i < parts.Length; i++)
             {
@@ -189,7 +242,25 @@ namespace spaar
 
             if (commands.ContainsKey(command))
             {
-                result = commands[command](args);
+                if (commands[command].Count > 1)
+                {
+                    if (!parts[0].Contains(":"))
+                    {
+                        result = "Error: Multiple mods have registered " + command + ", use <modname>:" + command + " to specify which one to use.\n"
+                            + "Mods that provide command " + command + ": ";
+                        foreach (var c in commands[command])
+                            result += "\n" + c.mod.Name();
+                    }
+                    else
+                    {
+                        var modname = parts[0].Split(':')[0];
+                        result = commands[command].Find((Command c) => { return c.mod.Name() == modname; }).callback(args);
+                    }
+                }
+                else
+                {
+                    result = commands[command][0].callback(args);
+                }
             }
             else
             {
@@ -197,7 +268,8 @@ namespace spaar
             }
 
             AddLogMessage("[Command] >" + input);
-            AddLogMessage("[Command] " + result);
+            if (result != null && result != "")
+                AddLogMessage("[Command] " + result);
         }
     }
 }
