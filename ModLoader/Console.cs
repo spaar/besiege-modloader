@@ -23,6 +23,7 @@ namespace spaar
         private Rect windowRect;
         private Vector2 scrollPosition;
         private string commandText = "";
+        private string lastCommand = "";
 
         private char[] newLine = { '\n', '\r' };
 
@@ -126,11 +127,25 @@ namespace spaar
             GUILayout.TextArea(logText);
             GUILayout.EndScrollView();
 
+            bool moveCursor = false;
+            if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.UpArrow)
+            {
+                commandText = lastCommand;
+                moveCursor = true;
+            }
+
             string input = GUILayout.TextField(commandText, 100, GUI.skin.textField);
 
+            if (moveCursor)
+            {
+                TextEditor editor = (TextEditor)GUIUtility.GetStateObject(typeof(TextEditor), GUIUtility.keyboardControl);
+                editor.pos = commandText.Length + 1;
+                editor.selectPos = commandText.Length + 1;
+            }
             if (input.IndexOfAny(newLine) != -1)
             {
                 commandText = "";
+                lastCommand = input.Replace("\n", "").Replace("\r", "");
                 Commands.HandleCommand(this, input.Replace("\n", "").Replace("\r", ""));
             }
             else

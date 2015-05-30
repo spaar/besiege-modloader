@@ -237,7 +237,7 @@ help - Prints this help message";
                     else
                     {
                         var modname = parts[0].Split(':')[0];
-                        result = commands[command].Find((Command c) => { return c.mod.Name() == modname; }).callback(args.ToArray(), namedArgs);
+                        result = commands[command].Find(c => c.mod.Name().Equals(modname, StringComparison.CurrentCultureIgnoreCase)).callback(args.ToArray(), namedArgs);
                     }
                 }
                 else
