@@ -11,23 +11,6 @@ namespace spaar
 {
     public class Console : MonoBehaviour
     {
-        
-        /// <summary>
-        /// Delegate to use with registering commands.
-        /// </summary>
-        /// <param name="args">The unnamed arguments passed on the command line, in the order they appear</param>
-        /// <param name="namedArgs">The named arguments passed on the command line</param>
-        /// <returns>Result of the command, will be printed to the console, if not null or empty string</returns>
-        public delegate string CommandCallback(string[] args, IDictionary<string, string> namedArgs);
-
-        // Simple struct for representing all information needed about a command
-        private struct Command
-        {
-            public Mod mod;
-            public CommandCallback callback;
-            public string helpMessage;
-        }
-
 #if DEV_BUILD
         // In a developer build, all console messages are also written to Mods/Debug/ConsoleOutput.txt to assist in debuggin.
         // This is especially useful because the format in output_log.txt is less than ideal for this use-case.
@@ -47,11 +30,6 @@ namespace spaar
         private bool interfaceEnabled;
         private Dictionary<LogType, bool> messageFilter;
 
-        // Map commands the user can enter to all Command's registered with that name. Mapping to multiple Commands
-        // is necessary so that multiple mods can register the same command
-        private static Dictionary<string, List<Command>> commands = new Dictionary<string, List<Command>>();
-        private static Dictionary<Mod, string> helpMessages = new Dictionary<Mod, string>();
-
         public Console()
         {
             interfaceEnabled = false;
@@ -64,7 +42,6 @@ namespace spaar
             windowRect = new Rect(50f, 50f, 600f, 600f);
 
             initMessageFiltering();
-            initHelp();
         }
 
         private void initMessageFiltering()
@@ -76,7 +53,7 @@ namespace spaar
             messageFilter.Add(LogType.Log, true);
             messageFilter.Add(LogType.Warning, true);
 
-            RegisterCommand("setMessageFilter", (string[] args, IDictionary<string, string> namedArgs) =>
+            Commands.RegisterCommand("setMessageFilter", (string[] args, IDictionary<string, string> namedArgs) =>
             {
                 foreach (var arg in args)
                 {
@@ -100,73 +77,7 @@ namespace spaar
                "Vaild values for type are Assert, Error, Exception, Log and Warning.");
         }
 
-        private void initHelp()
-        {
-            Console.RegisterCommand("help", (string[] args, IDictionary<string, string> namedArgs) =>
-            {
-                if (args.Length == 0)
-                {
-                    return @"List of built-in commands: 
-setMessageFilter - Filter console messages by type
-listMods - List all loaded mods, along with their author and version
-version - Prints the current version
-help <modname> - Prints help information about the specified mod, if available
-help <modname> <command> or help <modname>:<command> - Prints help information about the specified command, if available
-help - Prints this help message";
-                }
-                else if (args.Length == 1 && !args[0].Contains(":"))
-                {
-
-                    if (ModLoader.LoadedMods.Exists(m => m.Name() == args[0]))
-                    {
-                        var mod = ModLoader.LoadedMods.Find(m => m.Name() == args[0]);
-                        if (helpMessages.ContainsKey(mod))
-                        {
-                            return helpMessages[mod];
-                        }
-                        else
-                        {
-                            return "No help for " + args[0] + " could be found.";
-                        }
-                    }
-                    else
-                    {
-                        return "No mod named " + args[0] + " could be found.";
-                    }
-                }
-                else if (args.Length == 2 || args[0].Contains(":"))
-                {
-                    var modName = "";
-                    var commandName = "";
-                    if (args[0].Contains(":"))
-                    {
-                        modName = args[0].Split(':')[0];
-                        commandName = args[0].Split(':')[1];
-                    }
-                    else
-                    {
-                        modName = args[0];
-                        commandName = args[1];
-                    }
-                    if (!commands.ContainsKey(commandName))
-                    {
-                        return "No such command: " + commandName;
-                    }
-                    var coms = commands[commandName];
-                    if (!coms.Exists(com => com.mod.Name() == modName))
-                    {
-                        return "No command " + commandName + " in mod " + modName;
-                    }
-                    var helpMessage = coms.Find(com => com.mod.Name() == modName).helpMessage;
-                    if (helpMessage == "")
-                    {
-                        return "No help registered for " + modName + ":" + commandName;
-                    }
-                    return helpMessage;
-                }
-                return "Usage: 'help' or 'help <mod>' or 'help <mod> <command>' or 'help <mod>:<command>'";
-            });
-        }
+        
 
         void OnDisable()
         {
@@ -219,7 +130,8 @@ help - Prints this help message";
 
             if (input.IndexOfAny(newLine) != -1)
             {
-                HandleCommand(input.Replace("\n", "").Replace("\r", ""));
+                commandText = "";
+                Commands.HandleCommand(this, input.Replace("\n", "").Replace("\r", ""));
             }
             else
             {
@@ -272,7 +184,7 @@ help - Prints this help message";
             AddLogMessage(logMessage);
         }
 
-        private void AddLogMessage(string logMessage)
+        internal void AddLogMessage(string logMessage)
         {
             if (logMessages.Count < maxLogMessages)
             {
@@ -297,153 +209,6 @@ help - Prints this help message";
             scrollPosition.y = Mathf.Infinity;
         }
 
-        /// <summary>
-        /// Register a console command. The passed callback will be called when the user enters
-        /// the command in the console.
-        /// </summary>
-        /// <param name="command">The command to register</param>
-        /// <param name="callback">The callback to be called when the command is entered</param>
-        /// <param name="helpText">Help text for this command. Used for <code><![CDATA[help <mod> <command>]]></code></param>
-        /// <returns>True if registration succeeded, false otherwise</returns>
-        public static bool RegisterCommand(string command, CommandCallback callback, string helpText = "")
-        {
-            Command com = new Command();
-            com.callback = callback;
-            com.helpMessage = helpText;
-            var callingAssembly = Assembly.GetCallingAssembly();
-            com.mod = ModLoader.LoadedMods.Find((Mod mod) =>
-            {
-                return mod.assembly.Equals(callingAssembly);
-            });
-            if (com.mod == null)
-            {
-                Debug.LogError("Could not identify mod trying to register command " + command + "!");
-                return false;
-            }
-            if (commands.ContainsKey(command))
-            {
-                commands[command].Add(com);
-            }
-            else
-            {
-                List<Command> newList = new List<Command>();
-                newList.Add(com);
-                commands.Add(command, newList);
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// Register a help message for your mod to be displayed with the 'help' command.
-        /// This should give a general overview, to give specific information about a command,
-        /// use the <code>helpText</code> parameter of <code>RegisterCommand</code>.
-        /// </summary>
-        /// <param name="message">The help message</param>
-        public static void RegisterHelpMessage(string message)
-        {
-            var callingAssembly = Assembly.GetCallingAssembly();
-            var mod = ModLoader.LoadedMods.Find((Mod m) =>
-            {
-                return m.assembly.Equals(callingAssembly);
-            });
-
-            helpMessages[mod] = message;
-        }
-
-        private void HandleCommand(string input)
-        {
-            commandText = "";
-            var result = "";
-
-            // Input parsing
-            var parts = input.Split(' ');
-            var command = "";
-
-            if (parts[0].Contains(":"))
-                command = parts[0].Split(':')[1];
-            else
-                command = parts[0];
-
-            var args = new List<string>();
-            var namedArgs = new Dictionary<string, string>();
-            for (int i = 1; i < parts.Length; i++)
-            {
-                if (parts[i].StartsWith("--"))
-                {
-                    // Named arg
-                    var name = parts[i].Substring(2);
-                    var value = "";
-                    i++;
-                    if (parts[i].StartsWith("\""))
-                    {
-                        value = parts[i].Substring(1);
-                        i++;
-                        while (!parts[i].EndsWith("\""))
-                        {
-                            value += " " + parts[i];
-                            i++;
-                        }
-                        value += " " + parts[i].Substring(0, parts[i].Length - 1);
-                    }
-                    else
-                    {
-                        value = parts[i];
-                    }
-                    namedArgs.Add(name, value);
-                }
-                else
-                {
-                    // Unnamed arg
-                    if (parts[i].StartsWith("\""))
-                    {
-                        var currentArg = parts[i].Substring(1);
-                        i++;
-                        while (!parts[i].EndsWith("\""))
-                        {
-                            currentArg += " " + parts[i];
-                            i++;
-                        }
-                        currentArg += " " + parts[i].Substring(0, parts[i].Length - 1);
-                        args.Add(currentArg);
-                    }
-                    else
-                    {
-                        args.Add(parts[i]);
-                    }
-                }
-            }
-            
-            AddLogMessage("[Command] >" + input);
-
-            if (commands.ContainsKey(command))
-            {
-                if (commands[command].Count > 1)
-                {
-                    if (!parts[0].Contains(":"))
-                    {
-                        result = "Error: Multiple mods have registered " + command + ", use <modname>:" + command + " to specify which one to use.\n"
-                            + "Mods that provide command " + command + ": ";
-                        foreach (var c in commands[command])
-                            result += "\n" + c.mod.Name();
-                    }
-                    else
-                    {
-                        var modname = parts[0].Split(':')[0];
-                        result = commands[command].Find((Command c) => { return c.mod.Name() == modname; }).callback(args.ToArray(), namedArgs);
-                    }
-                }
-                else
-                {
-                    result = commands[command][0].callback(args.ToArray(), namedArgs);
-                }
-            }
-            else
-            {
-                result = "No such command: " + command;
-            }
-
-            if (result != null && result != "")
-                AddLogMessage("[Command] " + result);
-        }
+        
     }
 }

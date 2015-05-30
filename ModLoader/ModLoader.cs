@@ -45,6 +45,7 @@ namespace spaar
             LoadedMods.Add(new Mod("ModLoader")); // Needed so the mod loader can actually register commands itself
             LoadedMods[0].assembly = Assembly.GetExecutingAssembly();
 
+            Commands.init();
             var console = gameObject.AddComponent<Console>(); // Attach the console before loading the config so it can display possible errors
 
             Configuration = Configuration.LoadOrCreateDefault(Configuration.CONFIG_FILE_NAME);
@@ -108,7 +109,7 @@ namespace spaar
                 }
             }
 
-            Console.RegisterCommand("listMods", (args, namedArgs) =>
+            Commands.RegisterCommand("listMods", (args, namedArgs) =>
             {
                 var result = "Loaded mods: ";
                 for (int i = 1; i < LoadedMods.Count; i++)
@@ -118,7 +119,6 @@ namespace spaar
                 }
                 return result;
             });
-            Console.RegisterCommand("version", (args, namedArgs) => { return "spaar's Mod Loader version 0.2.2, Besiege v0.09"; });
         }
 
         public void Update()

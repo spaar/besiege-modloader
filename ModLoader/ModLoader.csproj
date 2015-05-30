@@ -74,6 +74,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="GameObserver.cs" />
     <Compile Include="Key.cs" />
