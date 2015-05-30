@@ -108,7 +108,7 @@ namespace spaar
                 }
             }
 
-            Console.RegisterCommand("listMods", (args) =>
+            Console.RegisterCommand("listMods", (args, namedArgs) =>
             {
                 var result = "Loaded mods: ";
                 for (int i = 1; i < LoadedMods.Count; i++)
@@ -118,7 +118,7 @@ namespace spaar
                 }
                 return result;
             });
-            Console.RegisterCommand("version", (args) => { return "spaar's Mod Loader version 0.2.2, Besiege v0.09"; });
+            Console.RegisterCommand("version", (args, namedArgs) => { return "spaar's Mod Loader version 0.2.2, Besiege v0.09"; });
         }
 
         public void Update()

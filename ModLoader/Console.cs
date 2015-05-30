@@ -15,9 +15,10 @@ namespace spaar
         /// <summary>
         /// Delegate to use with registering commands.
         /// </summary>
-        /// <param name="args">The arguments passed on the command line</param>
+        /// <param name="args">The unnamed arguments passed on the command line, in the order they appear</param>
+        /// <param name="namedArgs">The named arguments passed on the command line</param>
         /// <returns>Result of the command, will be printed to the console, if not null or empty string</returns>
-        public delegate string CommandCallback(string[] args);
+        public delegate string CommandCallback(string[] args, IDictionary<string, string> namedArgs);
 
         // Simple struct for representing all information needed about a command
         private struct Command
@@ -74,7 +75,7 @@ namespace spaar
             messageFilter.Add(LogType.Log, true);
             messageFilter.Add(LogType.Warning, true);
 
-            RegisterCommand("setMessageFilter", (string[] args) =>
+            RegisterCommand("setMessageFilter", (string[] args, IDictionary<string, string> namedArgs) =>
             {
                 foreach (var arg in args)
                 {
@@ -98,7 +99,7 @@ namespace spaar
 
         private void initHelp()
         {
-            Console.RegisterCommand("help", (string[] args) =>
+            Console.RegisterCommand("help", (string[] args, IDictionary<string, string> namedArgs) =>
             {
                 if (args.Length == 0)
                 {
@@ -312,26 +313,52 @@ help - Prints this help message";
             else
                 command = parts[0];
 
-            // TODO: improve argument parsing
-            // possibly some kind of named paramters?
             var args = new List<string>();
+            var namedArgs = new Dictionary<string, string>();
             for (int i = 1; i < parts.Length; i++)
             {
-                if (parts[i].StartsWith("\""))
+                if (parts[i].StartsWith("--"))
                 {
-                    var currentArg = parts[i].Substring(1);
+                    // Named arg
+                    var name = parts[i].Substring(2);
+                    var value = "";
                     i++;
-                    while (!parts[i].EndsWith("\""))
+                    if (parts[i].StartsWith("\""))
                     {
-                        currentArg += " " + parts[i];
+                        value = parts[i].Substring(1);
                         i++;
+                        while (!parts[i].EndsWith("\""))
+                        {
+                            value += " " + parts[i];
+                            i++;
+                        }
+                        value += " " + parts[i].Substring(0, parts[i].Length - 1);
                     }
-                    currentArg += " " + parts[i].Substring(0, parts[i].Length - 1);
-                    args.Add(currentArg);
+                    else
+                    {
+                        value = parts[i];
+                    }
+                    namedArgs.Add(name, value);
                 }
                 else
                 {
-                    args.Add(parts[i]);
+                    // Unnamed arg
+                    if (parts[i].StartsWith("\""))
+                    {
+                        var currentArg = parts[i].Substring(1);
+                        i++;
+                        while (!parts[i].EndsWith("\""))
+                        {
+                            currentArg += " " + parts[i];
+                            i++;
+                        }
+                        currentArg += " " + parts[i].Substring(0, parts[i].Length - 1);
+                        args.Add(currentArg);
+                    }
+                    else
+                    {
+                        args.Add(parts[i]);
+                    }
                 }
             }
             
@@ -351,12 +378,12 @@ help - Prints this help message";
                     else
                     {
                         var modname = parts[0].Split(':')[0];
-                        result = commands[command].Find((Command c) => { return c.mod.Name() == modname; }).callback(args.ToArray());
+                        result = commands[command].Find((Command c) => { return c.mod.Name() == modname; }).callback(args.ToArray(), namedArgs);
                     }
                 }
                 else
                 {
-                    result = commands[command][0].callback(args.ToArray());
+                    result = commands[command][0].callback(args.ToArray(), namedArgs);
                 }
             }
             else
