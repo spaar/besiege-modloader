@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
@@ -24,6 +25,8 @@ namespace spaar
         /// </summary>
         public static AddPiece AddPiece { get; private set; }
 
+        public static List<Mod> LoadedMods { get; private set; }
+
         private static GameObserver observer;
 
         internal static Configuration Configuration { get; set; }
@@ -38,6 +41,11 @@ namespace spaar
 
             AddPiece = null;
 
+            LoadedMods = new List<Mod>();
+            LoadedMods.Add(new Mod("ModLoader")); // Needed so the mod loader can actually register commands itself
+            LoadedMods[0].assembly = Assembly.GetExecutingAssembly();
+
+            Commands.init();
             var console = gameObject.AddComponent<Console>(); // Attach the console before loading the config so it can display possible errors
 
             Configuration = Configuration.LoadOrCreateDefault(Configuration.CONFIG_FILE_NAME);
@@ -70,6 +78,8 @@ namespace spaar
                             if (attrib != null)
                             {
                                 gameObject.AddComponent(type);
+                                attrib.assembly = assembly;
+                                LoadedMods.Add(attrib);
                                 Debug.Log("Successfully loaded " + attrib.Name() + " (" + attrib.version + ") by " + attrib.author);
                                 foundAttrib = true;
                             }
@@ -98,6 +108,17 @@ namespace spaar
                     }
                 }
             }
+
+            Commands.RegisterCommand("listMods", (args, namedArgs) =>
+            {
+                var result = "Loaded mods: ";
+                for (int i = 1; i < LoadedMods.Count; i++)
+                {
+                    var mod = LoadedMods[i];
+                    result += "\n " + mod.Name() + " (" + mod.version + ") by " + mod.author;
+                }
+                return result;
+            });
         }
 
         public void Update()
@@ -108,7 +129,7 @@ namespace spaar
                 {
                     AddPiece = GameObject.Find("BUILDER").GetComponent<AddPiece>();
                 }
-                catch (NullReferenceException e)
+                catch (NullReferenceException)
                 {
                     // Probably in menu, no AddPiece there, just fall through
                 }

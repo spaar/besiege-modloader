@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 #if DEV_BUILD
@@ -20,9 +22,14 @@ namespace spaar
 
         private Rect windowRect;
         private Vector2 scrollPosition;
+        private string commandText = "";
+        private string lastCommand = "";
+
+        private char[] newLine = { '\n', '\r' };
 
         private bool visible = false;
         private bool interfaceEnabled;
+        private Dictionary<LogType, bool> messageFilter;
 
         public Console()
         {
@@ -34,6 +41,40 @@ namespace spaar
             Application.RegisterLogCallback(HandleLog);
             logMessages = new List<string>(maxLogMessages);
             windowRect = new Rect(50f, 50f, 600f, 600f);
+
+            initMessageFiltering();
+        }
+
+        private void initMessageFiltering()
+        {
+            messageFilter = new Dictionary<LogType, bool>();
+            messageFilter.Add(LogType.Assert, true);
+            messageFilter.Add(LogType.Error, true);
+            messageFilter.Add(LogType.Exception, true);
+            messageFilter.Add(LogType.Log, true);
+            messageFilter.Add(LogType.Warning, true);
+
+            Commands.RegisterCommand("setMessageFilter", (string[] args, IDictionary<string, string> namedArgs) =>
+            {
+                foreach (var arg in args)
+                {
+                    bool val = !arg.StartsWith("!");
+                    string key = arg;
+                    if (!val) key = arg.Substring(1);
+                    try
+                    {
+                        var type = (LogType)Enum.Parse(typeof(LogType), key);
+                        messageFilter[type] = val;
+                    }
+                    catch (ArgumentException)
+                    {
+                        Debug.LogError("Not a valid filter setting: " + arg);
+                    }
+                }
+                return "Successfully updated console message filter.";
+            }, "Update the filter settings for console messages. Every argument must be in the form 'type' or '!type'. " + 
+               "The first form will activate the specified type. The second one will deactive it. " +
+               "Vaild values for type are Assert, Error, Exception, Log and Warning.");
         }
 
         void OnDisable()
@@ -83,7 +124,31 @@ namespace spaar
             GUILayout.TextArea(logText);
             GUILayout.EndScrollView();
 
-            GUILayout.TextField("Not yet implemented");
+            bool moveCursor = false;
+            if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.UpArrow)
+            {
+                commandText = lastCommand;
+                moveCursor = true;
+            }
+
+            string input = GUILayout.TextField(commandText, 100, GUI.skin.textField);
+
+            if (moveCursor)
+            {
+                TextEditor editor = (TextEditor)GUIUtility.GetStateObject(typeof(TextEditor), GUIUtility.keyboardControl);
+                editor.pos = commandText.Length + 1;
+                editor.selectPos = commandText.Length + 1;
+            }
+            if (input.IndexOfAny(newLine) != -1)
+            {
+                commandText = "";
+                lastCommand = input.Replace("\n", "").Replace("\r", "");
+                Commands.HandleCommand(this, input.Replace("\n", "").Replace("\r", ""));
+            }
+            else
+            {
+                commandText = input;
+            }
 
             GUILayout.EndArea();
 
@@ -124,14 +189,28 @@ namespace spaar
                 logMessage = typeString + logString;
             }
 
-            if (logMessages.Count < maxLogMessages)
+            AddLogMessage(logMessage, messageFilter[type]);
+        }
+
+        /// <summary>
+        /// Add a new message to the console. The message will only be printed if printToConsole is true,
+        /// but it will always be written to the output file, if in a developer build.
+        /// </summary>
+        /// <param name="logMessage">The message to add</param>
+        /// <param name="printToConsole">Whether to show the message in the console</param>
+        internal void AddLogMessage(string logMessage, bool printToConsole = true)
+        {
+            if (printToConsole)
             {
-                logMessages.Add(logMessage);
-            }
-            else
-            {
-                logMessages.RemoveAt(0);
-                logMessages.Add(logMessage);
+                if (logMessages.Count < maxLogMessages)
+                {
+                    logMessages.Add(logMessage);
+                }
+                else
+                {
+                    logMessages.RemoveAt(0);
+                    logMessages.Add(logMessage);
+                }
             }
 
 #if DEV_BUILD
@@ -147,5 +226,6 @@ namespace spaar
             scrollPosition.y = Mathf.Infinity;
         }
 
+        
     }
 }

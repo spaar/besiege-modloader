@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace spaar
 {
@@ -8,6 +9,8 @@ namespace spaar
         private string name;
         public string version;
         public string author;
+
+        internal Assembly assembly;
 
         public Mod(string name)
         {
