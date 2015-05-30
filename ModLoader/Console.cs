@@ -314,12 +314,28 @@ help - Prints this help message";
 
             // TODO: improve argument parsing
             // possibly some kind of named paramters?
-            // at least make it possible for arguments to have spaces in them if they are enclosed in quotes
-            var args = new string[parts.Length - 1];
+            var args = new List<string>();
             for (int i = 1; i < parts.Length; i++)
             {
-                args[i - 1] = parts[i];
+                if (parts[i].StartsWith("\""))
+                {
+                    var currentArg = parts[i].Substring(1);
+                    i++;
+                    while (!parts[i].EndsWith("\""))
+                    {
+                        currentArg += " " + parts[i];
+                        i++;
+                    }
+                    currentArg += " " + parts[i].Substring(0, parts[i].Length - 1);
+                    args.Add(currentArg);
+                }
+                else
+                {
+                    args.Add(parts[i]);
+                }
             }
+            
+            AddLogMessage("[Command] >" + input);
 
             if (commands.ContainsKey(command))
             {
@@ -335,12 +351,12 @@ help - Prints this help message";
                     else
                     {
                         var modname = parts[0].Split(':')[0];
-                        result = commands[command].Find((Command c) => { return c.mod.Name() == modname; }).callback(args);
+                        result = commands[command].Find((Command c) => { return c.mod.Name() == modname; }).callback(args.ToArray());
                     }
                 }
                 else
                 {
-                    result = commands[command][0].callback(args);
+                    result = commands[command][0].callback(args.ToArray());
                 }
             }
             else
@@ -348,7 +364,6 @@ help - Prints this help message";
                 result = "No such command: " + command;
             }
 
-            AddLogMessage("[Command] >" + input);
             if (result != null && result != "")
                 AddLogMessage("[Command] " + result);
         }
