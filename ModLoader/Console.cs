@@ -25,6 +25,7 @@ namespace spaar
         {
             public Mod mod;
             public CommandCallback callback;
+            public string helpMessage;
         }
 
 #if DEV_BUILD
@@ -94,7 +95,9 @@ namespace spaar
                     }
                 }
                 return "Successfully updated console message filter.";
-            });
+            }, "Update the filter settings for console messages. Every argument must be in the form 'type' or '!type'. " + 
+               "The first form will activate the specified type. The second one will deactive it. " +
+               "Vaild values for type are Assert, Error, Exception, Log and Warning.");
         }
 
         private void initHelp()
@@ -108,17 +111,60 @@ setMessageFilter - Filter console messages by type
 listMods - List all loaded mods, along with their author and version
 version - Prints the current version
 help <modname> - Prints help information about the specified mod, if available
+help <modname> <command> or help <modname>:<command> - Prints help information about the specified command, if available
 help - Prints this help message";
                 }
-                
-                if (ModLoader.LoadedMods.Exists(m => m.Name() == args[0]))
+                else if (args.Length == 1 && !args[0].Contains(":"))
                 {
-                    return helpMessages[ModLoader.LoadedMods.Find(m => m.Name() == args[0])];
+
+                    if (ModLoader.LoadedMods.Exists(m => m.Name() == args[0]))
+                    {
+                        var mod = ModLoader.LoadedMods.Find(m => m.Name() == args[0]);
+                        if (helpMessages.ContainsKey(mod))
+                        {
+                            return helpMessages[mod];
+                        }
+                        else
+                        {
+                            return "No help for " + args[0] + " could be found.";
+                        }
+                    }
+                    else
+                    {
+                        return "No mod named " + args[0] + " could be found.";
+                    }
                 }
-                else
+                else if (args.Length == 2 || args[0].Contains(":"))
                 {
-                    return "No help for " + args[0] + " could be found.";
+                    var modName = "";
+                    var commandName = "";
+                    if (args[0].Contains(":"))
+                    {
+                        modName = args[0].Split(':')[0];
+                        commandName = args[0].Split(':')[1];
+                    }
+                    else
+                    {
+                        modName = args[0];
+                        commandName = args[1];
+                    }
+                    if (!commands.ContainsKey(commandName))
+                    {
+                        return "No such command: " + commandName;
+                    }
+                    var coms = commands[commandName];
+                    if (!coms.Exists(com => com.mod.Name() == modName))
+                    {
+                        return "No command " + commandName + " in mod " + modName;
+                    }
+                    var helpMessage = coms.Find(com => com.mod.Name() == modName).helpMessage;
+                    if (helpMessage == "")
+                    {
+                        return "No help registered for " + modName + ":" + commandName;
+                    }
+                    return helpMessage;
                 }
+                return "Usage: 'help' or 'help <mod>' or 'help <mod> <command>' or 'help <mod>:<command>'";
             });
         }
 
@@ -188,6 +234,7 @@ help - Prints this help message";
 
         void HandleLog(string logString, string stackTrace, LogType type)
         {
+            //TODO: still write filtered messages to console output file, if DEV_BUILD
             if (!messageFilter[type])
                 return;
 
@@ -256,11 +303,13 @@ help - Prints this help message";
         /// </summary>
         /// <param name="command">The command to register</param>
         /// <param name="callback">The callback to be called when the command is entered</param>
+        /// <param name="helpText">Help text for this command. Used for <code><![CDATA[help <mod> <command>]]></code></param>
         /// <returns>True if registration succeeded, false otherwise</returns>
-        public static bool RegisterCommand(string command, CommandCallback callback)
+        public static bool RegisterCommand(string command, CommandCallback callback, string helpText = "")
         {
             Command com = new Command();
             com.callback = callback;
+            com.helpMessage = helpText;
             var callingAssembly = Assembly.GetCallingAssembly();
             com.mod = ModLoader.LoadedMods.Find((Mod mod) =>
             {
@@ -286,6 +335,8 @@ help - Prints this help message";
 
         /// <summary>
         /// Register a help message for your mod to be displayed with the 'help' command.
+        /// This should give a general overview, to give specific information about a command,
+        /// use the <code>helpText</code> parameter of <code>RegisterCommand</code>.
         /// </summary>
         /// <param name="message">The help message</param>
         public static void RegisterHelpMessage(string message)
