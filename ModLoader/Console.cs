@@ -64,7 +64,6 @@ namespace spaar
                     try
                     {
                         var type = (LogType)Enum.Parse(typeof(LogType), key);
-                        Debug.Log("Setting " + type + " to " + val);
                         messageFilter[type] = val;
                     }
                     catch (ArgumentException)
@@ -77,8 +76,6 @@ namespace spaar
                "The first form will activate the specified type. The second one will deactive it. " +
                "Vaild values for type are Assert, Error, Exception, Log and Warning.");
         }
-
-        
 
         void OnDisable()
         {
@@ -161,10 +158,6 @@ namespace spaar
 
         void HandleLog(string logString, string stackTrace, LogType type)
         {
-            //TODO: still write filtered messages to console output file, if DEV_BUILD
-            if (!messageFilter[type])
-                return;
-
             var typeString = "[";
             switch (type)
             {
@@ -196,19 +189,28 @@ namespace spaar
                 logMessage = typeString + logString;
             }
 
-            AddLogMessage(logMessage);
+            AddLogMessage(logMessage, messageFilter[type]);
         }
 
-        internal void AddLogMessage(string logMessage)
+        /// <summary>
+        /// Add a new message to the console. The message will only be printed if printToConsole is true,
+        /// but it will always be written to the output file, if in a developer build.
+        /// </summary>
+        /// <param name="logMessage">The message to add</param>
+        /// <param name="printToConsole">Whether to show the message in the console</param>
+        internal void AddLogMessage(string logMessage, bool printToConsole = true)
         {
-            if (logMessages.Count < maxLogMessages)
+            if (printToConsole)
             {
-                logMessages.Add(logMessage);
-            }
-            else
-            {
-                logMessages.RemoveAt(0);
-                logMessages.Add(logMessage);
+                if (logMessages.Count < maxLogMessages)
+                {
+                    logMessages.Add(logMessage);
+                }
+                else
+                {
+                    logMessages.RemoveAt(0);
+                    logMessages.Add(logMessage);
+                }
             }
 
 #if DEV_BUILD
