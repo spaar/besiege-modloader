@@ -56,6 +56,28 @@ namespace spaar
         {
             initHelp();
             RegisterCommand("version", (args, namedArgs) => { return "spaar's Mod Loader version 0.2.2, Besiege v0.09"; });
+            RegisterCommand("clear", (args, namedArgs) => { return clearConsole(args, namedArgs); }, "Clears the console");
+        }
+
+        /// <summary>
+        /// Clears the console, currently only by deleting the old one
+        /// </summary>
+        internal static String clearConsole(String[] args, IDictionary<String, String> namedArgs)
+        {
+            try
+            {
+                GameObject go = GameObject.Find("MODLOADERLORD");
+                Console cc = go.GetComponent<Console>();
+                cc.enabled = false;
+                GameObject.Destroy(cc);
+                cc = go.AddComponent<Console>();
+                cc.EnableInterface();
+            }
+            catch (ObjectDisposedException ex)
+            {
+
+            }
+            return "Cleared";
         }
 
         /// <summary>
@@ -73,7 +95,8 @@ listMods - List all loaded mods, along with their author and version
 version - Prints the current version
 help <modname> - Prints help information about the specified mod, if available
 help <modname> <command> or help <modname>:<command> - Prints help information about the specified command, if available
-help - Prints this help message";
+help - Prints this help message
+clear - Clears the Console";
                 }
                 else if (args.Length == 1 && !args[0].Contains(":"))
                 {
