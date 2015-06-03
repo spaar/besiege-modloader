@@ -9,6 +9,13 @@ using System.IO;
 
 namespace spaar
 {
+    /// <summary>
+    /// The in-game console, showing log output and enabling users to enter commands.
+    /// </summary>
+    /// <remarks>
+    /// The console also writes all log output to the file Mods/Debug/ConsoleOuput.txt for modders.
+    /// The main advantage of this is that it is a lot easier to read than output_log.txt and contains less unrelated messages.
+    /// </remarks>
     public class Console : MonoBehaviour
     {
 #if DEV_BUILD
@@ -31,12 +38,16 @@ namespace spaar
         private bool interfaceEnabled;
         private Dictionary<LogType, bool> messageFilter;
 
+        /// <summary>
+        /// Initializes a new console, with a disabled interface.
+        /// </summary>
+        /// <seealso cref="EnableInterface"/>
         public Console()
         {
             interfaceEnabled = false;
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             Application.RegisterLogCallback(HandleLog);
             logMessages = new List<string>(maxLogMessages);
@@ -77,7 +88,7 @@ namespace spaar
                "Vaild values for type are Assert, Error, Exception, Log and Warning.");
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             Application.RegisterLogCallback(null);
 #if DEV_BUILD
@@ -94,7 +105,7 @@ namespace spaar
             interfaceEnabled = true;
         }
 
-        void Update()
+        private void Update()
         {
             if (interfaceEnabled && Input.GetKey(Keys.getKey("Console").Modifier) && Input.GetKeyDown(Keys.getKey("Console").Trigger))
             {
@@ -102,7 +113,7 @@ namespace spaar
             }
         }
 
-        void OnGUI()
+        private void OnGUI()
         {
             if (visible)
             {
@@ -110,7 +121,7 @@ namespace spaar
             }
         }
 
-        void OnWindow(int windowId)
+        private void OnWindow(int windowId)
         {
             float lineHeight = GUI.skin.box.lineHeight;
 
@@ -156,7 +167,7 @@ namespace spaar
             GUI.DragWindow();
         }
 
-        void HandleLog(string logString, string stackTrace, LogType type)
+        private void HandleLog(string logString, string stackTrace, LogType type)
         {
             var typeString = "[";
             switch (type)

@@ -37,8 +37,8 @@
     <CppCommentsFixup>False</CppCommentsFixup>
     <CleanIntermediates>True</CleanIntermediates>
     <NamespaceSummaries>
-      <NamespaceSummaryItem name="spaar" isDocumented="True" xmlns="">Contains all classes required to make the mod loader work</NamespaceSummaryItem>
-    </NamespaceSummaries>
+      <NamespaceSummaryItem name="spaar" isDocumented="True">Namespace for every class in the mod loader.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="(global)" isDocumented="False" /></NamespaceSummaries>
     <BuildLogFile>HelpFileBuilder</BuildLogFile>
     <MaximumGroupParts>2</MaximumGroupParts>
     <NamespaceGrouping>False</NamespaceGrouping>
@@ -48,7 +48,7 @@
     <PresentationStyle>VS2013</PresentationStyle>
     <Preliminary>False</Preliminary>
     <NamingMethod>Guid</NamingMethod>
-    <HelpTitle>A Sandcastle Documented Class Library</HelpTitle>
+    <HelpTitle>spaar&amp;#39%3bs Mod Loader Documentation</HelpTitle>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <VisibleItems>Protected, ProtectedInternalAsProtected</VisibleItems>
   </PropertyGroup>

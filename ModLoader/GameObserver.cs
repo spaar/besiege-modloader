@@ -13,13 +13,13 @@ namespace spaar
         // Whether the observers were already notified for the current simulation
         private static bool notifiedObservers;
 
-        void Start()
+        private void Start()
         {
             observers = new List<IGameStateObserver>();
             notifiedObservers = false;
         }
 
-        void Update()
+        private void Update()
         {
             if (AddPiece.isSimulating && !notifiedObservers)
             {

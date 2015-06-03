@@ -2,11 +2,39 @@
 <topic id="1c8c0c25-81da-4934-b99a-ccc4f21c8d37" revisionNumber="1">
 	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
 		<introduction>
-			<para>This is a sample conceptual topic.  You can use this as a starting point for adding more conceptual
-content to your help project.</para>
+      <para>This is the documentation for spaar's Mod Loader. spaar's Mod Loader is currently the only mod loader available for the
+      game Besiege.</para>
+      <para>This documentation is aimed primarily at mod developers looking to use the APIs provided by the mod loader.</para>
+      <para>The documentation is still a work-in-progress, anybody who wants to contribute or request more documentation on a specific
+      topic is welcome to do so at the
+      <externalLink>
+        <linkUri>https://github.com/spaar/besiege-modloader</linkUri>
+        <linkText>GitHub repository</linkText>
+      </externalLink>
+      of the mod loader.</para>
 		</introduction>
 
-		<section>
+    <section>
+      <title>Getting Started</title>
+      <content>
+        <para>To get started writing mods you can look at the <codeEntityReference>T:spaar.Mod</codeEntityReference> class. Any mod needs to
+        have at least one class with this attribute which will then be loaded by the mod loader.
+        </para>
+        <para>
+          For more complete guides to creating a mod that can be loaded, also take a look at the
+          <externalLink>
+            <linkUri>https://github.com/spaar/besiege-modloader/tree/master/Examples</linkUri>
+            <linkText>Examples</linkText>
+          </externalLink>
+          available on GitHub.
+        </para>
+        <para>Apart from that, the most useful classes will be <codeEntityReference>T:spaar.Commands</codeEntityReference> and
+        <codeEntityReference>T:spaar.ModLoader</codeEntityReference> as they provide actual APIs to mods.
+      </para>
+      </content>
+    </section>
+
+		<!--<section>
 			<title>Getting Started</title>
 			<content>
 				<para>To get started, add a documentation source to the project (a Visual Studio solution, project, or
@@ -46,10 +74,10 @@ in order to be compiled into the help file.</para>
 help file for more information.  See the <legacyBold> Sandcastle MAML Guide</legacyBold> for details on Microsoft
 Assistance Markup Language (MAML) which is used to create these topics.</para>
 			</content>
-		</section>
+		</section>-->
 
 		<relatedTopics>
-			<link xlink:href="09f15d6f-84f5-4165-96bc-a73bbde423ff" />
+			<!--<link xlink:href="09f15d6f-84f5-4165-96bc-a73bbde423ff" />-->
 		</relatedTopics>
 	</developerConceptualDocument>
 </topic>

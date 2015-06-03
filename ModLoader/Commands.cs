@@ -132,8 +132,7 @@ clear - Clears the Console";
         }
 
         /// <summary>
-        /// Register a console command. The passed callback will be called when the user enters
-        /// the command in the console.
+        /// Register a console command. The passed callback will be called when the user enters the command in the console.
         /// </summary>
         /// <param name="command">The command to register</param>
         /// <param name="callback">The callback to be called when the command is entered</param>
@@ -167,7 +166,7 @@ clear - Clears the Console";
         /// <summary>
         /// Register a help message for your mod to be displayed with the 'help' command.
         /// This should give a general overview, to give specific information about a command,
-        /// use the <code>helpText</code> parameter of <code>RegisterCommand</code>.
+        /// use the <c>helpText</c> parameter of <c>RegisterCommand</c>.
         /// </summary>
         /// <param name="message">The help message</param>
         public static void RegisterHelpMessage(string message)
@@ -217,6 +216,11 @@ clear - Clears the Console";
             }  
         }
 
+        /// <summary>
+        /// Handle an entered command. Arguments are parsed and then the callback corresponding to the command is called.
+        /// </summary>
+        /// <param name="console">Console to log the command and the return value to</param>
+        /// <param name="input">Complete command line</param>
         internal static void HandleCommand(Console console, string input)
         {
             var result = "";

@@ -17,6 +17,9 @@ namespace spaar
         void SimulationStarted();
     }
 
+    /// <summary>
+    /// ModLoader handles loading of the rest of the mod loader, all mods and also provides some APIs for mods to use.
+    /// </summary>
     public class ModLoader : MonoBehaviour
     {
         /// <summary>
@@ -25,13 +28,24 @@ namespace spaar
         /// </summary>
         public static AddPiece AddPiece { get; private set; }
 
-        public static List<Mod> LoadedMods { get; private set; }
+        private static List<Mod> loadedMods;
+        /// <summary>
+        /// All mods loaded by the attribute-based loading system.
+        /// Changes to this list will not be reflected in the mod loader.
+        /// </summary>
+        public static List<Mod> LoadedMods
+        {
+            get
+            {
+                return new List<Mod>(loadedMods);
+            }
+        }
 
         private static GameObserver observer;
 
         internal static Configuration Configuration { get; set; }
 
-        void Start()
+        private void Start()
         {
             ModLoaderStats stats = ModLoaderStats.Instance;
             if (stats.WasLoaded)
@@ -41,9 +55,9 @@ namespace spaar
 
             AddPiece = null;
 
-            LoadedMods = new List<Mod>();
-            LoadedMods.Add(new Mod("ModLoader")); // Needed so the mod loader can actually register commands itself
-            LoadedMods[0].assembly = Assembly.GetExecutingAssembly();
+            loadedMods = new List<Mod>();
+            loadedMods.Add(new Mod("ModLoader")); // Needed so the mod loader can actually register commands itself
+            loadedMods[0].assembly = Assembly.GetExecutingAssembly();
 
             Commands.init();
             var console = gameObject.AddComponent<Console>(); // Attach the console before loading the config so it can display possible errors
@@ -79,7 +93,7 @@ namespace spaar
                             {
                                 gameObject.AddComponent(type);
                                 attrib.assembly = assembly;
-                                LoadedMods.Add(attrib);
+                                loadedMods.Add(attrib);
                                 Debug.Log("Successfully loaded " + attrib.Name() + " (" + attrib.version + ") by " + attrib.author);
                                 foundAttrib = true;
                             }
@@ -121,7 +135,7 @@ namespace spaar
             });
         }
 
-        public void Update()
+        private void Update()
         {
             if (AddPiece == null)
             {

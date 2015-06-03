@@ -5,17 +5,34 @@ using UnityEngine;
 
 namespace spaar
 {
+    /// <summary>
+    /// Stores configuration data for the mod loader, currently only keybindings.
+    /// </summary>
     public class Configuration
     {
+        /// <summary>
+        /// Path to the mod loader configuration file
+        /// </summary>
         public static readonly string CONFIG_FILE_NAME = Application.dataPath + "/Mods/Config/ModLoader.xml";
 
+        /// <summary>Modifer key for the console</summary>
         public string consoleK1 = "LeftControl";
+        /// <summary>Trigger key for the console</summary>
         public string consoleK2 = "K";
+        /// <summary>Modifer key for the object explore</summary>
         public string objExpK1 = "LeftControl";
+        /// <summary>Trigger key for the object explorer</summary>
         public string objExpK2 = "O";
+        /// <summary>Modifer key for the settings window</summary>
         public string settingsK1 = "LeftControl";
+        /// <summary>Trigger key for the settings window</summary>
         public string settingsK2 = "L";
 
+        /// <summary>
+        /// Save the specified configuration to the specified path, using XML serialization.
+        /// </summary>
+        /// <param name="fileName">Path to configuration file</param>
+        /// <param name="c">Configuration to save</param>
         public static void SaveConfig(string fileName, Configuration c)
         {
             XmlSerializer xs = new XmlSerializer(c.GetType());
@@ -24,6 +41,16 @@ namespace spaar
             writer.Flush();
             writer.Close();
         }
+
+        /// <summary>
+        /// Load a configuration from the specified path, using XML serialization.
+        /// </summary>
+        /// <remarks>
+        /// If no valid configuration can be loaded from the file, an error message is printed and a default one created and returned instead.
+        /// If the file does not contain one or more values, the defaults for those are used instead.
+        /// </remarks>
+        /// <param name="fileName">Path to configuration file</param>
+        /// <returns>The loaded configuration</returns>
         public static Configuration LoadConfig(string fileName)
         {
             StreamReader reader = null;
@@ -49,6 +76,11 @@ namespace spaar
             }
         }
 
+        /// <summary>
+        /// Load the specified configuration if one can be found at the specified location, otherwise create a default one there.
+        /// </summary>
+        /// <param name="fileName">Path to the configuration file</param>
+        /// <returns>The loaded or created configuration</returns>
         public static Configuration LoadOrCreateDefault(string fileName)
         {
             if (Directory.Exists(Application.dataPath + "/Mods/Config") && File.Exists(fileName))

@@ -4,6 +4,9 @@ using UnityEngine;
 #if DEV_BUILD
 namespace spaar
 {
+    /// <summary>
+    /// In-game object explorer. Only enabled in developer builds.
+    /// </summary>
     public class ObjectExplorer : MonoBehaviour
     {
         // Represents one of the pop-up windows that shows an object in more detail.
@@ -49,7 +52,7 @@ namespace spaar
             }
         }
 
-        void Start()
+       private  void Start()
         {
             searchText = "";
             UpdateGameObjectList();
@@ -59,7 +62,7 @@ namespace spaar
             openWindows = new Dictionary<GameObject, Window>();
         }
 
-        void Update()
+        private void Update()
         {
             if (Input.GetKey(Keys.getKey("ObjectExplorer").Modifier) && Input.GetKeyDown(Keys.getKey("ObjectExplorer").Trigger))
             {
@@ -67,7 +70,7 @@ namespace spaar
             }
         }
 
-        void OnGUI()
+        private void OnGUI()
         {
             if (visible)
             {
@@ -80,7 +83,7 @@ namespace spaar
             }
         }
 
-        void OnWindow(int windowId)
+        private void OnWindow(int windowId)
         {
             float lineHeight = GUI.skin.box.lineHeight;
 
@@ -136,7 +139,7 @@ namespace spaar
             GUI.DragWindow();
         }
 
-        void OnPopupWindow(int windowId)
+        private void OnPopupWindow(int windowId)
         {
             Window win = null;
 
