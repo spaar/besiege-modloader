@@ -16,6 +16,8 @@ bld/
 [Bb]in/
 [Oo]bj/
 
+ModLoaderHelp/Help
+
 # Roslyn cache directories
 *.ide/
 
