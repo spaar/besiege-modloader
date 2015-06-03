@@ -157,6 +157,14 @@ namespace spaar
                 return;
             }
 
+            if (win.go.tag != "Untagged")
+            {
+                GUILayout.Label("Tag: " + win.go.tag);
+            }
+            if (win.go.layer != 0)
+            {
+                GUILayout.Label("Layer: " + win.go.layer);
+            }
             var components = win.go.GetComponents<Component>();
             foreach (var comp in components)
             {
