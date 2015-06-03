@@ -56,28 +56,7 @@ namespace spaar
         {
             initHelp();
             RegisterCommand("version", (args, namedArgs) => { return "spaar's Mod Loader version 0.2.2, Besiege v0.09"; });
-            RegisterCommand("clear", (args, namedArgs) => { return clearConsole(args, namedArgs); }, "Clears the console");
-        }
-
-        /// <summary>
-        /// Clears the console, currently only by deleting the old one
-        /// </summary>
-        internal static String clearConsole(String[] args, IDictionary<String, String> namedArgs)
-        {
-            try
-            {
-                GameObject go = GameObject.Find("MODLOADERLORD");
-                Console cc = go.GetComponent<Console>();
-                cc.enabled = false;
-                GameObject.Destroy(cc);
-                cc = go.AddComponent<Console>();
-                cc.EnableInterface();
-            }
-            catch (ObjectDisposedException ex)
-            {
-
-            }
-            return "Cleared";
+            RegisterCommand("clear", (args, namedArgs) => { return GameObject.Find("MODLOADERLORD").GetComponent<Console>().clearConsole(args, namedArgs); }, "Clears the console");
         }
 
         /// <summary>

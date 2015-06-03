@@ -226,6 +226,21 @@ namespace spaar
             scrollPosition.y = Mathf.Infinity;
         }
 
+        public String clearConsole(String[] args, IDictionary<String, String> namedArgs)
+        {
+            if(args.Length == 0){
+                logMessages = "";
+                return "Cleared";
+            }
+            else{
+                int index = args.GetValue(0);
+                for(int i = 0; i < index; i++){
+                    logMessages.Remove(logMessages.LastIndexOf(Environment.NewLine));
+                }
+                return "Cleared";
+            }
+        }
+
         
     }
 }
