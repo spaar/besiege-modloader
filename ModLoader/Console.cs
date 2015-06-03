@@ -54,6 +54,7 @@ namespace spaar
             windowRect = new Rect(50f, 50f, 600f, 600f);
 
             initMessageFiltering();
+            registerClear();
         }
 
         private void initMessageFiltering()
@@ -86,6 +87,15 @@ namespace spaar
             }, "Update the filter settings for console messages. Every argument must be in the form 'type' or '!type'. " + 
                "The first form will activate the specified type. The second one will deactive it. " +
                "Vaild values for type are Assert, Error, Exception, Log and Warning.");
+        }
+
+        private void registerClear()
+        {
+            Commands.RegisterCommand("clear", (args, namedArgs) =>
+            {
+                logMessages = new List<string>(maxLogMessages);
+                return "Cleared.";
+            }, "Clears the console");
         }
 
         private void OnDisable()
@@ -236,22 +246,5 @@ namespace spaar
 
             scrollPosition.y = Mathf.Infinity;
         }
-
-        public String clearConsole(String[] args, IDictionary<String, String> namedArgs)
-        {
-            if(args.Length == 0){
-                logMessages = "";
-                return "Cleared";
-            }
-            else{
-                int index = args.GetValue(0);
-                for(int i = 0; i < index; i++){
-                    logMessages.Remove(logMessages.LastIndexOf(Environment.NewLine));
-                }
-                return "Cleared";
-            }
-        }
-
-        
     }
 }
