@@ -235,8 +235,12 @@ namespace spaar
             }
 
 #if DEV_BUILD
-            if (tw == null)
+            if (tw == null){
+                if(!Directory.Exists(Application.dataPath + "/Mods/Debug")){
+                    Directory.CreateDirectory(Application.dataPath + "/Mods/Debug");
+                }
                 tw = new StreamWriter(Application.dataPath + "/Mods/Debug/ConsoleOutput.txt");
+            }
             var lines = logMessage.Split('\n');
             foreach (var line in lines)
             {
