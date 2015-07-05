@@ -56,6 +56,15 @@ namespace spaar
         {
             initHelp();
             RegisterCommand("version", (args, namedArgs) => { return "spaar's Mod Loader version 0.3, Besiege v0.09"; });
+            RegisterCommand("list", (args, namedArgs) =>
+            {
+                String output = "";
+                foreach (var VARIABLE in commands.Keys)
+                {
+                    output += VARIABLE + "\n";
+                }
+                return output + "\n" + "To get help type [commandname";
+            }, "Returns a list of all available modded commands.");
         }
 
         /// <summary>
@@ -72,8 +81,10 @@ setMessageFilter - Filter console messages by type
 listMods - List all loaded mods, along with their author and version
 clear - Clears the Console
 version - Prints the current version
+list - Prints every command available
 help <modname> - Prints help information about the specified mod, if available
 help <modname> <command> or help <modname>:<command> - Prints help information about the specified command, if available
+help <command> - Prints help information about the specified command, if available
 help - Prints this help message";
                 }
                 else if (args.Length == 1 && !args[0].Contains(":"))
@@ -90,6 +101,15 @@ help - Prints this help message";
                         {
                             return "No help for " + args[0] + " could be found.";
                         }
+                    }
+                    else if (commands.ContainsKey(args[0]))
+                    {
+                        String output = "";
+                        foreach (var coms in commands[args[0]])
+                        {
+                            output += coms.helpMessage + "\n";
+                        }
+                        return output;
                     }
                     else
                     {
