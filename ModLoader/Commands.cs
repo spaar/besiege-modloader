@@ -45,7 +45,7 @@ namespace spaar
         
         // Map commands the user can enter to all Command's registered with that name. Mapping to multiple Commands
         // is necessary so that multiple mods can register the same command
-        private static Dictionary<string, List<Command>> commands = new Dictionary<string, List<Command>>();
+        private static Dictionary<string, List<Command>> commands = new Dictionary<string, List<Command>>(StringComparer.InvariantCultureIgnoreCase);
         private static Dictionary<Mod, string> helpMessages = new Dictionary<Mod, string>();
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace spaar
                 {
                     output += keyValue + "\n";
                 }
-                return output + "\n" + "To get help type help [command]";
+                return output + "\n" + "To get help type help <command>";
             }, "Returns a list of all available commands.");
         }
 
@@ -89,10 +89,10 @@ help - Prints this help message";
                 }
                 else if (args.Length == 1 && !args[0].Contains(":"))
                 {
-
-                    if (ModLoader.LoadedMods.Exists(m => m.Name().ToLower() == args[0].ToLower()))
+                    args[0] = args[0].ToLower();
+                    if (ModLoader.LoadedMods.Exists(m => m.Name().ToLower() == args[0]))
                     {
-                        var mod = ModLoader.LoadedMods.Find(m => m.Name().ToLower() == args[0].ToLower());
+                        var mod = ModLoader.LoadedMods.Find(m => m.Name().ToLower() == args[0]);
                         if (helpMessages.ContainsKey(mod))
                         {
                             return helpMessages[mod];
@@ -102,10 +102,10 @@ help - Prints this help message";
                             return "No help for " + args[0] + " could be found.";
                         }
                     }
-                    else if (commands.ContainsKey(args[0].ToLower()))
+                    else if (commands.ContainsKey(args[0]))
                     {
                         String output = "";
-                        foreach (var coms in commands[args[0].ToLower()])
+                        foreach (var coms in commands[args[0]])
                         {
                             output += coms.helpMessage + "\n";
                         }
@@ -122,12 +122,12 @@ help - Prints this help message";
                     var commandName = "";
                     if (args[0].Contains(":"))
                     {
-                        modName = args[0].Split(':')[0].ToLower();
-                        commandName = args[0].Split(':')[1].ToLower();
+                        modName = args[0].Split(':')[0];
+                        commandName = args[0].Split(':')[1];
                     }
                     else
                     {
-                        modName = args[0].ToLower();
+                        modName = args[0];
                         commandName = args[1].ToLower();
                     }
                     if (!commands.ContainsKey(commandName))
@@ -169,9 +169,9 @@ help - Prints this help message";
                 Debug.LogError("Could not identify mod trying to register command " + command + "!");
                 return false;
             }
-            if (commands.ContainsKey(command.ToLower()))
+            if (commands.ContainsKey(command))
             {
-                commands[command.ToLower()].Add(com);
+                commands[command].Add(com);
             }
             else
             {
@@ -249,9 +249,9 @@ help - Prints this help message";
             var command = "";
 
             if (parts[0].Contains(":"))
-                command = parts[0].Split(':')[1].ToLower();
+                command = parts[0].Split(':')[1];
             else
-                command = parts[0].ToLower();
+                command = parts[0];
 
             var args = new List<string>();
             var namedArgs = new Dictionary<string, string>();
@@ -275,26 +275,26 @@ help - Prints this help message";
             
             console.AddLogMessage("[Command] >" + input);
 
-            if (commands.ContainsKey(command.ToLower()))
+            if (commands.ContainsKey(command))
             {
-                if (commands[command.ToLower()].Count > 1)
+                if (commands[command].Count > 1)
                 {
                     if (!parts[0].Contains(":"))
                     {
                         result = "Error: Multiple mods have registered " + command + ", use <modname>:" + command + " to specify which one to use.\n"
                             + "Mods that provide command " + command + ": ";
-                        foreach (var c in commands[command.ToLower()])
+                        foreach (var c in commands[command])
                             result += "\n" + c.mod.Name();
                     }
                     else
                     {
-                        var modname = parts[0].Split(':')[0].ToLower();
-                        result = commands[command.ToLower()].Find(c => c.mod.Name().Equals(modname, StringComparison.CurrentCultureIgnoreCase)).callback(args.ToArray(), namedArgs);
+                        var modname = parts[0].Split(':')[0];
+                        result = commands[command].Find(c => c.mod.Name().Equals(modname, StringComparison.CurrentCultureIgnoreCase)).callback(args.ToArray(), namedArgs);
                     }
                 }
                 else
                 {
-                    result = commands[command.ToLower()][0].callback(args.ToArray(), namedArgs);
+                    result = commands[command][0].callback(args.ToArray(), namedArgs);
                 }
             }
             else
