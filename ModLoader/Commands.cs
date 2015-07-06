@@ -59,9 +59,9 @@ namespace spaar
             RegisterCommand("list", (args, namedArgs) =>
             {
                 String output = "";
-                foreach (var keyValue in commands.Keys)
+                foreach (var key in commands.Keys)
                 {
-                    output += keyValue + "\n";
+                    output += key + "\n";
                 }
                 return output + "\n" + "To get help type help <command>";
             }, "Returns a list of all available commands.");
@@ -83,8 +83,7 @@ clear - Clears the Console
 version - Prints the current version
 list - Prints every command available
 help <modname> - Prints help information about the specified mod, if available
-help <modname> <command> or help <modname>:<command> - Prints help information about the specified command, if available
-help <command> - Prints help information about the specified command, if available
+help <modname> <command> or help <modname>:<command> or help <command> - Prints help information about the specified command, if available
 help - Prints this help message";
                 }
                 else if (args.Length == 1 && !args[0].Contains(":"))
@@ -107,13 +106,13 @@ help - Prints this help message";
                         String output = "";
                         foreach (var coms in commands[args[0]])
                         {
-                            output += coms.helpMessage + "\n";
+                            output += "[" + coms.mod.Name() + "] " + coms.helpMessage + "\n";
                         }
                         return output;
                     }
                     else
                     {
-                        return "No mod named " + args[0] + " could be found.";
+                        return "No mod or command named " + args[0] + " could be found.";
                     }
                 }
                 else if (args.Length == 2 || args[0].Contains(":"))
