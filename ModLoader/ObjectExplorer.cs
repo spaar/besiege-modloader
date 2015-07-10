@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+using System;
+
 #if DEV_BUILD
 namespace spaar
 {
@@ -76,8 +78,14 @@ namespace spaar
             {
                 windowRect = GUI.Window(1001, windowRect, OnWindow, "Object explorer");
 
-                foreach (var window in openWindows.Values)
+                foreach (var window in new List<Window>(openWindows.Values))
                 {
+                    if (window.go == null)
+                    {
+                        // GameObject was destroyed while the window was open
+                        openWindows.Remove(window.go);
+                        continue;
+                    }
                     window.rect = GUILayout.Window(window.id, window.rect, OnPopupWindow, window.go.name);
                 }
             }
