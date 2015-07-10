@@ -48,6 +48,9 @@ namespace spaar
         private static Dictionary<string, List<Command>> commands = new Dictionary<string, List<Command>>(StringComparer.InvariantCultureIgnoreCase);
         private static Dictionary<Mod, string> helpMessages = new Dictionary<Mod, string>();
 
+        // Necessary state for auto-completion
+        private static List<string> completedCommands = new List<string>();
+
         /// <summary>
         /// Registers the general built-in commands.
         /// Specifically help and version.
@@ -303,6 +306,33 @@ help - Prints this help message";
 
             if (result != null && result != "")
                 console.AddLogMessage("[Command] " + result);
+        }
+
+        internal static string AutoCompleteNext(string toComplete)
+        {
+            List<string> commandList = new List<string>(commands.Keys);
+            List<string> matchingCommands = commandList.FindAll(c => c.StartsWith(toComplete.ToLower()));
+
+            if (matchingCommands.Count == 0)
+                return toComplete;
+
+            foreach (var command in matchingCommands)
+            {
+                if (!completedCommands.Contains(command))
+                {
+                    completedCommands.Add(command);
+                    return command;
+                }
+            }
+
+            // Matching commands were found, however they were all suggested already. Start again at the beginning
+            AutoCompleteReset();
+            return AutoCompleteNext(toComplete);
+        }
+
+        internal static void AutoCompleteReset()
+        {
+            completedCommands.Clear();
         }
     }
 }

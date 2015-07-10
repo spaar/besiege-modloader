@@ -31,6 +31,8 @@ namespace spaar
         private Vector2 scrollPosition;
         private string commandText = "";
         private string lastCommand = "";
+        private string nonCompletedText = "";
+        private bool doingCompletion = false;
 
         private char[] newLine = { '\n', '\r' };
 
@@ -131,6 +133,9 @@ namespace spaar
             }
         }
 
+        // In case of auto-completion, cursor has to be moved the first time _after_ the text-box was refocused, it doesn't work in the same frame
+        bool moveCursorNextFrame = false;
+        bool skippedFrame = false;
         private void OnWindow(int windowId)
         {
             float lineHeight = GUI.skin.box.lineHeight;
@@ -145,21 +150,56 @@ namespace spaar
             GUILayout.TextArea(logText);
             GUILayout.EndScrollView();
 
-            bool moveCursor = false;
-            if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.UpArrow)
+            bool refocus = false;
+            if (Event.current.type == EventType.KeyUp)
             {
-                commandText = lastCommand;
-                moveCursor = true;
+                if (Event.current.keyCode == KeyCode.UpArrow)
+                {
+                    commandText = lastCommand;
+                    moveCursorNextFrame = true;
+                }
+                else if (Event.current.keyCode == KeyCode.Tab)
+                {
+                    if (!doingCompletion)
+                    {
+                        nonCompletedText = commandText;
+                        doingCompletion = true;
+                    }
+                    commandText = Commands.AutoCompleteNext(nonCompletedText);
+                    moveCursorNextFrame = true;
+                    refocus = true;
+                }
+                else
+                {
+                    doingCompletion = false;
+                    Commands.AutoCompleteReset();
+                }
             }
 
+            GUI.SetNextControlName("ConsoleInput");
             string input = GUILayout.TextField(commandText, 100, GUI.skin.textField);
-
-            if (moveCursor)
+            if (moveCursorNextFrame)
             {
-                TextEditor editor = (TextEditor)GUIUtility.GetStateObject(typeof(TextEditor), GUIUtility.keyboardControl);
-                editor.pos = commandText.Length + 1;
-                editor.selectPos = commandText.Length + 1;
+                if (!skippedFrame)
+                {
+                    skippedFrame = true;
+                }
+                else
+                {
+                    TextEditor editor = (TextEditor)GUIUtility.GetStateObject(typeof(TextEditor), GUIUtility.keyboardControl);
+                    editor.pos = commandText.Length + 1;
+                    editor.selectPos = commandText.Length + 1;
+                    moveCursorNextFrame = false;
+                    skippedFrame = false;
+                }
             }
+
+            if (refocus)
+            {
+                GUI.FocusControl("ConsoleInput");
+                // TODO: Move cursor to end again after refocusing, code below should do that, doesn't work though
+            }
+            
             if (input.IndexOfAny(newLine) != -1)
             {
                 commandText = "";
