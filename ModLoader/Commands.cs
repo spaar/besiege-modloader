@@ -58,7 +58,7 @@ namespace spaar
         internal static void init()
         {
             initHelp();
-            RegisterCommand("version", (args, namedArgs) => { return "spaar's Mod Loader version 0.3, Besiege v0.09"; });
+            RegisterCommand("version", (args, namedArgs) => { return "spaar's Mod Loader version 0.3.1, Besiege v0.10"; });
             RegisterCommand("list", (args, namedArgs) =>
             {
                 String output = "";
