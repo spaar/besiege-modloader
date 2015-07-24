@@ -45,7 +45,7 @@ namespace spaar
             {
                 foreach (var obj in objs)
                 {
-                    if (obj.name.ToLower().StartsWith(searchText.ToLower()))
+                    if (obj.name.ToLower().Contains(searchText.ToLower()))
                     {
                         visibleGameObjects.Add(obj);
                     }
@@ -110,7 +110,7 @@ namespace spaar
                 {
                     foreach (var comp in visibleGameObjects[i].GetComponents<Component>())
                     {
-                        if (comp.GetType().Name.ToLower().StartsWith(searchText.ToLower().Split(':')[1]))
+                        if (comp.GetType().Name.ToLower().Contains(searchText.ToLower().Split(':')[1]))
                         {
                             display = true;
                         }
