@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 #if DEV_BUILD
-namespace spaar
+namespace spaar.ModLoader.Internal
 {
     /// <summary>
     /// In-game object explorer. Only enabled in developer builds.

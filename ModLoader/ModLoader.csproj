@@ -7,7 +7,7 @@
     <ProjectGuid>{975AD54A-4D46-4028-8BFB-E847C527C409}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>spaar</RootNamespace>
+    <RootNamespace>spaar.ModLoader</RootNamespace>
     <AssemblyName>SpaarModLoader</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -21,6 +21,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\SpaarModLoader.XML</DocumentationFile>
+    <CodeAnalysisRuleSet>ModLoader.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\SpaarModLoader.XML</DocumentationFile>
+    <CodeAnalysisRuleSet>ModLoader.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build and Install|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -38,7 +40,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>ModLoader.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\SpaarModLoader.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugDeveloper|AnyCPU'">
@@ -48,7 +50,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>ModLoader.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\SpaarModLoader.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseDeveloper|AnyCPU'">
@@ -58,8 +60,11 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>ModLoader.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\SpaarModLoader.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-UnityScript, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -68,6 +73,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -80,17 +86,87 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands.cs" />
-    <Compile Include="Configuration.cs" />
-    <Compile Include="GameObserver.cs" />
-    <Compile Include="Key.cs" />
-    <Compile Include="KeySettings.cs" />
-    <Compile Include="Console.cs" />
-    <Compile Include="Keys.cs" />
+    <Compile Include="Internal\Activator.cs" />
+    <Compile Include="Internal\Configuration.cs" />
+    <Compile Include="Internal\InternalMod.cs" />
+    <Compile Include="Internal\Key.cs" />
+    <Compile Include="Internal\SerializableDictionary.cs" />
+    <Compile Include="Internal\Tools\Console.cs" />
+    <Compile Include="Internal\Keys.cs" />
+    <Compile Include="Internal\Tools\LogEntry.cs" />
     <Compile Include="Mod.cs" />
-    <Compile Include="ModLoader.cs" />
-    <Compile Include="ModLoaderStats.cs" />
-    <Compile Include="ObjectExplorer.cs" />
+    <Compile Include="Internal\ModLoader.cs" />
+    <Compile Include="Internal\Tools\ObjectExplorer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SingleInstance.cs" />
+    <Compile Include="UI\Buttons.cs" />
+    <Compile Include="UI\Colors.cs" />
+    <Compile Include="UI\Elements.cs" />
+    <Compile Include="UI\InputFields.cs" />
+    <Compile Include="UI\Labels.cs" />
+    <Compile Include="UI\Scrollview.cs" />
+    <Compile Include="UI\Settings.cs" />
+    <Compile Include="UI\Tools.cs" />
+    <Compile Include="UI\ModGUI.cs" />
+    <Compile Include="UI\Windows.cs" />
+    <Compile Include="Util.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ModLoader.ruleset" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\arrow-disabled-down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\arrow-disabled-right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\arrow-hover-down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\arrow-hover-right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\arrow-normal-down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\arrow-normal-right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\background-44px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\background-dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\blue-dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\blue-light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\blue-normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\scroll-horizontal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\scroll-thumb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\scroll-thumb-active.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\scroll-thumb-hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\scroll-vertical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\thumb-horizontal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\thumb-vertical.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
