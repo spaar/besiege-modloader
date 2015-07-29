@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using spaar.ModLoader.Internal;
 using UnityEngine;
@@ -47,7 +48,7 @@ namespace spaar.ModLoader
   public static class Commands
   {
     // Simple struct for representing all information needed about a command
-    private struct Command
+    private class Command
     {
       public InternalMod mod;
       public CommandCallback callback;
@@ -176,6 +177,8 @@ help - Prints this help message";
     /// Register a console command.
     /// The passed callback will be called when the user enters the command in
     /// the console.
+    /// If the same command was previously registered by the same mod,
+    /// the old one will be updated instead of a new one being registered.
     /// </summary>
     /// <param name="command">The command to register</param>
     /// <param name="callback">The callback to be called when the command is entered</param>
@@ -199,7 +202,18 @@ help - Prints this help message";
       }
       if (commands.ContainsKey(command))
       {
-        commands[command].Add(com);
+        var oldCommand = commands[command].Find(c => c.mod == com.mod);
+        if (oldCommand != default(Command))
+        {
+          // Command was previously registered by same mod.
+          // Update old one instead of registering new one.
+          oldCommand.callback = callback;
+          oldCommand.helpMessage = helpText;
+        }
+        else
+        {
+          commands[command].Add(com);
+        }
       }
       else
       {

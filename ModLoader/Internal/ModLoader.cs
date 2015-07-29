@@ -42,6 +42,8 @@ namespace spaar.ModLoader.Internal
 
     private void Start()
     {
+      DontDestroyOnLoad(this);
+
       loadedMods = new List<InternalMod>();
       loadedMods.Add(new InternalMod(new LoaderMod(),
         Assembly.GetExecutingAssembly()));
@@ -57,7 +59,7 @@ namespace spaar.ModLoader.Internal
 
       //gameObject.AddComponent<KeySettings>();
 #if DEV_BUILD
-      gameObject.AddComponent<ObjectExplorer>();
+      Tools.ObjectExplorer.Initialize();
 #endif
 
       // Enable the console interface since it can now ask the configuration

@@ -91,9 +91,14 @@
     <Compile Include="Internal\InternalMod.cs" />
     <Compile Include="Internal\Key.cs" />
     <Compile Include="Internal\SerializableDictionary.cs" />
+    <Compile Include="Internal\Tools\ComponentEntry.cs" />
     <Compile Include="Internal\Tools\Console.cs" />
     <Compile Include="Internal\Keys.cs" />
+    <Compile Include="Internal\Tools\HierarchyEntry.cs" />
+    <Compile Include="Internal\Tools\HierarchyPanel.cs" />
+    <Compile Include="Internal\Tools\InspectorPanel.cs" />
     <Compile Include="Internal\Tools\LogEntry.cs" />
+    <Compile Include="Internal\Tools\MemberValue.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="Internal\ModLoader.cs" />
     <Compile Include="Internal\Tools\ObjectExplorer.cs" />

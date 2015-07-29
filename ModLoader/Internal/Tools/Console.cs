@@ -18,7 +18,7 @@ namespace spaar.ModLoader.Internal.Tools
   /// </remarks>
   public class Console : SingleInstance<Console>
   {
-    public override string Name { get { return "spaar's Console"; } }
+    public override string Name { get { return "spaar's Mod Loader: Console"; } }
 
     private List<LogEntry> entries;
 
