@@ -49,7 +49,8 @@ namespace spaar.ModLoader.Internal.Tools
 
       Application.RegisterLogCallback(HandleLog);
       entries = new List<LogEntry>();
-      windowRect = new Rect(50f, 50f, Elements.Settings.ConsoleSize.x, Elements.Settings.ConsoleSize.y);
+      windowRect = new Rect(50f, 50f, Elements.Settings.ConsoleSize.x,
+        Elements.Settings.ConsoleSize.y);
 
       initMessageFiltering();
       registerClear();
@@ -57,12 +58,14 @@ namespace spaar.ModLoader.Internal.Tools
 
     private void initMessageFiltering()
     {
-      messageFilter = new Dictionary<LogType, bool>();
-      messageFilter.Add(LogType.Assert, true);
-      messageFilter.Add(LogType.Error, true);
-      messageFilter.Add(LogType.Exception, true);
-      messageFilter.Add(LogType.Log, true);
-      messageFilter.Add(LogType.Warning, true);
+      messageFilter = new Dictionary<LogType, bool>()
+      {
+        { LogType.Assert, true },
+        { LogType.Error, true },
+        { LogType.Exception, true },
+        { LogType.Log, true },
+        { LogType.Warning, true }
+      };
 
       Commands.RegisterCommand("setMessageFilter", (args, namedArgs) =>
       {
@@ -207,7 +210,7 @@ namespace spaar.ModLoader.Internal.Tools
       {
         commandText = "";
         lastCommand = input.Replace("\n", "").Replace("\r", "");
-        Commands.HandleCommand(this, input.Replace("\n", "").Replace("\r", ""));
+        Commands.HandleCommand(input.Replace("\n", "").Replace("\r", ""));
         moveCursorNextFrame = true;
       }
       else

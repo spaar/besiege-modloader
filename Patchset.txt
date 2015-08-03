@@ -14,9 +14,7 @@ namespace spaar
             if (!InternalModLoader.loadedModLoader)
             {
                 Assembly assembly = Assembly.LoadFrom(string.Concat(Application.dataPath, "/Mods/SpaarModLoader.dll"));
-                GameObject go = new GameObject("MODLOADERLORD");
-                go.AddComponent(typeof(DontDestroyOnLoady));
-                go.AddComponent(assembly.GetType("spaar.ModLoader"));
+		assembly.GetType("spaar.ModLoader.Internal.Activator").GetMethod("Activate").Invoke(null, null);
                 InternalModLoader.loadedModLoader = true;
             }
         }

@@ -15,7 +15,7 @@ namespace spaar.ModLoader.Internal.Tools
     private Vector2 hierarchyScroll = Vector2.zero;
 
     private string searchFieldText = SEARCH_FIELD_DEFAULT;
-    private bool isSearching = false; // TODO: Implement searching
+    private bool isSearching = false;
 
     private void Start()
     {
@@ -39,9 +39,14 @@ namespace spaar.ModLoader.Internal.Tools
       // Set the name of the  search field so we can later detect if it's in focus
       GUI.SetNextControlName(SEARCH_FIELD_NAME);
       const int SEARCH_FIELD_WIDTH = 160;
-      searchFieldText = GUILayout.TextField(searchFieldText,
+      var oldSearchText = searchFieldText;
+      searchFieldText = GUILayout.TextField(oldSearchText,
         Elements.InputFields.ThinNoTopBotMargin,
         GUILayout.Width(SEARCH_FIELD_WIDTH));
+      if (oldSearchText != searchFieldText)
+      {
+        RefreshGameObjectList();
+      }
 
       // Expand/collapse all entries button
       bool allCollapsed = AreAllCollapsed(inspectorEntries);
@@ -192,6 +197,26 @@ namespace spaar.ModLoader.Internal.Tools
           inspectorEntries.Add(entry);
         }
       }
+      if (isSearching)
+      {
+        foreach (var entry in new HashSet<HierarchyEntry>(inspectorEntries))
+        {
+          if (!EntryOrChildrenContain(entry, searchFieldText))
+          {
+            inspectorEntries.Remove(entry);
+          }
+        }
+      }
+    }
+
+    private bool EntryOrChildrenContain(HierarchyEntry entry, string text)
+    {
+      if (entry.Transform.name.Contains(text)) return true;
+      foreach (var child in entry.Children)
+      {
+        if (EntryOrChildrenContain(child, text)) return true;
+      }
+      return false;
     }
   }
 }

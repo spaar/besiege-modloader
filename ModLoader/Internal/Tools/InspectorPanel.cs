@@ -7,7 +7,11 @@ namespace spaar.ModLoader.Internal.Tools
 {
   public class InspectorPanel : MonoBehaviour
   {
-    // TODO: Refactor this. It's necessary.
+    // TODO: Sometimes when changing int values, all text fields break.
+    //       Unity's GUI system is then of the opinion that the control key
+    //       is held down and acts accordingly. To fix that, just press
+    //       control. This bug should be fixed, but after a lot of trying
+    //       around, I still have no idea how or why this happens.
 
     enum FieldType
     {
@@ -21,7 +25,7 @@ namespace spaar.ModLoader.Internal.Tools
     private object activeMemberNewValue;
 
     private GameObject _selectedGameObject;
-    // null indicated no object selected
+    // null indicates no object selected
     public GameObject SelectedGameObject
     {
       get
@@ -61,17 +65,36 @@ namespace spaar.ModLoader.Internal.Tools
         {
           activeMember.SetValue(activeMemberNewValue);
         }
+        else if (@object is int)
+        {
+          int i;
+          if (activeMemberNewValue != null
+            && int.TryParse(activeMemberNewValue.ToString(), out i))
+          {
+            activeMember.SetValue(i);
+          }
+        }
         else if (@object is Vector3)
         {
           Vector3 vector3 = (Vector3)activeMember.GetValue();
           float v;
-          if (activeMemberNewValue != null && float.TryParse(activeMemberNewValue.ToString(), out v))
+          if (activeMemberNewValue != null
+            && float.TryParse(activeMemberNewValue.ToString(), out v))
           {
             if (activeMemberFieldType == FieldType.VectorX) vector3.x = v;
             else if (activeMemberFieldType == FieldType.VectorY) vector3.y = v;
             else if (activeMemberFieldType == FieldType.VectorZ) vector3.z = v;
           }
           activeMember.SetValue(vector3);
+        }
+        else if (@object is float)
+        {
+          float f;
+          if (activeMemberNewValue != null
+            && float.TryParse(activeMemberNewValue.ToString(), out f))
+          {
+            activeMember.SetValue(f);
+          }
         }
 
         // Reset variables
@@ -92,8 +115,7 @@ namespace spaar.ModLoader.Internal.Tools
 
       if (IsGameObjectSelected)
       {
-        // TODO: Measure performance impact from assigning it every redraw
-        // versus checking if it was changed and then assign
+        // Text field to change game object's name
         SelectedGameObject.name = GUILayout.TextField(SelectedGameObject.name,
           Elements.InputFields.ThinNoTopBotMargin, GUILayout.Width(panelWidth),
           GUILayout.ExpandWidth(false));
@@ -138,10 +160,11 @@ namespace spaar.ModLoader.Internal.Tools
         Elements.Labels.LogEntry);
       GUILayout.EndHorizontal();
 
-      if (!entry.IsExpanded) return;
-
-      ShowFields("Properties", entry.Properties);
-      ShowFields("Fields", entry.Fields);
+      if (entry.IsExpanded)
+      {
+        ShowFields("Properties", entry.Properties);
+        ShowFields("Fields", entry.Fields);
+      }
     }
 
     private void ShowFields(string title, IEnumerable<MemberValue> fields)
@@ -173,7 +196,6 @@ namespace spaar.ModLoader.Internal.Tools
         bool canModifyType = IsSupported(value);
         if (Elements.Tools.DoCollapseArrow(member.IsExpanded, canModifyType))
         {
-          if (canModifyType)
             member.IsExpanded = !member.IsExpanded;
         }
 
@@ -182,7 +204,7 @@ namespace spaar.ModLoader.Internal.Tools
           fontStyle = FontStyle.Bold,
           normal = { textColor = Elements.Colors.TypeText }
         };
-        var nameStyle = new GUIStyle(Elements.Labels.LogEntry)
+        var valueStyle = new GUIStyle(Elements.Labels.LogEntry)
         {
           normal = { textColor = Elements.Colors.DefaultText * .8f }
         };
@@ -191,7 +213,7 @@ namespace spaar.ModLoader.Internal.Tools
         GUILayout.Label(" " + name + ":", Elements.Labels.LogEntry,
           GUILayout.ExpandWidth(false));
         GUILayout.Label(" " + (value == null ? "null" : value.ToString()),
-          nameStyle, GUILayout.ExpandWidth(false));
+          valueStyle, GUILayout.ExpandWidth(false));
 
         GUILayout.EndHorizontal();
 
@@ -236,9 +258,13 @@ namespace spaar.ModLoader.Internal.Tools
             DoInputField(member, vec3Value.z, FieldType.VectorZ, 80);
             GUILayout.EndHorizontal();
           }
-          else
+          else if (value is int)
           {
-            GUILayout.Label("Unsupported type.");
+            DoInputField(member, (int)value, FieldType.Normal);
+          }
+          else if (value is float)
+          {
+            DoInputField(member, (float)value, FieldType.Normal);
           }
           GUILayout.EndHorizontal();
         }
@@ -260,7 +286,7 @@ namespace spaar.ModLoader.Internal.Tools
       float width = 0)
     {
       GUILayoutOption widthOption = width > 0 ? GUILayout.Width(width)
-                                              : GUILayout.ExpandWidth(false);
+                                              : GUILayout.ExpandWidth(true);
 
       // If this one is selected
       if (activeMember == member && activeMemberFieldType == type)
@@ -274,7 +300,7 @@ namespace spaar.ModLoader.Internal.Tools
         string oldValue = value.ToString();
 
         GUI.SetNextControlName(FIELD_EDIT_INPUT_NAME + member.ID);
-        string newValue = GUILayout.TextField(oldValue,
+        string newValue = GUILayout.TextField(oldValue.ToString(),
           Elements.InputFields.ComponentField, widthOption);
 
         // Input was changed
@@ -290,7 +316,8 @@ namespace spaar.ModLoader.Internal.Tools
 
     public bool IsSupported(object value)
     {
-      return value is string || value is bool || value is Vector3;
+      return value is string || value is bool || value is Vector3
+          || value is int    || value is float;
     }
   }
 }

@@ -13,14 +13,12 @@ namespace spaar.ModLoader.Internal
   /// </summary>
   public class LoaderMod : Mod
   {
-    public string Name { get { return "modLoader"; } }
-    public string DisplayName { get { return "spaar's Mod Loader"; } }
-    public string Author { get { return "spaar"; } }
-    public Version Version { get { return new Version(1, 0); } }
-    public string BesiegeVersion { get { return ModLoader.BesiegeVersion; } }
-    public bool CanBeUnloaded { get { return false; } }
-    public void OnLoad() { }
-    public void OnUnload() { }
+    public override string Name { get { return "modLoader"; } }
+    public override string DisplayName { get { return "spaar's Mod Loader"; } }
+    public override string Author { get { return "spaar"; } }
+    public override Version Version { get { return new Version(1, 0); } }
+    public override void OnLoad() { }
+    public override void OnUnload() { }
   }
 
   public class ModLoader : SingleInstance<ModLoader>
@@ -48,7 +46,7 @@ namespace spaar.ModLoader.Internal
       loadedMods.Add(new InternalMod(new LoaderMod(),
         Assembly.GetExecutingAssembly()));
 
-      Commands.init();
+      Commands.Initialize();
 
       // Create the console before loading the config so it can display
       // possible errors.
@@ -57,7 +55,6 @@ namespace spaar.ModLoader.Internal
       Configuration.Initialize();
       Keys.LoadKeys();
 
-      //gameObject.AddComponent<KeySettings>();
 #if DEV_BUILD
       Tools.ObjectExplorer.Initialize();
 #endif

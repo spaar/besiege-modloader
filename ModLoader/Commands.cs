@@ -60,7 +60,7 @@ namespace spaar.ModLoader
     // register the same command.
     private static Dictionary<string, List<Command>> commands
       = new Dictionary<string, List<Command>>(
-          StringComparer.InvariantCultureIgnoreCase);
+        StringComparer.InvariantCultureIgnoreCase);
 
     private static Dictionary<InternalMod, string> helpMessages
       = new Dictionary<InternalMod, string>();
@@ -72,7 +72,7 @@ namespace spaar.ModLoader
     /// Registers the general built-in commands.
     /// Specifically help and version.
     /// </summary>
-    internal static void init()
+    internal static void Initialize()
     {
       initHelp();
       RegisterCommand("version", (args, namedArgs) =>
@@ -109,12 +109,13 @@ help - Prints this help message";
         }
         else if (args.Length == 1 && !args[0].Contains(":"))
         {
-          args[0] = args[0].ToLower();
+          var name = args[0].ToLower();
           if (Internal.ModLoader.Instance.LoadedMods
-                  .Exists(m => m.Mod.Name.ToLower() == args[0]))
+                  .Exists(m => m.Mod.Name.ToLower() == name))
           {
+            // help <modname>
             var mod = Internal.ModLoader.Instance.LoadedMods
-              .Find(m => m.Mod.Name.ToLower() == args[0]);
+              .Find(m => m.Mod.Name.ToLower() == name);
             if (helpMessages.ContainsKey(mod))
             {
               return helpMessages[mod];
@@ -126,6 +127,7 @@ help - Prints this help message";
           }
           else if (commands.ContainsKey(args[0]))
           {
+            // help <command>
             String output = "";
             foreach (var coms in commands[args[0]])
             {
@@ -140,6 +142,7 @@ help - Prints this help message";
         }
         else if (args.Length == 2 || args[0].Contains(":"))
         {
+          // help <mod> <command> || help <mod>:<command>
           var modName = "";
           var commandName = "";
           if (args[0].Contains(":"))
@@ -150,19 +153,19 @@ help - Prints this help message";
           else
           {
             modName = args[0];
-            commandName = args[1].ToLower();
+            commandName = args[1];
           }
           if (!commands.ContainsKey(commandName))
           {
             return "No such command: " + commandName;
           }
           var coms = commands[commandName];
-          if (!coms.Exists(com => com.mod.Mod.Name.ToLower() == modName))
+          if (!coms.Exists(com => com.mod.Mod.Name.ToLower() == modName.ToLower()))
           {
             return "No command " + commandName + " in mod " + modName;
           }
-          var helpMessage = coms.Find(com => com.mod.Mod.Name.ToLower() == modName)
-            .helpMessage;
+          var helpMessage = coms.Find(com => com.mod.Mod.Name.ToLower()
+            == modName.ToLower()).helpMessage;
           if (helpMessage == "")
           {
             return "No help registered for " + modName + ":" + commandName;
@@ -219,7 +222,7 @@ help - Prints this help message";
       {
         List<Command> newList = new List<Command>();
         newList.Add(com);
-        commands.Add(command.ToLower(), newList);
+        commands.Add(command, newList);
       }
       return true;
     }
@@ -283,7 +286,7 @@ help - Prints this help message";
     /// </summary>
     /// <param name="console">Console to log the command and the return value to</param>
     /// <param name="input">Complete command line</param>
-    internal static void HandleCommand(Internal.Tools.Console console, string input)
+    internal static void HandleCommand(string input)
     {
       var result = "";
 
@@ -306,8 +309,17 @@ help - Prints this help message";
           var name = parts[i].Substring(2);
           var value = "";
           i++;
-          value = GetArgument(parts, i, out i);
-          namedArgs.Add(name, value);
+
+          if (parts.Length > i)
+          {
+            value = GetArgument(parts, i, out i);
+            namedArgs.Add(name, value);
+          }
+          else
+          {
+            // No value passed, use empty string
+            namedArgs.Add(name, "");
+          }
         }
         else
         {
@@ -357,7 +369,7 @@ help - Prints this help message";
     {
       List<string> commandList = new List<string>(commands.Keys);
       List<string> matchingCommands = commandList.FindAll(
-        c => c.StartsWith(toComplete.ToLower()));
+        c => c.StartsWith(toComplete, StringComparison.InvariantCultureIgnoreCase));
 
       if (matchingCommands.Count == 0)
         return toComplete;

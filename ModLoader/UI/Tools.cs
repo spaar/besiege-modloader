@@ -7,9 +7,11 @@ namespace spaar.ModLoader.UI
   // All credit goes to VapidLinus.
   public class Tools
   {
-    public bool DoCollapseArrow(bool isExpanded, bool enabled, params GUILayoutOption[] options)
+    public bool DoCollapseArrow(bool isExpanded, bool enabled,
+      params GUILayoutOption[] options)
     {
-      return DoCollapseArrow(isExpanded, enabled, Elements.Settings.LogEntrySize, Elements.Settings.LogEntrySize, options);
+      return DoCollapseArrow(isExpanded, enabled,
+        Elements.Settings.LogEntrySize, Elements.Settings.LogEntrySize, options);
     }
 
     public bool DoCollapseArrow(bool isExpanded, params GUILayoutOption[] options)
@@ -17,7 +19,8 @@ namespace spaar.ModLoader.UI
       return DoCollapseArrow(isExpanded, true, options);
     }
 
-    public bool DoCollapseArrow(bool isExpanded, bool enabled, float width, float height, params GUILayoutOption[] options)
+    public bool DoCollapseArrow(bool isExpanded, bool enabled,
+      float width, float height, params GUILayoutOption[] options)
     {
       int length = options.Length;
 
@@ -26,10 +29,12 @@ namespace spaar.ModLoader.UI
       options[length + 1] = GUILayout.Height(height);
 
       var style = enabled
-        ? (isExpanded ? Elements.Buttons.ArrowExpanded : Elements.Buttons.ArrowCollapsed)
-        : (isExpanded ? Elements.Buttons.ArrowDarkExpanded : Elements.Buttons.ArrowDarkCollapsed);
+        ? (isExpanded ? Elements.Buttons.ArrowExpanded
+                      : Elements.Buttons.ArrowCollapsed)
+        : (isExpanded ? Elements.Buttons.ArrowDarkExpanded
+                      : Elements.Buttons.ArrowDarkCollapsed);
 
-      return GUILayout.Button("", style, options);
+      return GUILayout.Button("", style, options) && enabled;
     }
 
     /// <summary>
