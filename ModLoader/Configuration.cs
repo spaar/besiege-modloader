@@ -13,6 +13,7 @@ namespace spaar.ModLoader
   /// Utility class to store configuration values for your mod.
   /// This is a basic Key-Value store and supports only strings as keys
   /// and strings, ints, floats, doubles and bools as values.
+  /// This class also provides the setConfigValue command to users.
   /// Configuration is stored in <![CDATA[Mods/Config/<modname>.json]]>.
   /// </summary>
   public static class Configuration
@@ -44,6 +45,44 @@ namespace spaar.ModLoader
       public override int GetHashCode()
       {
         return base.GetHashCode();
+      }
+    }
+
+    private static Dictionary<string, Delegate>
+      eventDelegates = new Dictionary<string, Delegate>();
+    public static event EventHandler<ConfigurationEventArgs> OnConfigurationChange
+    {
+      add
+      {
+        var mod = GetModFromAssembly(Assembly.GetCallingAssembly());
+        if (mod == null)
+        {
+          throw new InvalidOperationException("Cannot add event listener: "
+            + "Cannot determine mod");
+        }
+        var modName = mod.Mod.Name;
+        if (!eventDelegates.ContainsKey(modName))
+        {
+          eventDelegates.Add(modName, null);
+        }
+        eventDelegates[modName] = 
+          (EventHandler<ConfigurationEventArgs>)eventDelegates[modName] + value;
+      }
+      remove
+      {
+        var mod = GetModFromAssembly(Assembly.GetCallingAssembly());
+        if (mod == null)
+        {
+          throw new InvalidOperationException("Cannon remove event listener: "
+            + "Cannont determine mod");
+        }
+        var modName = mod.Mod.Name;
+        if (!eventDelegates.ContainsKey(modName))
+        {
+          return;
+        }
+        eventDelegates[modName] =
+          (EventHandler<ConfigurationEventArgs>)eventDelegates[modName] - value;
       }
     }
 
@@ -248,18 +287,76 @@ namespace spaar.ModLoader
           + "Failed to determine mod");
       }
 
-      var modName = mod.Mod.Name;
+      SetValue(mod.Mod.Name, key, value);
+   }
 
+    private static void SetValue(string modName, string key, Value value)
+    {
       if (!configs.ContainsKey(modName))
       {
-        configs[modName] = new Dictionary<string, Value>();
+        configs.Add(modName, new Dictionary<string, Value>());
       }
 
       configs[modName][key] = value;
+
+      EventHandler<ConfigurationEventArgs> handler;
+      if (eventDelegates.ContainsKey(modName) && null !=
+        (handler = (EventHandler<ConfigurationEventArgs>)eventDelegates[modName]))
+      {
+        var eventArgs = new ConfigurationEventArgs(key, value.type, value.value);
+        handler(null, eventArgs);
+      }
+    }
+
+    /// <summary>
+    /// Checks whether a given key exists in the configuration for your mod.
+    /// Note that this will only be the case after it has ben set once.
+    /// </summary>
+    /// <param name="key">Key to check</param>
+    /// <returns>Whether the key exists</returns>
+    public static bool KeyExists(string key)
+    {
+      var mod = GetModFromAssembly(Assembly.GetCallingAssembly());
+      if (mod == null)
+      {
+        throw new InvalidOperationException("Cannot check for key: "
+          + "Failed to determine mod");
+      }
+
+      return configs.ContainsKey(mod.Mod.Name)
+        && configs[mod.Mod.Name].ContainsKey(key);
+    }
+
+    private static void InitializeCommand()
+    {
+      Commands.RegisterCommand("setConfigValue", (args, nArgs) =>
+      {
+        const string usage = "setConfigValue <mod> <key> <type> <value>";
+
+        if (args.Length != 4)
+          return usage;
+
+        string mod = args[0];
+        string key = args[1];
+        string type = args[2];
+        string value = args[3];
+
+        var val = new Value()
+        {
+          type = type,
+          value = value
+        };
+
+        SetValue(mod, key, val);
+
+        return "Updated configuration.";
+      });
     }
 
     internal static void Load()
     {
+      InitializeCommand();
+
       var files = new DirectoryInfo(Application.dataPath + "/Mods/Config/")
         .GetFiles("*.json");
       foreach (var file in files)
@@ -317,7 +414,7 @@ namespace spaar.ModLoader
 
       if (!configs.ContainsKey(modName))
       {
-        configs[modName] = new Dictionary<string, Value>();
+        configs.Add(modName, new Dictionary<string, Value>());
       }
 
       var config = configs[modName];

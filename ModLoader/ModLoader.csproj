@@ -88,8 +88,8 @@
   <ItemGroup>
     <Compile Include="Commands.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="ConfigurationEventArgs.cs" />
     <Compile Include="Internal\Activator.cs" />
-    <Compile Include="Internal\Configuration.cs" />
     <Compile Include="Internal\InternalMod.cs" />
     <Compile Include="Internal\Key.cs" />
     <Compile Include="Internal\lib\SimpleJSON.cs" />

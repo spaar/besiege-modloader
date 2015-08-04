@@ -53,8 +53,8 @@ namespace spaar.ModLoader.Internal
       // possible errors.
       var console = Tools.Console.Instance;
 
-      Configuration.Initialize();
-      Keys.LoadKeys();
+      Configuration.Load();
+      Keys.Initialize();
 
 #if DEV_BUILD
       Tools.ObjectExplorer.Initialize();
@@ -65,9 +65,6 @@ namespace spaar.ModLoader.Internal
       console.EnableInterface();
 
       LoadMods();
-
-      spaar.ModLoader.Configuration.Load();
-
       InitializeMods();
 
       UpdateChecker.Initialize();
@@ -154,7 +151,7 @@ namespace spaar.ModLoader.Internal
       {
         mod.Deactivate();
       }
-      Configuration.SaveConfig();
+      Configuration.Save();
     }
 
     /// <summary>

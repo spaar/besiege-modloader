@@ -18,7 +18,9 @@ namespace spaar.ModLoader.Internal
 
     private IEnumerator Start()
     {
-      if (Configuration.Get("enableUpdateChecker") != "true") yield break;
+      ModLoader.MakeModule(this);
+
+      if (Configuration.GetBool("enableUpdateChecker", true)) yield break;
 
       var www = new WWW(
         "https://api.github.com/repos/spaar/besiege-modloader/releases");
