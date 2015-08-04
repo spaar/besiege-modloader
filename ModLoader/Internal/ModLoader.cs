@@ -16,7 +16,7 @@ namespace spaar.ModLoader.Internal
     public override string Name { get { return "modLoader"; } }
     public override string DisplayName { get { return "spaar's Mod Loader"; } }
     public override string Author { get { return "spaar"; } }
-    public override Version Version { get { return new Version(1, 0); } }
+    public override Version Version { get { return ModLoader.ModLoaderVersion; } }
     public override void OnLoad() { }
     public override void OnUnload() { }
   }
@@ -28,6 +28,7 @@ namespace spaar.ModLoader.Internal
     /// The currently running Besiege version.
     /// </summary>
     public static readonly string BesiegeVersion = "v0.10";
+    public static readonly Version ModLoaderVersion = new Version(1, 0);
 
     public override string Name { get { return "spaar's Mod Loader"; } }
 
@@ -64,7 +65,12 @@ namespace spaar.ModLoader.Internal
       console.EnableInterface();
 
       LoadMods();
+
+      spaar.ModLoader.Configuration.Load();
+
       InitializeMods();
+
+      UpdateChecker.Initialize();
     }
 
     private void LoadMods()

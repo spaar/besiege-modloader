@@ -24,6 +24,7 @@ namespace spaar.ModLoader.Internal
         {"consoleK2", "K" },
         {"objExpK1", "LeftControl" },
         {"objExpK2", "O" },
+        {"enableUpdateChecker", "true" }
       };
 
     public static string Get(string key)

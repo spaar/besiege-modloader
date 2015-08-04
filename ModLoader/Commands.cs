@@ -76,7 +76,8 @@ namespace spaar.ModLoader
     {
       initHelp();
       RegisterCommand("version", (args, namedArgs) =>
-        { return "spaar's Mod Loader version 1.0.0, Besiege v0.10"; });
+        { return string.Format("spaar's Mod Loader version {0}, Besiege {1}",
+          Internal.ModLoader.ModLoaderVersion, Internal.ModLoader.BesiegeVersion); });
       RegisterCommand("list", (args, namedArgs) =>
       {
         string output = "";
