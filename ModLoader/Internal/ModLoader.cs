@@ -8,8 +8,8 @@ namespace spaar.ModLoader.Internal
 {
   /// <summary>
   /// This work-around is required so that the mod loader can be correctly
-  /// registered as a loaded 'mod'. That enabled the mod loader to itself
-  /// register commands in the Commands class.
+  /// registered as a loaded 'mod'. That enables the mod loader to e.g.
+  /// register commands in the Commands class or use the Configuration class.
   /// </summary>
   public class LoaderMod : Mod
   {
@@ -39,6 +39,8 @@ namespace spaar.ModLoader.Internal
       get { return new List<InternalMod>(loadedMods); }
     }
 
+    private Dictionary<string, bool> modStatus;
+
     private void Start()
     {
       DontDestroyOnLoad(this);
@@ -64,10 +66,31 @@ namespace spaar.ModLoader.Internal
       // for the correct keys to use.
       console.EnableInterface();
 
+      LoadModStatus();
+
       LoadMods();
+
+      RegisterModManagementCommands();
+
       InitializeMods();
 
       UpdateChecker.Initialize();
+    }
+
+    private void LoadModStatus()
+    {
+      modStatus = new Dictionary<string, bool>();
+
+      var keys = Configuration.GetKeys();
+      foreach (var key in keys)
+      {
+        if (key.StartsWith("modStatus:"))
+        {
+          var mod = key.Replace("modStatus:", "");
+          var modEnabled = Configuration.GetBool(key, true);
+          modStatus[mod] = modEnabled;
+        }
+      }
     }
 
     private void LoadMods()
@@ -106,6 +129,13 @@ namespace spaar.ModLoader.Internal
             }
 
             var mod = (Mod)System.Activator.CreateInstance(modTypes[0]);
+
+            if (modStatus.ContainsKey(mod.Name) && !modStatus[mod.Name])
+            {
+              Debug.Log("Not activating mod " + mod.DisplayName + ": Is disabled");
+              continue;
+            }
+
             loadedMods.Add(new InternalMod(mod, assembly));
             Debug.Log(mod.DisplayName + " was loaded!");
           }
@@ -116,8 +146,11 @@ namespace spaar.ModLoader.Internal
           }
         }
       }
+    }
 
-      Commands.RegisterCommand("listMods", (args, namedArgs) =>
+    private void RegisterModManagementCommands()
+    {
+      Commands.RegisterCommand("listMods", (args, nArgs) =>
       {
         var result = "Loaded mods:";
         foreach (var mod in loadedMods)
@@ -128,6 +161,68 @@ namespace spaar.ModLoader.Internal
         return result;
       }, "Print a list of all mods. If 'internalNames' is passed,"
        + " internal names will be shown instead of display names.");
+
+      Commands.RegisterCommand("enableMod", (args, nArgs) =>
+      {
+        const string usage = "Usage: enableMod <mod>";
+        if (args.Length != 1)
+        {
+          return usage;
+        }
+
+        EnableMod(args[0]);
+
+        return "Enabled mod " + args[0];
+      });
+
+      Commands.RegisterCommand("disableMod", (args, nArgs) =>
+      {
+        const string usage = "Usage: disableMod <mod>";
+        if (args.Length != 1)
+        {
+          return usage;
+        }
+
+        DisableMod(args[0]);
+
+        if (loadedMods.FindIndex(m => m.Mod.Name == args[0]) == -1)
+        {
+          Debug.LogWarning("There is currently no mod named " + args[0]
+            + " loaded. Did you spell the name correctly? Remember to use "
+            + "internal names.");
+        }
+
+        return "Disabled mod " + args[0];
+      });
+    }
+
+    public void EnableMod(string modName)
+    {
+      modStatus[modName] = true;
+    }
+
+    public void DisableMod(string modName)
+    {
+      modStatus[modName] = false;
+
+      var mod = loadedMods.Find(m => m.Mod.Name == modName);
+      if (mod != null)
+      {
+        if (mod.Mod.CanBeUnloaded)
+        {
+          Debug.Log("Unloading " + mod.Mod.DisplayName);
+          mod.Mod.OnUnload();
+        }
+        else
+        {
+          Debug.Log("Not unloading " + mod.Mod.DisplayName
+            + ", it cannot be unloaded at runtime.");
+        }
+      }
+      else
+      {
+        Debug.Log("Not unloading " + modName + ", can't find it.");
+      }
     }
 
     private void InitializeMods()
@@ -151,6 +246,12 @@ namespace spaar.ModLoader.Internal
       {
         mod.Deactivate();
       }
+
+      foreach (var pair in modStatus)
+      {
+        Configuration.SetBool("modStatus:" + pair.Key, pair.Value);
+      }
+
       Configuration.Save();
     }
 

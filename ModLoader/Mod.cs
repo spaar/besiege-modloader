@@ -11,8 +11,10 @@ namespace spaar.ModLoader
   {
     /// <summary>
     /// Name of the mod.
-    /// Should be all lowercase and be in camelCase.
+    /// Should be all lowercase, alphanumeric and be in camelCase.
     /// This name should not change once a mod was published.
+    /// It should also be unique among all published mod as it is used for
+    /// identification by the mod loader.
     /// </summary>
     public abstract string Name { get; }
 
@@ -41,6 +43,8 @@ namespace spaar.ModLoader
     /// If this is not equal to the currently running game version,
     /// a warning will be printed, however the mod will still be loaded.
     /// Default is the version the running mod loader is targeted at.
+    /// Please only use this default if you are reasonably sure that a Besiege
+    /// update will not break your mod!
     /// </summary>
     public virtual string BesiegeVersion { get { return Internal.ModLoader.BesiegeVersion; } }
 

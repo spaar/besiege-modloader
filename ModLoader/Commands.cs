@@ -100,6 +100,7 @@ namespace spaar.ModLoader
         {
           return @"List of built-in commands: 
 setMessageFilter - Filter console messages by type
+setConfigValue - Sets a configuration value
 listMods - List all loaded mods, along with their author and version
 clear - Clears the Console
 version - Prints the current version

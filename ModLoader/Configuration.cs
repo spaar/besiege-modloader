@@ -48,6 +48,8 @@ namespace spaar.ModLoader
       }
     }
 
+    #region OnConfigurationChange Event
+
     private static Dictionary<string, Delegate>
       eventDelegates = new Dictionary<string, Delegate>();
     public static event EventHandler<ConfigurationEventArgs> OnConfigurationChange
@@ -85,6 +87,8 @@ namespace spaar.ModLoader
           (EventHandler<ConfigurationEventArgs>)eventDelegates[modName] - value;
       }
     }
+
+    #endregion
 
     private static Dictionary<string, Dictionary<string, Value>> configs
       = new Dictionary<string, Dictionary<string, Value>>();
@@ -327,6 +331,26 @@ namespace spaar.ModLoader
         && configs[mod.Mod.Name].ContainsKey(key);
     }
 
+    /// <summary>
+    /// Gets all keys currently stored in the configuration of your mod.
+    /// </summary>
+    /// <returns>List of keys</returns>
+    public static List<string> GetKeys()
+    {
+      var mod = GetModFromAssembly(Assembly.GetCallingAssembly());
+      if (mod == null)
+      {
+        throw new InvalidOperationException("Cannot get configuration keys: "
+          + "Unable to determine mod");
+      }
+      var modName = mod.Mod.Name;
+      if (!configs.ContainsKey(modName))
+      {
+        return new List<string>();
+      }
+      return new List<string>(configs[modName].Keys);
+    }
+
     private static void InitializeCommand()
     {
       Commands.RegisterCommand("setConfigValue", (args, nArgs) =>
@@ -350,7 +374,10 @@ namespace spaar.ModLoader
         SetValue(mod, key, val);
 
         return "Updated configuration.";
-      });
+      }, "Sets a configuration value. Usage: setConfigValue <mod> <key> <type> <value>"
+        + " where <mod> is the internal name of a mod, <key> is the configuration"
+        + " key, <type> is one of string, int, float, double and bool and <value>"
+        + " is the value you want to set.");
     }
 
     internal static void Load()
