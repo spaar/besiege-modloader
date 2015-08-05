@@ -18,13 +18,34 @@ namespace spaar.ModLoader.Internal.Tools
       Component = component;
       IsExpanded = false;
 
-      foreach (var property in component.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
+      foreach (var property in component.GetType().GetProperties(
+        BindingFlags.Instance | BindingFlags.Static |
+        BindingFlags.Public | BindingFlags.NonPublic |
+        BindingFlags.DeclaredOnly))
       {
-        Properties.Add(new MemberValue(Component, property));
+        Properties.Add(new MemberValue(Component, property, false));
       }
-      foreach (var field in component.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public))
+
+      foreach (var property in component.GetType().BaseType.GetProperties(
+        BindingFlags.Instance | BindingFlags.Static |
+        BindingFlags.Public | BindingFlags.NonPublic))
       {
-        Fields.Add(new MemberValue(Component, field));
+        Properties.Add(new MemberValue(Component, property, true));
+      }
+
+      foreach (var field in component.GetType().GetFields(
+        BindingFlags.Instance | BindingFlags.Static |
+        BindingFlags.Public | BindingFlags.NonPublic |
+        BindingFlags.DeclaredOnly))
+      {
+        Fields.Add(new MemberValue(Component, field, false));
+      }
+    
+      foreach (var field in component.GetType().BaseType.GetFields(
+        BindingFlags.Instance | BindingFlags.Static |
+        BindingFlags.Public | BindingFlags.NonPublic))
+      {
+        Fields.Add(new MemberValue(Component, field, true));
       }
     }
   }

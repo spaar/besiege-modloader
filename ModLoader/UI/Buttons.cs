@@ -2,11 +2,13 @@
 
 namespace spaar.ModLoader.UI
 {
-  // This class was taken from Vapid's ModLoader with permissions.
+  // This class was taken from Vapid's ModLoader with permission.
   // All credit goes to VapidLinus.
+  // It was later modified for this project.
   public class Buttons
   {
     public GUIStyle Default { get; set; }
+    public GUIStyle Disabled { get; set; }
     public GUIStyle ComponentField { get; set; }
     public GUIStyle LogEntryLabel { get; set; }
     public GUIStyle ThinNoTopBotMargin { get; set; }
@@ -30,6 +32,11 @@ namespace spaar.ModLoader.UI
         alignment = TextAnchor.MiddleCenter,
         fontSize = 14,
         fontStyle = FontStyle.Bold
+      };
+
+      Disabled = new GUIStyle(Default)
+      {
+        normal = { background = Elements.LoadImage("blue-very-dark.png") }
       };
 
       var margin = Elements.Settings.LowMargin;

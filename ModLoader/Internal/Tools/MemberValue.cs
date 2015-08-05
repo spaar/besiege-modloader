@@ -19,12 +19,32 @@ namespace spaar.ModLoader.Internal.Tools
     public bool IsExpanded { get; set; }
     public object Dummy { get; set; }
 
+    public bool IsPublic
+    {
+      get
+      {
+        if (entryType == EntryType.Field) return FieldInfo.IsPublic;
+        return PropertyInfo.GetGetMethod(true).IsPublic;
+      }
+    }
+
+    public bool IsStatic
+    {
+      get
+      {
+        if (entryType == EntryType.Field) return FieldInfo.IsStatic;
+        return PropertyInfo.GetGetMethod(true).IsStatic;
+      }
+    }
+
+    public bool IsInherited { get; private set; }
+
     public bool HasSetter
     {
       get
       {
         if (entryType == EntryType.Field) return true;
-        return !ReferenceEquals(PropertyInfo.GetSetMethod(), null);
+        return !ReferenceEquals(PropertyInfo.GetSetMethod(true), null);
       }
     }
 
@@ -37,21 +57,23 @@ namespace spaar.ModLoader.Internal.Tools
     private readonly Component component;
     private readonly MemberInfo info;
 
-    public MemberValue(Component component, PropertyInfo property)
-      : this(component, EntryType.Property, property)
+    public MemberValue(Component component, PropertyInfo property, bool inherited)
+      : this(component, EntryType.Property, property, inherited)
     { }
 
-    public MemberValue(Component component, FieldInfo field)
-      : this(component, EntryType.Field, field)
+    public MemberValue(Component component, FieldInfo field, bool inherited)
+      : this(component, EntryType.Field, field, inherited)
     { }
 
-    private MemberValue(Component component, EntryType entryType, MemberInfo info)
+    private MemberValue(Component component, EntryType entryType,
+      MemberInfo info, bool inherited)
     {
       this.component = component;
       this.entryType = entryType;
       this.info = info;
 
       Dummy = GetValue();
+      IsInherited = inherited;
     }
 
     public void SetValue(object value)

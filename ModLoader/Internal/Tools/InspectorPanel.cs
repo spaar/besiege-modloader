@@ -52,6 +52,16 @@ namespace spaar.ModLoader.Internal.Tools
       get { return SelectedGameObject != null; }
     }
 
+    private Dictionary<string, bool> filter = new Dictionary<string, bool>()
+    {
+      { "Instance", true },
+      { "Static", false },
+      { "Public", true },
+      { "NonPublic", false },
+      { "Inherited", false },
+      { "Has Setter", true }, // TODO: reconsider default
+    };
+
     private readonly HashSet<ComponentEntry> entries = new HashSet<ComponentEntry>();
     private Vector2 inspectorScroll = Vector2.zero;
 
@@ -146,7 +156,24 @@ namespace spaar.ModLoader.Internal.Tools
 
       GUILayout.EndVertical();
 
+      GUILayout.BeginVertical();
+      DisplayFilters();
+      GUILayout.EndVertical();
+
       GUILayout.EndHorizontal();
+    }
+
+    private void DisplayFilters()
+    {
+      foreach (var pair in new Dictionary<string, bool>(filter))
+      {
+        var style = pair.Value ? Elements.Buttons.Default
+                               : Elements.Buttons.Disabled;
+        if (GUILayout.Button(pair.Key, style))
+        {
+          filter[pair.Key] = !filter[pair.Key];
+        }
+      }
     }
 
     private void DisplayComponent(ComponentEntry entry)
@@ -177,8 +204,16 @@ namespace spaar.ModLoader.Internal.Tools
       bool hasDisplayedFields = false;
       foreach (var member in fields)
       {
-        // Don't display members without setter and obsolete members
-        if (!member.HasSetter || member.IsObsolete) return;
+        // Don't display obsolete members
+        if (member.IsObsolete) continue;
+
+        // Filters
+        if (!filter["Static"] && member.IsStatic) continue;
+        if (!filter["Instance"] && !member.IsStatic) continue;
+        if (!filter["Public"] && member.IsPublic) continue;
+        if (!filter["NonPublic"] && !member.IsPublic) continue;
+        if (!filter["Inherited"] && member.IsInherited) continue;
+        if (filter["Has Setter"] && !member.HasSetter) continue;
 
         hasDisplayedFields = true;
 
