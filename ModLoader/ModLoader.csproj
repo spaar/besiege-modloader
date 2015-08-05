@@ -89,6 +89,7 @@
     <Compile Include="Commands.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="ConfigurationEventArgs.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Internal\Activator.cs" />
     <Compile Include="Internal\InternalMod.cs" />
