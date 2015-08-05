@@ -25,12 +25,12 @@ namespace spaar.ModLoader
 
     public override string Name { get { return "spaar's Mod Loader: Game State"; } }
 
-    private AddPiece _addPiece;
+    private static AddPiece _addPiece;
     /// <summary>
     /// Reference to the AddPiece instance of the current scene.
     /// Null if there is no AddPiece in the current scene.
     /// </summary>
-    public AddPiece AddPiece
+    public static AddPiece AddPiece
     {
       get
       {
@@ -40,12 +40,12 @@ namespace spaar.ModLoader
       }
     }
 
-    private MachineObjectTracker _mot;
+    private static MachineObjectTracker _mot;
     /// <summary>
     /// Reference to the MachineObjectTracker instance of the current scene.
     /// Null if there is no MachineObjectTracker in the current scene.
     /// </summary>
-    public MachineObjectTracker MachineObjectTracker
+    public static MachineObjectTracker MachineObjectTracker
     {
       get
       {
@@ -58,7 +58,7 @@ namespace spaar.ModLoader
     /// <summary>
     /// Whether the game is currently simulating.
     /// </summary>
-    public bool IsSimulating
+    public static bool IsSimulating
     {
       get
       {
