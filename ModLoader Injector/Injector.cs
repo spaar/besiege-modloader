@@ -1,49 +1,79 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.Reflection;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
+using UnityEngine;
 
-namespace spaar.injector
+namespace spaar.ModLoader.Injector
 {
-    class Injector
+  public static class Injector
+  {
+
+    public static void Inject(AssemblyDefinition game, string outputPath)
     {
-        private string asUnityScriptPath;
-        private AssemblyDefinition asUnityScriptDef;
+      TypeDefinition planetRotate = game.MainModule.GetType("", "PlanetRotateMouse");
 
-        private string asModLoaderPath;
-        private AssemblyDefinition asModLoaderDef;
+      if (planetRotate == null)
+      {
+        throw new Exception("PlanetRotateMouse not found");
+      }
 
-        public Injector(string asUnityScript, string asModLoader)
-        {
-            asUnityScriptPath = asUnityScript;
-            asUnityScriptDef = AssemblyDefinition.ReadAssembly(asUnityScript);
+      MethodDefinition planetStart = planetRotate.Methods.FirstOrDefault(
+        method => method.Name == "Start");
 
-            asModLoaderPath = asModLoader;
-            asModLoaderDef = AssemblyDefinition.ReadAssembly(asModLoader);
-        }
+      if (planetStart == null)
+      {
+        throw new Exception("PlanetRotateMouse.Start not found");
+      }
 
-        public void InjectModLoader()
-        {
-            TypeDefinition internalModLoader = asModLoaderDef.MainModule.GetType("spaar.InternalModLoader");
-            TypeDefinition internalModLoaderCopy = new TypeDefinition("spaar", "InternalModLoader", internalModLoader.Attributes, internalModLoader.BaseType);
-            foreach (var field in internalModLoader.Fields)
-            {
-                FieldDefinition fieldCopy = new FieldDefinition(field.Name, field.Attributes, field.FieldType);
-                internalModLoaderCopy.Fields.Add(fieldCopy);
-            }
-            foreach (var method in internalModLoader.Methods)
-            {
-                MethodDefinition methodCopy = new MethodDefinition(method.Name, method.Attributes, method.ReturnType);
-                methodCopy.Body = method.Body;
-                internalModLoaderCopy.Methods.Add(methodCopy);
-            }
-            asUnityScriptDef.MainModule.Types.Add(internalModLoaderCopy);
+      var p = planetStart.Body.GetILProcessor();
+      var i = p.Body.Instructions;
+      // Assembly.LoadFrom(Application.dataPath + "/Mods/SpaarModLoader.dll")
+      i.Insert(0, p.Create(OpCodes.Call,
+        Util.ImportMethod<Application>(game, "get_dataPath")));
+      i.Insert(1, p.Create(OpCodes.Ldstr, "/Mods/SpaarModLoader.dll"));
+      i.Insert(2, p.Create(OpCodes.Call,
+        Util.ImportMethod<string>(game, "Concat", typeof(string), typeof(string))));
+      i.Insert(3, p.Create(OpCodes.Call,
+        Util.ImportMethod<Assembly>(game, "LoadFrom", typeof(string))));
+      // .GetType("spaar.ModLoader.Internal.Activator()
+      i.Insert(4, p.Create(OpCodes.Ldstr, "spaar.ModLoader.Internal.Activator"));
+      i.Insert(5, p.Create(OpCodes.Callvirt,
+        Util.ImportMethod<Assembly>(game, "GetType", typeof(string))));
+      // .GetMethod("Activate")
+      i.Insert(6, p.Create(OpCodes.Ldstr, "Activate"));
+      i.Insert(7, p.Create(OpCodes.Callvirt,
+        Util.ImportMethod<Type>(game, "GetMethod", typeof(string))));
+      // .Invoke(null, null);
+      i.Insert(8, p.Create(OpCodes.Ldnull));
+      i.Insert(9, p.Create(OpCodes.Ldnull));
+      i.Insert(10, p.Create(OpCodes.Callvirt,
+        Util.ImportMethod<MethodBase>(game, "Invoke", typeof(object), typeof(object[]))));
+      i.Insert(11, p.Create(OpCodes.Pop));
 
-            asUnityScriptDef.MainModule.Import(typeof(object).GetConstructor(new Type[0]));
-            asUnityScriptDef.Write(asUnityScriptPath + ".modloader");
-        }
+      game.Write(outputPath);
     }
+
+  }
+
+  public static class Util
+  {
+    public static MethodReference ImportMethod<T>(AssemblyDefinition assembly, string name)
+    {
+      return assembly.MainModule.Import(typeof(T).GetMethod(name, Type.EmptyTypes));
+    }
+
+    public static MethodReference ImportMethod<T>(AssemblyDefinition assembly, string name, params Type[] types)
+    {
+      return assembly.MainModule.Import(typeof(T).GetMethod(name, types));
+    }
+
+    public static MethodReference ImportMethod(AssemblyDefinition assembly, string type, string method, params Type[] types)
+    {
+      TypeReference reference = assembly.MainModule.Types.First(t => t.Name == type);
+      return assembly.MainModule.Import(reference.Resolve().Methods.First(m => m.Name == method));
+    }
+  }
 }
