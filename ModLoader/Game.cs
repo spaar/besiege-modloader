@@ -4,12 +4,26 @@ using UnityEngine;
 
 namespace spaar.ModLoader
 {
+
+  /// <summary>
+  /// Handler delegate for Game.OnSimulationToggle
+  /// </summary>
+  /// <param name="simulating">Whether the game is simulating</param>
+  public delegate void OnSimulationToggle(bool simulating);
+
+  /// <summary>
+  /// Handler delegate for Game.OnLevelWon
+  /// </summary>
+  public delegate void OnLevelWon();
+
   /// <summary>
   /// Provides convenient access to various parts of the game that are often
   /// needed by mods.
   /// </summary>
-  public class Game
+  public class Game : SingleInstance<Game>
   {
+
+    public override string Name { get { return "spaar's Mod Loader: Game State"; } }
 
     private AddPiece _addPiece;
     /// <summary>
@@ -21,7 +35,7 @@ namespace spaar.ModLoader
       get
       {
         if (_addPiece == null)
-          _addPiece = UnityEngine.Object.FindObjectOfType<AddPiece>();
+          _addPiece = FindObjectOfType<AddPiece>();
         return _addPiece;
       }
     }
@@ -36,7 +50,7 @@ namespace spaar.ModLoader
       get
       {
         if (_mot == null)
-          _mot = UnityEngine.Object.FindObjectOfType<MachineObjectTracker>();
+          _mot = FindObjectOfType<MachineObjectTracker>();
         return _mot;
       }
     }
@@ -50,6 +64,59 @@ namespace spaar.ModLoader
       {
         return AddPiece.isSimulating;
       }
+    }
+
+    /// <summary>
+    /// This event is fired whenever the simulation started or stopped.
+    /// </summary>
+    public static event OnSimulationToggle OnSimulationToggle;
+
+    /// <summary>
+    /// This event is fired whenever the user completes a level.
+    /// </summary>
+    public static event OnLevelWon OnLevelWon;
+
+    private void Start()
+    {
+      Internal.ModLoader.MakeModule(this);
+    }
+
+    private bool hasNotifiedWinCondition = false;
+    private void Update()
+    {
+      if (IsSimulating)
+      {
+        if (WinCondition.hasWon && !hasNotifiedWinCondition)
+        {
+          var handler = OnLevelWon;
+          if (handler != null) handler();
+          hasNotifiedWinCondition = true;
+        }
+        else if (!WinCondition.hasWon && hasNotifiedWinCondition)
+        {
+          hasNotifiedWinCondition = false;
+        }
+      }
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+      var addPiece = AddPiece;
+      if (addPiece == null) return;
+
+      addPiece.sendSimulateMessage.Add(transform);
+    }
+
+    private void OnSimulate()
+    {
+      var handler = OnSimulationToggle;
+      if (handler != null) handler(true);
+    }
+
+    private void OnStopSimulate()
+    {
+      var handler = OnSimulationToggle;
+      if (handler != null) handler(false);
     }
 
   }

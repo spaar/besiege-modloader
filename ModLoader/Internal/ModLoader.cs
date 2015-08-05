@@ -57,6 +57,7 @@ namespace spaar.ModLoader.Internal
 
       Configuration.Load();
       Keys.Initialize();
+      Game.Initialize();
 
 #if DEV_BUILD
       Tools.ObjectExplorer.Initialize();

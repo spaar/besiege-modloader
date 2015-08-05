@@ -16,7 +16,6 @@
     /// Do not use this method as an argument to GUI.Window directly!
     /// Call this method once and store and re-use the id!
     /// </remarks>
-    /// <returns></returns>
     public static int GetWindowID()
     {
       return currentWindowID--;
