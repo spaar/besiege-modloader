@@ -58,6 +58,7 @@ namespace spaar.ModLoader.Internal
       Configuration.Load();
       Keys.Initialize();
       Game.Initialize();
+      BlockPrefabs.Initialize();
 
 #if DEV_BUILD
       Tools.ObjectExplorer.Initialize();
