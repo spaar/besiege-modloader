@@ -286,9 +286,8 @@ help - Prints this help message";
     /// Arguments are parsed and then the callback corresponding to the command
     /// is called.
     /// </summary>
-    /// <param name="console">Console to log the command and the return value to</param>
     /// <param name="input">Complete command line</param>
-    internal static void HandleCommand(string input)
+    public static void HandleCommand(string input)
     {
       var result = "";
 
