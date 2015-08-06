@@ -366,6 +366,16 @@ help - Prints this help message";
         Debug.Log("=> " + result);
     }
 
+    /// <summary>
+    /// Checks whether a command currently exists (is registered).
+    /// </summary>
+    /// <param name="command">The command to check</param>
+    /// <returns>Whether the specifed command exists</returns>
+    public static bool DoesCommandExist(string command)
+    {
+      return commands.ContainsKey(command);
+    }
+
     internal static string AutoCompleteNext(string toComplete)
     {
       List<string> commandList = new List<string>(commands.Keys);
