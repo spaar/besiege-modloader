@@ -17,6 +17,11 @@ namespace spaar.ModLoader
   public delegate void OnLevelWon();
 
   /// <summary>
+  /// Handler delegate for Game.OnKeymapperOpen
+  /// </summary>
+  public delegate void OnKeymapperOpen();
+
+  /// <summary>
   /// Provides convenient access to various parts of the game that are often
   /// needed by mods.
   /// </summary>
@@ -55,6 +60,21 @@ namespace spaar.ModLoader
       }
     }
 
+    private static BlockInfoController _boi;
+    /// <summary>
+    /// Reference to the BlockInfoController instance of the current scene.
+    /// Null if there is no BlockInfoController in the current scene.
+    /// </summary>
+    public static BlockInfoController BlockInfoController
+    {
+      get
+      {
+        if (_boi == null)
+          _boi = FindObjectOfType<BlockInfoController>();
+        return _boi;
+      }
+    }
+
     /// <summary>
     /// Whether the game is currently simulating.
     /// </summary>
@@ -76,12 +96,18 @@ namespace spaar.ModLoader
     /// </summary>
     public static event OnLevelWon OnLevelWon;
 
+    /// <summary>
+    /// This event is fired whenever the keymapper is opened.
+    /// </summary>
+    public static event OnKeymapperOpen OnKeymapperOpen;
+
     private void Start()
     {
       Internal.ModLoader.MakeModule(this);
     }
 
     private bool hasNotifiedWinCondition = false;
+    private bool hasNotifiedKeymapperOpen = false;
     private void Update()
     {
       if (IsSimulating)
@@ -95,6 +121,24 @@ namespace spaar.ModLoader
         else if (!WinCondition.hasWon && hasNotifiedWinCondition)
         {
           hasNotifiedWinCondition = false;
+        }
+      }
+
+      if (OnKeymapperOpen != null)
+      {
+        if (BlockInfoController != null
+          && BlockInfoController.menuHolder.gameObject.activeSelf
+          && !hasNotifiedKeymapperOpen)
+        {
+          var handler = OnKeymapperOpen;
+          if (handler != null) handler();
+          hasNotifiedKeymapperOpen = true;
+        }
+        else if (BlockInfoController != null
+          && !BlockInfoController.menuHolder.gameObject.activeSelf
+          && hasNotifiedKeymapperOpen)
+        {
+          hasNotifiedKeymapperOpen = false;
         }
       }
     }
