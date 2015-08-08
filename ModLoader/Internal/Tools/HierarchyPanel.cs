@@ -239,6 +239,7 @@ namespace spaar.ModLoader.Internal.Tools
     private bool EntryOrChildrenContain(HierarchyEntry entry, string text)
     {
       string toSearch = text.ToLower();
+      if (entry.Transform == null) return false;
       if (entry.Transform.name.ToLower().Contains(toSearch)) return true;
       foreach (var child in entry.Children)
       {
