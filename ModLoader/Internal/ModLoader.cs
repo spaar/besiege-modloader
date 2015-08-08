@@ -85,7 +85,7 @@ namespace spaar.ModLoader.Internal
       var keys = Configuration.GetKeys();
       foreach (var key in keys)
       {
-        if (key.StartsWith("modStatus:"))
+        if (key.StartsWith("modStatus:", StringComparison.CurrentCulture))
         {
           var mod = key.Replace("modStatus:", "");
           var modEnabled = Configuration.GetBool(key, true);

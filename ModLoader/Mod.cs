@@ -73,6 +73,5 @@ namespace spaar.ModLoader
     /// user at runtime.
     /// </summary>
     public abstract void OnUnload();
-
   }
 }

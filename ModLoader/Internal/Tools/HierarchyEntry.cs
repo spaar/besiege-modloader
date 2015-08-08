@@ -6,7 +6,7 @@ namespace spaar.ModLoader.Internal.Tools
   public class HierarchyEntry
   {
     public readonly Transform Transform;
-    public readonly HashSet<HierarchyEntry> Children;
+    public HashSet<HierarchyEntry> Children;
 
     public bool HasChildren { get { return Children.Count > 0; } }
     public bool IsExpanded { get; set; }

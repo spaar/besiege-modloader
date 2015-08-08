@@ -86,7 +86,7 @@ namespace spaar.ModLoader.Internal.Tools
         }
         else if (@object is Vector3)
         {
-          Vector3 vector3 = (Vector3)activeMember.GetValue();
+          var vector3 = (Vector3)activeMember.GetValue();
           float v;
           if (activeMemberNewValue != null
             && float.TryParse(activeMemberNewValue.ToString(), out v))
@@ -231,7 +231,7 @@ namespace spaar.ModLoader.Internal.Tools
         bool canModifyType = IsSupported(value);
         if (Elements.Tools.DoCollapseArrow(member.IsExpanded, canModifyType))
         {
-            member.IsExpanded = !member.IsExpanded;
+          member.IsExpanded = !member.IsExpanded;
         }
 
         var typeStyle = new GUIStyle(Elements.Labels.LogEntry)
@@ -271,7 +271,7 @@ namespace spaar.ModLoader.Internal.Tools
           }
           else if (value is Vector3)
           {
-            var vec3Value = (Vector3) value;
+            var vec3Value = (Vector3)value;
 
 
             // X
@@ -352,7 +352,7 @@ namespace spaar.ModLoader.Internal.Tools
     public bool IsSupported(object value)
     {
       return value is string || value is bool || value is Vector3
-          || value is int    || value is float;
+          || value is int || value is float;
     }
   }
 }

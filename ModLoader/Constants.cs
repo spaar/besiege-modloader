@@ -6,6 +6,7 @@ namespace spaar.ModLoader
   /// All block types in the game. These values can be used as indices to
   /// AddPiece.blockTypes.
   /// </summary>
+#pragma warning disable CS1591 // Don't need documentation for each of these
   public enum BlockType
   {
     SmallWoodBlock = 0,
@@ -129,5 +130,5 @@ namespace spaar.ModLoader
     GrenadeBlock = 54,
     SmallPropellor = 55
   }
-
+#pragma warning restore CS1591
 }

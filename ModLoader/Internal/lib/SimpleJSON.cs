@@ -69,11 +69,15 @@ namespace SimpleJSON
     {
     }
 
+#pragma warning disable RECS0029 // Warns about property or indexer setters
+    // and event adders or removers that do not use the value parameter
+    // This is fine in this case, the setters are meant to be overriden
     public virtual JSONNode this[int aIndex] { get { return null; } set { } }
 
     public virtual JSONNode this[string aKey] { get { return null; } set { } }
 
     public virtual string Value { get { return ""; } set { } }
+#pragma warning restore RECS0029
 
     public virtual int Count { get { return 0; } }
 

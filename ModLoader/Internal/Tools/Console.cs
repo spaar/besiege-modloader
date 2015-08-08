@@ -71,7 +71,7 @@ namespace spaar.ModLoader.Internal.Tools
       {
         foreach (var arg in args)
         {
-          bool val = !arg.StartsWith("!");
+          bool val = !arg.StartsWith("!", StringComparison.Ordinal);
           string key = arg;
           if (!val) key = arg.Substring(1);
           try

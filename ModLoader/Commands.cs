@@ -254,17 +254,17 @@ help - Prints this help message";
     /// <returns>The parsed argument</returns>
     private static string GetArgument(string[] parts, int i, out int newI)
     {
-      if (parts[i].StartsWith("\""))
+      if (parts[i].StartsWith("\"", StringComparison.Ordinal))
       {
         var currentArg = parts[i].Substring(1);
-        if (parts[i].EndsWith("\""))
+        if (parts[i].EndsWith("\"", StringComparison.Ordinal))
         {
           currentArg = currentArg.Substring(0, currentArg.Length - 1);
         }
         else
         {
           i++;
-          while (!parts[i].EndsWith("\""))
+          while (!parts[i].EndsWith("\"", StringComparison.Ordinal))
           {
             currentArg += " " + parts[i];
             i++;
@@ -304,7 +304,7 @@ help - Prints this help message";
       var namedArgs = new Dictionary<string, string>();
       for (int i = 1; i < parts.Length; i++)
       {
-        if (parts[i].StartsWith("--"))
+        if (parts[i].StartsWith("--", StringComparison.Ordinal))
         {
           // Named arg
           var name = parts[i].Substring(2);
