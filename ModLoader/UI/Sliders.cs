@@ -30,7 +30,7 @@ namespace spaar.ModLoader.UI
       {
         normal = { background = Elements.LoadImage("slider-thumb.png") },
         hover = { background = Elements.LoadImage("slider-thumb-hover.png") },
-        active = { background = Elements.LoadImage("silder-thumb-active.png") }
+        active = { background = Elements.LoadImage("slider-thumb-active.png") }
       };
     }
   }
