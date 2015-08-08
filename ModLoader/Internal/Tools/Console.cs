@@ -26,9 +26,9 @@ namespace spaar.ModLoader.Internal.Tools
     private int windowID = Util.GetWindowID();
     private Vector2 scrollPosition;
     private string commandText = "";
-    private string lastCommand = "";
     private string nonCompletedText = "";
     private bool doingCompletion = false;
+    private int historyIndex = 0;
 
     private bool visible = false;
     private bool interfaceEnabled;
@@ -160,7 +160,26 @@ namespace spaar.ModLoader.Internal.Tools
       {
         if (Event.current.keyCode == KeyCode.UpArrow)
         {
-          commandText = lastCommand;
+          if (historyIndex > 0)
+          {
+            historyIndex--;
+          }
+          commandText = Commands.History[historyIndex];
+          moveCursorNextFrame = true;
+          Commands.AutoCompleteReset();
+        }
+        else if (Event.current.keyCode == KeyCode.DownArrow)
+        {
+          if (historyIndex < Commands.History.Count - 1)
+          {
+            historyIndex++;
+            commandText = Commands.History[historyIndex];
+          }
+          else if (historyIndex == Commands.History.Count - 1)
+          {
+            historyIndex++;
+            commandText = "";
+          }
           moveCursorNextFrame = true;
           Commands.AutoCompleteReset();
         }
@@ -192,7 +211,8 @@ namespace spaar.ModLoader.Internal.Tools
         }
         else
         {
-          var editor = (TextEditor)GUIUtility.GetStateObject(typeof(TextEditor), GUIUtility.keyboardControl);
+          var editor = (TextEditor)GUIUtility.GetStateObject(typeof(TextEditor),
+            GUIUtility.keyboardControl);
           editor.pos = commandText.Length + 1;
           editor.selectPos = commandText.Length + 1;
           moveCursorNextFrame = false;
@@ -209,8 +229,8 @@ namespace spaar.ModLoader.Internal.Tools
       if (input.IndexOfAny(Environment.NewLine.ToCharArray()) != -1)
       {
         commandText = "";
-        lastCommand = input.Replace("\n", "").Replace("\r", "");
         Commands.HandleCommand(input.Replace("\n", "").Replace("\r", ""));
+        historyIndex++;
         moveCursorNextFrame = true;
       }
       else
@@ -245,7 +265,7 @@ namespace spaar.ModLoader.Internal.Tools
       var lineCount = entry.log.Split('\n').Length;
 
       GUILayout.TextField(entry.log, style,
-        GUILayout.Height(Elements.Settings.LogEntrySize*lineCount));
+        GUILayout.Height(Elements.Settings.LogEntrySize * lineCount));
 
       GUILayout.EndHorizontal();
 
@@ -278,7 +298,7 @@ namespace spaar.ModLoader.Internal.Tools
       {
         Directory.CreateDirectory(Application.dataPath + "/Mods/Debug");
       }
-      TextWriter tw = new StreamWriter(
+      var tw = new StreamWriter(
         Application.dataPath + "/Mods/Debug/ConsoleOutput.txt");
 
       var logText = "";

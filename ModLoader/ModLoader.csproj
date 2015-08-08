@@ -95,7 +95,6 @@
     <Compile Include="Internal\InternalMod.cs" />
     <Compile Include="Internal\Key.cs" />
     <Compile Include="Internal\lib\SimpleJSON.cs" />
-    <Compile Include="Internal\SerializableDictionary.cs" />
     <Compile Include="Internal\Tools\ComponentEntry.cs" />
     <Compile Include="Internal\Tools\Console.cs" />
     <Compile Include="Internal\Keys.cs" />

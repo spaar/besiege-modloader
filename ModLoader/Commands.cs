@@ -68,6 +68,9 @@ namespace spaar.ModLoader
     // Necessary state for auto-completion
     private static List<string> completedCommands = new List<string>();
 
+    private static List<string> history = new List<string>();
+    public static IList<string> History { get { return history.AsReadOnly(); } }
+
     /// <summary>
     /// Registers the general built-in commands.
     /// Specifically help and version.
@@ -193,7 +196,7 @@ help - Prints this help message";
     public static bool RegisterCommand(string command, CommandCallback callback,
       string helpText = "")
     {
-      Command com = new Command();
+      var com = new Command();
       com.callback = callback;
       com.helpMessage = helpText;
       var callingAssemblyName = Assembly.GetCallingAssembly().FullName;
@@ -222,7 +225,7 @@ help - Prints this help message";
       }
       else
       {
-        List<Command> newList = new List<Command>();
+        var newList = new List<Command>();
         newList.Add(com);
         commands.Add(command, newList);
       }
@@ -289,6 +292,8 @@ help - Prints this help message";
     /// <param name="input">Complete command line</param>
     public static void HandleCommand(string input)
     {
+      history.Add(input);
+
       var result = "";
 
       // Input parsing
@@ -378,8 +383,8 @@ help - Prints this help message";
 
     internal static string AutoCompleteNext(string toComplete)
     {
-      List<string> commandList = new List<string>(commands.Keys);
-      List<string> matchingCommands = commandList.FindAll(
+      var commandList = new List<string>(commands.Keys);
+      var matchingCommands = commandList.FindAll(
         c => c.StartsWith(toComplete, StringComparison.InvariantCultureIgnoreCase));
 
       if (matchingCommands.Count == 0)
