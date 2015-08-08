@@ -4,6 +4,7 @@ using System.Linq;
 using spaar.ModLoader.UI;
 using UnityEngine;
 
+#if DEV_BUILD
 namespace spaar.ModLoader.Internal.Tools
 {
   public class HierarchyPanel : MonoBehaviour
@@ -249,3 +250,4 @@ namespace spaar.ModLoader.Internal.Tools
     }
   }
 }
+#endif

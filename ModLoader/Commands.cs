@@ -247,6 +247,15 @@ help - Prints this help message";
       helpMessages[mod] = message;
     }
 
+    internal static void RegisterHelpMessage(Assembly callingAssembly, string message)
+    {
+      // For CommandsCompat
+      var mod = Internal.ModLoader.Instance.LoadedMods.Find(
+        m => m.AssemblyName == callingAssembly.FullName);
+
+      helpMessages[mod] = message;
+    }
+
     /// <summary>
     /// Parse the next argument from parts, starting at i.
     /// This respects quotes, so that arguments can contain spaces.

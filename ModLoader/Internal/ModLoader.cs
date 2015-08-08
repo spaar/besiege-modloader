@@ -118,9 +118,39 @@ namespace spaar.ModLoader.Internal
 
             if (modTypes.Count < 1)
             {
+#if COMPAT
+              Debug.LogError(fileInfo.Name
+                + " contains no implementation of Mod. Trying fallback system.");
+
+              // Fallback to old attribute-way of loading, this will be removed
+              // in the future.
+
+              bool fallbackWorked = false;
+              foreach (var type in types)
+              {
+                var attrib = Attribute.GetCustomAttribute(type, typeof(spaar.Mod)) as spaar.Mod;
+                if (attrib != null)
+                {
+                  gameObject.AddComponent(type);
+                  attrib.assembly = assembly;
+                  ModCompatWrapper wrapper = new ModCompatWrapper();
+                  wrapper.SetCompatInfo(attrib.author, attrib.Name(), attrib.version);
+                  Debug.Log("Loaded " + attrib.Name() + " (" + attrib.version + ") by " + attrib.author);
+                  Debug.LogWarning("This mod was loade using a compatibility wrapper for the old system.\nPlease upgrade the mod.");
+                  loadedMods.Add(new InternalMod(wrapper, assembly));
+                  fallbackWorked = true;
+                }
+              }
+              if (!fallbackWorked)
+              {
+                Debug.Log("Fallback system failed too. Skipping.");
+              }
+              continue;
+#else
               Debug.LogError(fileInfo.Name
                 + " contains no implementation of Mod. Not loading it.");
               continue;
+#endif
             }
             else if (modTypes.Count > 1)
             {
