@@ -85,7 +85,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlockPrefabs.cs" />
     <Compile Include="Commands.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="ConfigurationEventArgs.cs" />
@@ -108,7 +107,6 @@
     <Compile Include="Mod.cs" />
     <Compile Include="Internal\ModLoader.cs" />
     <Compile Include="Internal\Tools\ObjectExplorer.cs" />
-    <Compile Include="PrefabHolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SingleInstance.cs" />
     <Compile Include="UI\Buttons.cs" />
@@ -118,6 +116,7 @@
     <Compile Include="UI\Labels.cs" />
     <Compile Include="UI\Scrollview.cs" />
     <Compile Include="UI\Settings.cs" />
+    <Compile Include="UI\Sliders.cs" />
     <Compile Include="UI\Tools.cs" />
     <Compile Include="UI\ModGUI.cs" />
     <Compile Include="UI\Windows.cs" />

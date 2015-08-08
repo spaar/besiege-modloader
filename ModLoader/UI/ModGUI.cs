@@ -53,6 +53,10 @@ namespace spaar.ModLoader.UI
       Skin.horizontalScrollbar = Elements.Scrollview.Horizontal;
       Skin.horizontalScrollbarThumb = Elements.Scrollview.ThumbHorizontal;
       Skin.scrollView = Elements.Windows.ClearDark;
+      Skin.horizontalSlider = Elements.Sliders.Horizontal;
+      Skin.horizontalSliderThumb = Elements.Sliders.ThumbHorizontal;
+      Skin.verticalSlider = Elements.Sliders.Vertical;
+      Skin.verticalSliderThumb = Elements.Sliders.ThumbVertical;
     }
   }
 }
