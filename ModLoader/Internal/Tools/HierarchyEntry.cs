@@ -29,5 +29,10 @@ namespace spaar.ModLoader.Internal.Tools
       }
     }
 
+    public override int GetHashCode()
+    {
+      return Transform.GetHashCode();
+    }
+
   }
 }

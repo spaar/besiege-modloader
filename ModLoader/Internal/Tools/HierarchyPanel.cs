@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using spaar.ModLoader.UI;
 using UnityEngine;
 
@@ -12,11 +13,12 @@ namespace spaar.ModLoader.Internal.Tools
 
     private readonly HashSet<HierarchyEntry> inspectorEntries
       = new HashSet<HierarchyEntry>();
+    private readonly HashSet<HierarchyEntry> searchFilteredEntries
+      = new HashSet<HierarchyEntry>();
     private Vector2 hierarchyScroll = Vector2.zero;
 
     private string searchFieldText = SEARCH_FIELD_DEFAULT;
     private bool isSearching = false;
-    private HashSet<HierarchyEntry> searchFilteredEntries;
 
     private void Start()
     {
@@ -102,14 +104,7 @@ namespace spaar.ModLoader.Internal.Tools
       hierarchyScroll = GUILayout.BeginScrollView(hierarchyScroll, false, true,
         GUILayout.Width(Elements.Settings.HierarchyPanelWidth));
 
-      if (isSearching)
-      {
-        DoShowEntries(searchFilteredEntries);
-      }
-      else
-      {
-        DoShowEntries(inspectorEntries);
-      }
+      DoShowEntries(inspectorEntries);
 
       GUILayout.EndScrollView();
 
@@ -168,6 +163,11 @@ namespace spaar.ModLoader.Internal.Tools
           // The object has been deleted
           continue;
         }
+        if (isSearching && !searchFilteredEntries.Contains(entry))
+        {
+          // The search filtered this object out
+          continue;
+        }
 
         GUILayout.BeginHorizontal();
         Elements.Tools.Indent(iterationDepth);
@@ -213,37 +213,33 @@ namespace spaar.ModLoader.Internal.Tools
 
     private void RefreshSearchList()
     {
-      searchFilteredEntries = new HashSet<HierarchyEntry>();
+      searchFilteredEntries.Clear();
       foreach (var entry in inspectorEntries)
       {
-        if (EntryOrChildrenContain(entry, searchFieldText))
-        {
-          var newEntry = new HierarchyEntry(entry.Transform);
-          newEntry.Children = FilterChildren(newEntry.Children, searchFieldText);
-          searchFilteredEntries.Add(newEntry);
-        }
+        searchFilteredEntries.UnionWith(Flatten(entry));
       }
+      searchFilteredEntries.RemoveWhere(
+        e => !EntryOrChildrenContain(e, searchFieldText));
     }
 
-    private HashSet<HierarchyEntry> FilterChildren(HashSet<HierarchyEntry> children,
-      string text)
+    private HashSet<HierarchyEntry> Flatten(HierarchyEntry root)
     {
-      var result = new HashSet<HierarchyEntry>();
-      foreach (var child in children)
+      var flattened = new HashSet<HierarchyEntry>() { root };
+      var children = root.Children;
+      if (children != null)
       {
-        if (EntryOrChildrenContain(child, text))
+        foreach (var child in children)
         {
-          result.Add(child);
-          if (child.HasChildren)
-            child.Children = FilterChildren(child.Children, text);
+          flattened.UnionWith(Flatten(child));
         }
       }
-      return result;
+      return flattened;
     }
 
     private bool EntryOrChildrenContain(HierarchyEntry entry, string text)
     {
-      if (entry.Transform.name.Contains(text)) return true;
+      string toSearch = text.ToLower();
+      if (entry.Transform.name.ToLower().Contains(toSearch)) return true;
       foreach (var child in entry.Children)
       {
         if (EntryOrChildrenContain(child, text)) return true;

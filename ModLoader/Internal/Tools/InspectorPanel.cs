@@ -7,12 +7,6 @@ namespace spaar.ModLoader.Internal.Tools
 {
   public class InspectorPanel : MonoBehaviour
   {
-    // TODO: Sometimes when changing int values, all text fields break.
-    //       Unity's GUI system is then of the opinion that the control key
-    //       is held down and acts accordingly. To fix that, just press
-    //       control. This bug should be fixed, but after a lot of trying
-    //       around, I still have no idea how or why this happens.
-
     enum FieldType
     {
       Normal, VectorX, VectorY, VectorZ
