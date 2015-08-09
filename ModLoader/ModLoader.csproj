@@ -99,6 +99,7 @@
     <Compile Include="Internal\InternalMod.cs" />
     <Compile Include="Internal\Key.cs" />
     <Compile Include="Internal\lib\SimpleJSON.cs" />
+    <Compile Include="Internal\SettingsComponent.cs" />
     <Compile Include="Internal\Tools\ComponentEntry.cs" />
     <Compile Include="Internal\Tools\Console.cs" />
     <Compile Include="Internal\Keys.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Internal\Tools\ObjectExplorer.cs" />
     <Compile Include="Compat\ModCompat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsMenu.cs" />
     <Compile Include="SingleInstance.cs" />
     <Compile Include="UI\Buttons.cs" />
     <Compile Include="UI\Colors.cs" />
