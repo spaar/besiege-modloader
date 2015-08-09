@@ -22,7 +22,7 @@ namespace spaar.ModLoader.Internal.Tools
     private readonly int windowID = Util.GetWindowID();
     private Rect windowRect = new Rect(20, 20, 800, 600);
 
-    private bool isVisible = false;
+    public bool IsVisible = false;
 
     private void Start()
     {
@@ -36,7 +36,7 @@ namespace spaar.ModLoader.Internal.Tools
     {
       if (Keys.K["ObjectExplorer"])
       {
-        isVisible = !isVisible;
+        IsVisible = !IsVisible;
       }
     }
 
@@ -44,7 +44,7 @@ namespace spaar.ModLoader.Internal.Tools
     {
       GUI.skin = ModGUI.Skin;
 
-      if (isVisible)
+      if (IsVisible)
       {
         windowRect = GUILayout.Window(windowID, windowRect, DoWindow,
           WindowTitle);

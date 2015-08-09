@@ -33,6 +33,5 @@ namespace spaar.ModLoader.Internal.Tools
     {
       return Transform.GetHashCode();
     }
-
   }
 }

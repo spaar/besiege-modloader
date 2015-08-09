@@ -12,18 +12,47 @@ namespace spaar.ModLoader.Internal.Tools
     private const string SEARCH_FIELD_NAME = "search_field";
     private const string SEARCH_FIELD_DEFAULT = "Search";
 
-    private readonly HashSet<HierarchyEntry> inspectorEntries
+    private HashSet<HierarchyEntry> inspectorEntries
       = new HashSet<HierarchyEntry>();
-    private readonly HashSet<HierarchyEntry> searchFilteredEntries
+    private HashSet<HierarchyEntry> searchFilteredEntries
       = new HashSet<HierarchyEntry>();
     private Vector2 hierarchyScroll = Vector2.zero;
 
     private string searchFieldText = SEARCH_FIELD_DEFAULT;
     private bool isSearching = false;
 
+    private bool shouldUpdate = false;
+
     private void Start()
     {
       RefreshGameObjectList();
+
+      shouldUpdate = Configuration.GetBool("objExpAutoUpdate", false);
+      StartCoroutine(AutoUpdate());
+
+      Configuration.OnConfigurationChange += OnConfigurationChange;
+    }
+
+    private void OnConfigurationChange(object s, ConfigurationEventArgs e)
+    {
+      var old = shouldUpdate;
+      shouldUpdate = Configuration.GetBool("objExpAutoUpdate", false);
+      if (!old)
+      {
+        StartCoroutine(AutoUpdate());
+      }
+    }
+
+    private System.Collections.IEnumerator AutoUpdate()
+    {
+      while (shouldUpdate)
+      {
+        yield return new WaitForSeconds(0.5f);
+        if (ObjectExplorer.Instance.IsVisible)
+        {
+          RefreshGameObjectList();
+        }
+      }
     }
 
     private void OnLevelWasLoaded(int level)
@@ -197,18 +226,35 @@ namespace spaar.ModLoader.Internal.Tools
 
     public void RefreshGameObjectList()
     {
-      inspectorEntries.Clear();
+      var newEntries = new HashSet<HierarchyEntry>();
       foreach (var transform in FindObjectsOfType<Transform>())
       {
         if (transform.parent == null)
         {
           var entry = new HierarchyEntry(transform);
-          inspectorEntries.Add(entry);
+          newEntries.Add(entry);
         }
       }
+      CopyIsExpanded(inspectorEntries, newEntries);
+      inspectorEntries = newEntries;
       if (isSearching)
       {
         RefreshSearchList();
+      }
+    }
+
+    private void CopyIsExpanded(HashSet<HierarchyEntry> src,
+      HashSet<HierarchyEntry> dest)
+    {
+      foreach (var entry in src)
+      {
+        HierarchyEntry newEntry = null;
+        if ((newEntry = dest.FirstOrDefault(e => e.Transform == entry.Transform))
+          != null)
+        {
+          newEntry.IsExpanded = entry.IsExpanded;
+          CopyIsExpanded(entry.Children, newEntry.Children);
+        }
       }
     }
 
