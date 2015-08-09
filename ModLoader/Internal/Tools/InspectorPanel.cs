@@ -152,7 +152,7 @@ namespace spaar.ModLoader.Internal.Tools
 
       GUILayout.BeginVertical();
       DisplayFilters();
-      DisplayAutoUpdateToggle();
+      DisplayUtilityButtons();
       GUILayout.EndVertical();
 
       GUILayout.EndHorizontal();
@@ -171,13 +171,27 @@ namespace spaar.ModLoader.Internal.Tools
       }
     }
 
-    private void DisplayAutoUpdateToggle()
+    private void DisplayUtilityButtons()
     {
       var autoUpdate = Configuration.GetBool("objExpAutoUpdate", false);
       var style = autoUpdate ? Elements.Buttons.Default
                              : Elements.Buttons.Disabled;
 
       GUILayout.FlexibleSpace();
+      if (GUILayout.Button("Focus"))
+      {
+        var mo = Camera.main.GetComponent<MouseOrbit>();
+        if (mo != null)
+          mo.target = SelectedGameObject.transform;
+      }
+      if (GUILayout.Button("Select focused"))
+      {
+        var mo = Camera.main.GetComponent<MouseOrbit>();
+        if (mo != null && mo.target != null)
+        {
+          SelectedGameObject = mo.target.gameObject;
+        }
+      }
       if (GUILayout.Button("Auto Update", style))
       {
         Configuration.SetBool("objExpAutoUpdate", !autoUpdate);
