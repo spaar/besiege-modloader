@@ -267,7 +267,15 @@ namespace spaar.ModLoader.Internal
             + " Unexpected behaviour may occur.");
         }
 
-        mod.Activate();
+        try
+        {
+          mod.Activate();
+        }
+        catch (Exception)
+        {
+          // Ignore the exception, it was printed to the console, modder's
+          // responsibility
+        }
       }
     }
 
@@ -275,7 +283,15 @@ namespace spaar.ModLoader.Internal
     {
       foreach (var mod in loadedMods)
       {
-        mod.Deactivate();
+        try
+        {
+          mod.Deactivate();
+        }
+        catch (Exception)
+        {
+          // Ignore the exception, it was printed to the console, modder's
+          // responsibility
+        }
       }
 
       foreach (var pair in modStatus)
@@ -284,6 +300,8 @@ namespace spaar.ModLoader.Internal
       }
 
       Configuration.Save();
+
+      throw new Exception("Test Exception");
     }
 
     /// <summary>
