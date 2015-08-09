@@ -152,6 +152,7 @@ namespace spaar.ModLoader.Internal.Tools
 
       GUILayout.BeginVertical();
       DisplayFilters();
+      DisplayAutoUpdateToggle();
       GUILayout.EndVertical();
 
       GUILayout.EndHorizontal();
@@ -167,6 +168,19 @@ namespace spaar.ModLoader.Internal.Tools
         {
           filter[pair.Key] = !filter[pair.Key];
         }
+      }
+    }
+
+    private void DisplayAutoUpdateToggle()
+    {
+      var autoUpdate = Configuration.GetBool("objExpAutoUpdate", false);
+      var style = autoUpdate ? Elements.Buttons.Default
+                             : Elements.Buttons.Disabled;
+
+      GUILayout.FlexibleSpace();
+      if (GUILayout.Button("Auto Update", style))
+      {
+        Configuration.SetBool("objExpAutoUpdate", !autoUpdate);
       }
     }
 
