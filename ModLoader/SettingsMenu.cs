@@ -8,7 +8,7 @@ using UnityEngine;
 namespace spaar.ModLoader
 {
   /// <summary>
-  /// Callback delegate for the default toggle setting.
+  /// Callback delegate for a toggle setting.
   /// </summary>
   /// <param name="active">Whether the toggle is active</param>
   public delegate void SettingsToggle(bool active);

@@ -318,7 +318,7 @@ namespace spaar.ModLoader
     /// </summary>
     /// <param name="key">Key to check</param>
     /// <returns>Whether the key exists</returns>
-    public static bool KeyExists(string key)
+    public static bool DoesKeyExist(string key)
     {
       var mod = GetModFromAssembly(Assembly.GetCallingAssembly());
       if (mod == null)
@@ -329,6 +329,14 @@ namespace spaar.ModLoader
 
       return configs.ContainsKey(mod.Mod.Name)
         && configs[mod.Mod.Name].ContainsKey(key);
+    }
+
+    [Obsolete("KeyExists is deprecated, use DoesKeyExist instead")]
+    public static bool KeyExists(string key)
+    {
+      Debug.LogWarning("Use Configuration.DoesKeyExist instead of Configuration.KeyExists.\n"
+        + "Configuration.KeyExists is deprecated and will be removed.");
+      return DoesKeyExist(key);
     }
 
     /// <summary>
