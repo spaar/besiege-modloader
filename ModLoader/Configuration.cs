@@ -392,6 +392,10 @@ namespace spaar.ModLoader
     {
       InitializeCommand();
 
+      if (!Directory.Exists(Application.dataPath + "/Mods/Config/"))
+      {
+        Directory.CreateDirectory(Application.dataPath + "/Mods/Config/");
+      }
       var files = new DirectoryInfo(Application.dataPath + "/Mods/Config/")
         .GetFiles("*.json");
       foreach (var file in files)
