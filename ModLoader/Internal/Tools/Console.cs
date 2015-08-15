@@ -25,6 +25,7 @@ namespace spaar.ModLoader.Internal.Tools
     private Rect windowRect;
     private int windowID = Util.GetWindowID();
     private Vector2 scrollPosition;
+
     private string commandText = "";
     private string nonCompletedText = "";
     private bool doingCompletion = false;
@@ -33,6 +34,8 @@ namespace spaar.ModLoader.Internal.Tools
     private bool visible = false;
     private bool interfaceEnabled;
     private Dictionary<LogType, bool> messageFilter;
+
+    private int maxMessages = 250;
 
     /// <summary>
     /// Initializes a new console, with a disabled interface.
@@ -112,6 +115,15 @@ namespace spaar.ModLoader.Internal.Tools
     public void EnableInterface()
     {
       interfaceEnabled = true;
+
+      // Load configuration values here as well
+      maxMessages = Configuration.GetInt("maxConsoleMessages", 250);
+      Configuration.OnConfigurationChange += OnConfigurationChange;
+    }
+
+    private void OnConfigurationChange(object s, ConfigurationEventArgs e)
+    {
+      maxMessages = Configuration.GetInt("maxConsoleMessages", 250);
     }
 
     private void Update()
@@ -288,6 +300,10 @@ namespace spaar.ModLoader.Internal.Tools
     private void HandleLog(string logString, string stackTrace, LogType type)
     {
       entries.Add(new LogEntry(type, logString, stackTrace));
+      if (entries.Count > maxMessages)
+      {
+        entries.RemoveAt(0);
+      }
       scrollPosition.y = float.PositiveInfinity; // Auto-scrolling
     }
 
