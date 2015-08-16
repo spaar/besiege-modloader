@@ -11,10 +11,10 @@ namespace spaar.ModLoader
   /// Delegate to use with registering commands.
   /// </summary>
   /// <param name="args">The unnamed arguments passed on the command line,
-  /// in the order they appear</param>
-  /// <param name="namedArgs">The named arguments passed on the command line</param>
+  /// in the order they appear.</param>
+  /// <param name="namedArgs">The named arguments passed on the command line.</param>
   /// <returns>Result of the command, will be printed to the console,
-  /// if not null or empty string</returns>
+  /// if not null or empty string.</returns>
   public delegate string CommandCallback(string[] args,
     IDictionary<string, string> namedArgs);
 
@@ -69,6 +69,10 @@ namespace spaar.ModLoader
     private static List<string> completedCommands = new List<string>();
 
     private static List<string> history = new List<string>();
+    /// <summary>
+    /// List of all executed commands.
+    /// This returns a read-only list.
+    /// </summary>
     public static IList<string> History { get { return history.AsReadOnly(); } }
 
     /// <summary>

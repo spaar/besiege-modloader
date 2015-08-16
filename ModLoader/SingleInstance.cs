@@ -2,6 +2,11 @@
 
 namespace spaar.ModLoader
 {
+  /// <summary>
+  /// Singleton for MonoBehaviours.
+  /// Creates a game object for your component if no instance is found.
+  /// </summary>
+  /// <typeparam name="T">The class you want to make a singleton</typeparam>
   public abstract class SingleInstance<T> : MonoBehaviour
     where T : SingleInstance<T>
   {
@@ -12,8 +17,18 @@ namespace spaar.ModLoader
 
     private static T _instance;
 
+    // Make it impossible to construct a SingleInstance manually
+    /// <exclude />
+    protected SingleInstance()
+    {
+
+    }
+
+
     /// <summary>
     /// Return the single instance.
+    /// If none exists, a new game object is created and the component is added
+    /// to it.
     /// </summary>
     public static T Instance
     {

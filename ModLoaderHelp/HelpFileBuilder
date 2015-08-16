@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shfbBuild product="Sandcastle Help File Builder" version="2015.5.2.0" projectFile="D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\ModLoaderHelp.shfbproj" started="02.06.2015 19:59:18">
+<shfbBuild product="Sandcastle Help File Builder and Tools" version="2015.7.25.0" projectFile="D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\ModLoaderHelp.shfbproj" started="16.08.2015 14:07:25">
 <buildStep step="Initializing">
 Finding tools...
 The Sandcastle tools are located in &#39;D:\Programme\EWSoftware\Sandcastle Help File Builder\&#39;
 Searching for HTML Help 1 compiler...
 Found HTML Help 1 compiler in &#39;C:\Program Files (x86)\HTML Help Workshop\&#39;
 Locating components in the following folder(s):
-   D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp
+    D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp
+    C:\ProgramData\EWSoftware\Sandcastle Help File Builder\Components and Plug-Ins\
+    D:\Programme\EWSoftware\Sandcastle Help File Builder\
+Framework reflection data location: D:\Programme\EWSoftware\Sandcastle Help File Builder\Data\.NETFramework
 Using presentation style &#39;VS2013&#39; located in &#39;D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013&#39;
 Loading and initializing plug-ins...
-Lightweight Website Style Version 2015.5.2.0
+Lightweight Website Style Version 2015.7.25.0
 Copyright &#169; 2006-2015, Eric Woodruff, All Rights Reserved
 Portions Copyright &#169; 2014, Sam Harwell, All Rights Reserved
+-------------------------------
+Clearing any prior web/markdown output...
 </buildStep>
 <buildStep step="ValidatingDocumentationSources">
 Validating and copying documentation source information
@@ -20,77 +25,80 @@ Source: D:\Programme\Besiege\Mod_Src\ModLoader\ModLoader\ModLoader.csproj
 
 Parsing project files
     Found assembly &#39;D:\Programme\Besiege\Mod_Src\ModLoader\ModLoader\bin\Debug\SpaarModLoader.dll&#39;
+SHFB: Warning BE0007: A project with a different or higher framework version was found.  Changing project FrameworkVersion property from &#39;.NET Framework 4.5&#39; to &#39;.NET Framework 3.5&#39; for the build.
 
 References to include (excluding framework assemblies):
     Assembly-UnityScript, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL
     UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL
 
 Copying XML comments files
-    D:\Programme\Besiege\Mod_Src\ModLoader\ModLoader\bin\SpaarModLoader.XML -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\SpaarModLoader.XML
+    D:\Programme\Besiege\Mod_Src\ModLoader\ModLoader\bin\Debug\SpaarModLoader.XML -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\SpaarModLoader.XML
 </buildStep>
 <buildStep step="GenerateSharedContent">
 Generating shared content files (en-US, English (United States))...
 <plugIn name="Lightweight Website Style" behavior="After" priority="1000">
-</plugIn>    Last step completed in 00:00:00,0020
+</plugIn>    Last step completed in 00:00:00,0060
 </buildStep>
 <buildStep step="GenerateApiFilter">
 Generating API filter for MRefBuilder...
-    Last step completed in 00:00:00,0020
+    Last step completed in 00:00:00,0050
 </buildStep>
 <buildStep step="GenerateReflectionInfo">
 Generating reflection information...
-[C:\Program Files (x86)\MSBuild\12.0\bin\MSBuild.exe]
-Der Buildvorgang wurde am 02.06.2015 19:59:18 gestartet.
+[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - GenerateRefInfo.proj]
+Der Buildvorgang wurde am 16.08.2015 14:07:25 gestartet.
 Projekt &quot;D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\GenerateRefInfo.proj&quot; auf Knoten &quot;1&quot; (Standardziele).
 PrepareForBuild:
   Das Verzeichnis &quot;obj\Debug\&quot; wird erstellt.
 GenerateRefInfo:
-  MRefBuilder (v2015.5.2.0)
+  MRefBuilder (v2015.7.25.0)
   Copyright &#184; 2006-2015, Microsoft Corporation, All Rights Reserved.
-  Portions Copyright &#184; 2006-2014, Eric Woodruff, All Rights Reserved.
+  Portions Copyright &#184; 2006-2015, Eric Woodruff, All Rights Reserved.
   Loaded 1 assemblies for reflection and 3 dependency assemblies.
-  Wrote information on 1 namespaces, 6 types, and 13 members
+  Wrote information on 2 namespaces, 27 types, and 226 members
   Die Datei wird von &quot;reflection.org&quot; in &quot;reflection.all&quot; kopiert.
-  XslTransform (v2015.5.2.0)
+  XslTransform (v2015.7.25.0)
   Copyright &#184; 2006-2015, Microsoft Corporation, All Rights Reserved.
-  Portions Copyright &#184; 2006-2014, Eric Woodruff, All Rights Reserved.
+  Portions Copyright &#184; 2006-2015, Eric Woodruff, All Rights Reserved.
   Applying XSL transformation &#39;D:\Programme\EWSoftware\Sandcastle Help File Builder\ProductionTransforms\MergeDuplicates.xsl&#39;.
 Die Erstellung von Projekt &quot;D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\GenerateRefInfo.proj&quot; ist abgeschlossen (Standardziele).
 
 Der Buildvorgang wurde erfolgreich ausgefhrt.
 
-Verstrichene Zeit 00:00:00.35
-    Last step completed in 00:00:00,4344
+Verstrichene Zeit 00:00:00.43
+    Last step completed in 00:00:00,5458
 </buildStep>
 <buildStep step="TransformReflectionInfo">
 Transforming reflection output...
-[C:\Program Files (x86)\MSBuild\12.0\bin\MSBuild.exe]
-Der Buildvorgang wurde am 02.06.2015 19:59:19 gestartet.
+[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - TransformManifest.proj]
+Der Buildvorgang wurde am 16.08.2015 14:07:26 gestartet.
 Projekt &quot;D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\TransformManifest.proj&quot; auf Knoten &quot;1&quot; (Standardziele).
 TransformManifest:
-  XslTransform (v2015.5.2.0)
+  XslTransform (v2015.7.25.0)
   Copyright &#184; 2006-2015, Microsoft Corporation, All Rights Reserved.
-  Portions Copyright &#184; 2006-2014, Eric Woodruff, All Rights Reserved.
+  Portions Copyright &#184; 2006-2015, Eric Woodruff, All Rights Reserved.
   Applying XSL transformation &#39;D:\Programme\EWSoftware\Sandcastle Help File Builder\\ProductionTransforms\ApplyVSDocModel.xsl&#39;.
   Die Datei wird von &quot;reflection.xml&quot; in &quot;reflection.nofilenames&quot; kopiert.
-  XslTransform (v2015.5.2.0)
+  XslTransform (v2015.7.25.0)
   Copyright &#184; 2006-2015, Microsoft Corporation, All Rights Reserved.
-  Portions Copyright &#184; 2006-2014, Eric Woodruff, All Rights Reserved.
+  Portions Copyright &#184; 2006-2015, Eric Woodruff, All Rights Reserved.
   Applying XSL transformation &#39;D:\Programme\EWSoftware\Sandcastle Help File Builder\ProductionTransforms\AddFilenames.xsl&#39;.
-  XslTransform (v2015.5.2.0)
+    Unique name M_spaar_ModLoader_UI_Tools_DoCollapseArrow_1 generated for M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,System.Boolean,UnityEngine.GUILayoutOption[])
+    Unique name M_spaar_ModLoader_UI_Tools_DoCollapseArrow_2 generated for M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,UnityEngine.GUILayoutOption[])
+  XslTransform (v2015.7.25.0)
   Copyright &#184; 2006-2015, Microsoft Corporation, All Rights Reserved.
-  Portions Copyright &#184; 2006-2014, Eric Woodruff, All Rights Reserved.
+  Portions Copyright &#184; 2006-2015, Eric Woodruff, All Rights Reserved.
   Applying XSL transformation &#39;D:\Programme\EWSoftware\Sandcastle Help File Builder\ProductionTransforms\ReflectionToManifest.xsl&#39;.
 Die Erstellung von Projekt &quot;D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\TransformManifest.proj&quot; ist abgeschlossen (Standardziele).
 
 Der Buildvorgang wurde erfolgreich ausgefhrt.
 
-Verstrichene Zeit 00:00:00.25
-    Last step completed in 00:00:00,3229
+Verstrichene Zeit 00:00:00.31
+    Last step completed in 00:00:00,4112
 </buildStep>
 <buildStep step="GenerateNamespaceSummaries">
 Generating namespace summary information...
-    Last step completed in 00:00:00,1511
+    Last step completed in 00:00:00,0090
 </buildStep>
 <buildStep step="CopyConceptualContent">
 Copying conceptual content...
@@ -101,20 +109,20 @@ Copying images and creating the media map file...
 Generating conceptual topic files
     Parsing topic file &#39;D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Content\Welcome.aml&#39;
     D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Content\Welcome.aml -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\ddueXml\1c8c0c25-81da-4934-b99a-ccc4f21c8d37.xml
-    Last step completed in 00:00:00,0100
+    Last step completed in 00:00:00,0140
 </buildStep>
 <buildStep step="CreateConceptualTopicConfigs">
 Creating conceptual topic configuration files...
     Companion files
     _ContentMetadata_.xml
     ConceptualManifest.xml
-    Last step completed in 00:00:00,0010
+    Last step completed in 00:00:00,0050
 </buildStep>
 <buildStep step="CopyAdditionalContent">
 Copying additional content files...
 D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\icons\Help.png -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\HtmlHelp1\icons\Help.png
 D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\icons\Help.png -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\Website\icons\Help.png
-    Last step completed in 00:00:00,0050
+    Last step completed in 00:00:00,0060
 </buildStep>
 <buildStep step="MergeTablesOfContents">
 Merging conceptual and additional tables of contents...
@@ -122,44 +130,44 @@ Merging conceptual and additional tables of contents...
 </buildStep>
 <buildStep step="GenerateIntermediateTableOfContents">
 Generating intermediate table of contents file...
-[C:\Program Files (x86)\MSBuild\12.0\bin\MSBuild.exe]
-Der Buildvorgang wurde am 02.06.2015 19:59:19 gestartet.
+[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - GenerateIntermediateTOC.proj]
+Der Buildvorgang wurde am 16.08.2015 14:07:26 gestartet.
 Projekt &quot;D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\GenerateIntermediateTOC.proj&quot; auf Knoten &quot;1&quot; (Standardziele).
 GenerateIntermediateTOC:
-  XslTransform (v2015.5.2.0)
+  XslTransform (v2015.7.25.0)
   Copyright &#184; 2006-2015, Microsoft Corporation, All Rights Reserved.
-  Portions Copyright &#184; 2006-2014, Eric Woodruff, All Rights Reserved.
+  Portions Copyright &#184; 2006-2015, Eric Woodruff, All Rights Reserved.
   Applying XSL transformation &#39;D:\Programme\EWSoftware\Sandcastle Help File Builder\\ProductionTransforms\CreateVSToc.xsl&#39;.
 Die Erstellung von Projekt &quot;D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\GenerateIntermediateTOC.proj&quot; ist abgeschlossen (Standardziele).
 
 Der Buildvorgang wurde erfolgreich ausgefhrt.
 
-Verstrichene Zeit 00:00:00.06
+Verstrichene Zeit 00:00:00.07
 Generating conceptual content intermediate TOC file...
-    Last step completed in 00:00:00,1409
+    Last step completed in 00:00:00,1788
 </buildStep>
 <buildStep step="CreateBuildAssemblerConfigs">
 Creating Sandcastle configuration files...
     sandcastle.config
     conceptual.config
-    Last step completed in 00:00:00,1528
+    Last step completed in 00:00:00,1601
 </buildStep>
 <buildStep step="MergeCustomConfigs">
 Merging custom build component configurations
 D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\sandcastle.config
 D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\conceptual.config
     Removing unused ExampleComponent.
-    Last step completed in 00:00:00,1681
+    Last step completed in 00:00:00,0160
 </buildStep>
 <buildStep step="BuildConceptualTopics">
 Building conceptual help topics...
-[C:\Program Files (x86)\MSBuild\12.0\bin\MSBuild.exe]
-Der Buildvorgang wurde am 02.06.2015 19:59:20 gestartet.
+[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - BuildConceptualTopics.proj]
+Der Buildvorgang wurde am 16.08.2015 14:07:27 gestartet.
 Projekt &quot;D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildConceptualTopics.proj&quot; auf Knoten &quot;1&quot; (Standardziele).
 BuildConceptualTopics:
-  BuildAssembler (v2015.5.2.0)
+  BuildAssembler (v2015.7.25.0)
   Copyright &#184; 2006-2015, Microsoft Corporation, All Rights Reserved.
-  Portions Copyright &#184; 2006-2014, Eric Woodruff, All Rights Reserved.
+  Portions Copyright &#184; 2006-2015, Eric Woodruff, All Rights Reserved.
   Loading configuration...
   Processing topics...
   Processed 1 topic(s)
@@ -168,76 +176,269 @@ Die Erstellung von Projekt &quot;D:\Programme\Besiege\Mod_Src\ModLoader\ModLoade
 
 Der Buildvorgang wurde erfolgreich ausgefhrt.
 
-Verstrichene Zeit 00:00:02.88
-    Last step completed in 00:00:03,1473
+Verstrichene Zeit 00:00:03.28
+    Last step completed in 00:00:03,4160
 </buildStep>
 <buildStep step="BuildReferenceTopics">
 Building reference help topics...
-[C:\Program Files (x86)\MSBuild\12.0\bin\MSBuild.exe]
-Der Buildvorgang wurde am 02.06.2015 19:59:23 gestartet.
+[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - BuildReferenceTopics.proj]
+Der Buildvorgang wurde am 16.08.2015 14:07:30 gestartet.
 Projekt &quot;D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj&quot; auf Knoten &quot;1&quot; (Standardziele).
 BuildReferenceTopics:
-  BuildAssembler (v2015.5.2.0)
+  BuildAssembler (v2015.7.25.0)
   Copyright &#184; 2006-2015, Microsoft Corporation, All Rights Reserved.
-  Portions Copyright &#184; 2006-2014, Eric Woodruff, All Rights Reserved.
+  Portions Copyright &#184; 2006-2015, Eric Woodruff, All Rights Reserved.
   Loading configuration...
   Processing topics...
-BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.Console] Unknown reference link target &#39;T:UnityEngine.Object&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.Console] Unknown reference link target &#39;T:UnityEngine.Component&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.Console] Unknown reference link target &#39;T:UnityEngine.Behaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.Console] Unknown reference link target &#39;T:UnityEngine.MonoBehaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.Console] Unknown reference link target &#39;T:UnityEngine.Object&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.Console] Unknown reference link target &#39;T:UnityEngine.Component&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.Console] Unknown reference link target &#39;T:UnityEngine.Behaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.Console] Unknown reference link target &#39;T:UnityEngine.MonoBehaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader] Unknown reference link target &#39;T:UnityEngine.Object&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader] Unknown reference link target &#39;T:UnityEngine.Component&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader] Unknown reference link target &#39;T:UnityEngine.Behaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader] Unknown reference link target &#39;T:UnityEngine.MonoBehaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader] Unknown reference link target &#39;T:UnityEngine.Object&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader] Unknown reference link target &#39;T:UnityEngine.Component&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader] Unknown reference link target &#39;T:UnityEngine.Behaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader] Unknown reference link target &#39;T:UnityEngine.MonoBehaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.AddPiece] Unknown reference link target &#39;T:AddPiece&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.AddPiece] Unknown reference link target &#39;T:AddPiece&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
-  Processed 27 topic(s)
-  18 warning(s)
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.Game] Unknown reference link target &#39;T:UnityEngine.Object&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.Game] Unknown reference link target &#39;T:UnityEngine.Component&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.Game] Unknown reference link target &#39;T:UnityEngine.Behaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.Game] Unknown reference link target &#39;T:UnityEngine.MonoBehaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.Game] Unknown reference link target &#39;T:UnityEngine.Object&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.Game] Unknown reference link target &#39;T:UnityEngine.Component&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.Game] Unknown reference link target &#39;T:UnityEngine.Behaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.Game] Unknown reference link target &#39;T:UnityEngine.MonoBehaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.Game.AddPiece] Unknown reference link target &#39;T:AddPiece&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.Game.AddPiece] Unknown reference link target &#39;T:AddPiece&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.Game.BlockInfoController] Unknown reference link target &#39;T:BlockInfoController&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.Game.BlockInfoController] Unknown reference link target &#39;T:BlockInfoController&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.Game.MachineObjectTracker] Unknown reference link target &#39;T:MachineObjectTracker&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.Game.MachineObjectTracker] Unknown reference link target &#39;T:MachineObjectTracker&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.Game.Name] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.SettingsMenu] Unknown reference link target &#39;T:UnityEngine.Object&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.SettingsMenu] Unknown reference link target &#39;T:UnityEngine.Component&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.SettingsMenu] Unknown reference link target &#39;T:UnityEngine.Behaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.SettingsMenu] Unknown reference link target &#39;T:UnityEngine.MonoBehaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.SettingsMenu] Unknown reference link target &#39;T:UnityEngine.Object&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.SettingsMenu] Unknown reference link target &#39;T:UnityEngine.Component&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.SettingsMenu] Unknown reference link target &#39;T:UnityEngine.Behaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.SettingsMenu] Unknown reference link target &#39;T:UnityEngine.MonoBehaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.SettingsMenu.Name] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.SingleInstance`1] Unknown reference link target &#39;T:UnityEngine.Object&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.SingleInstance`1] Unknown reference link target &#39;T:UnityEngine.Component&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.SingleInstance`1] Unknown reference link target &#39;T:UnityEngine.Behaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.SingleInstance`1] Unknown reference link target &#39;T:UnityEngine.MonoBehaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.SingleInstance`1] Unknown reference link target &#39;T:UnityEngine.Object&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.SingleInstance`1] Unknown reference link target &#39;T:UnityEngine.Component&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.SingleInstance`1] Unknown reference link target &#39;T:UnityEngine.Behaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.SingleInstance`1] Unknown reference link target &#39;T:UnityEngine.MonoBehaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:spaar.ModLoader.UI.Buttons] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Buttons.ArrowCollapsed] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Buttons.ArrowCollapsed] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Buttons.ArrowCollapsed] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Buttons.ArrowDarkCollapsed] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Buttons.ArrowDarkCollapsed] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Buttons.ArrowDarkCollapsed] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Buttons.ArrowDarkExpanded] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Buttons.ArrowDarkExpanded] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Buttons.ArrowDarkExpanded] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Buttons.ArrowExpanded] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Buttons.ArrowExpanded] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Buttons.ArrowExpanded] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Buttons.ComponentField] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Buttons.ComponentField] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Buttons.ComponentField] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Buttons.Default] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Buttons.Default] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Buttons.Default] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Buttons.Disabled] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Buttons.Disabled] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Buttons.Disabled] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Buttons.LogEntryLabel] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Buttons.LogEntryLabel] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Buttons.LogEntryLabel] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Buttons.ThinNoTopBotMargin] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Buttons.ThinNoTopBotMargin] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Buttons.ThinNoTopBotMargin] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Colors.DefaultText] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Colors.DefaultText] Unknown reference link target &#39;T:UnityEngine.Color&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Colors.DefaultText] Unknown reference link target &#39;T:UnityEngine.Color&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Colors.LogAssert] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Colors.LogAssert] Unknown reference link target &#39;T:UnityEngine.Color&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Colors.LogAssert] Unknown reference link target &#39;T:UnityEngine.Color&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Colors.LogError] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Colors.LogError] Unknown reference link target &#39;T:UnityEngine.Color&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Colors.LogError] Unknown reference link target &#39;T:UnityEngine.Color&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Colors.LogException] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Colors.LogException] Unknown reference link target &#39;T:UnityEngine.Color&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Colors.LogException] Unknown reference link target &#39;T:UnityEngine.Color&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Colors.LogNormal] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Colors.LogNormal] Unknown reference link target &#39;T:UnityEngine.Color&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Colors.LogNormal] Unknown reference link target &#39;T:UnityEngine.Color&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Colors.LogWarning] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Colors.LogWarning] Unknown reference link target &#39;T:UnityEngine.Color&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Colors.LogWarning] Unknown reference link target &#39;T:UnityEngine.Color&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Colors.LowlightText] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Colors.LowlightText] Unknown reference link target &#39;T:UnityEngine.Color&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Colors.LowlightText] Unknown reference link target &#39;T:UnityEngine.Color&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Colors.TypeText] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Colors.TypeText] Unknown reference link target &#39;T:UnityEngine.Color&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Colors.TypeText] Unknown reference link target &#39;T:UnityEngine.Color&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:spaar.ModLoader.UI.ColorUtil.FromRGB255(System.Single,System.Single,System.Single)] Unknown reference link target &#39;T:UnityEngine.Color&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:spaar.ModLoader.UI.ColorUtil.FromRGB255(System.Single,System.Single,System.Single)] Unknown reference link target &#39;T:UnityEngine.Color&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Elements.Buttons] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Elements.Colors] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Elements.InputFields] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Elements.IsInitialized] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Elements.Labels] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Elements.Scrollview] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Elements.Settings] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Elements.Sliders] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Elements.Tools] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Elements.Windows] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:spaar.ModLoader.UI.InputFields] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.InputFields.Alternate] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.InputFields.Alternate] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.InputFields.Alternate] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.InputFields.AlternateThin] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.InputFields.AlternateThin] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.InputFields.AlternateThin] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.InputFields.ComponentField] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.InputFields.ComponentField] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.InputFields.ComponentField] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.InputFields.Default] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.InputFields.Default] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.InputFields.Default] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.InputFields.ThinNoTopBotMargin] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.InputFields.ThinNoTopBotMargin] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.InputFields.ThinNoTopBotMargin] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:spaar.ModLoader.UI.Labels] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Labels.Default] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Labels.Default] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Labels.Default] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Labels.LogEntry] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Labels.LogEntry] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Labels.LogEntry] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Labels.LogEntryTitle] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Labels.LogEntryTitle] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Labels.LogEntryTitle] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Labels.Title] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Labels.Title] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Labels.Title] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:spaar.ModLoader.UI.ModGUI] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.UI.ModGUI] Unknown reference link target &#39;T:UnityEngine.Object&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.UI.ModGUI] Unknown reference link target &#39;T:UnityEngine.Component&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.UI.ModGUI] Unknown reference link target &#39;T:UnityEngine.Behaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.UI.ModGUI] Unknown reference link target &#39;T:UnityEngine.MonoBehaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.UI.ModGUI] Unknown reference link target &#39;T:UnityEngine.Object&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.UI.ModGUI] Unknown reference link target &#39;T:UnityEngine.Component&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.UI.ModGUI] Unknown reference link target &#39;T:UnityEngine.Behaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:spaar.ModLoader.UI.ModGUI] Unknown reference link target &#39;T:UnityEngine.MonoBehaviour&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.ModGUI.Name] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.ModGUI.Skin] Unknown reference link target &#39;T:UnityEngine.GUISkin&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.ModGUI.Skin] Unknown reference link target &#39;T:UnityEngine.GUISkin&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:spaar.ModLoader.UI.Scrollview] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Scrollview.Horizontal] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Scrollview.Horizontal] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Scrollview.Horizontal] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Scrollview.ThumbHorizontal] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Scrollview.ThumbHorizontal] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Scrollview.ThumbHorizontal] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Scrollview.ThumbVertical] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Scrollview.ThumbVertical] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Scrollview.ThumbVertical] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Scrollview.Vertical] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Scrollview.Vertical] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Scrollview.Vertical] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:spaar.ModLoader.UI.Settings] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Settings.ConsoleSize] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Settings.ConsoleSize] Unknown reference link target &#39;T:UnityEngine.Vector2&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Settings.ConsoleSize] Unknown reference link target &#39;T:UnityEngine.Vector2&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Settings.DefaultMargin] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Settings.DefaultMargin] Unknown reference link target &#39;T:UnityEngine.RectOffset&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Settings.DefaultMargin] Unknown reference link target &#39;T:UnityEngine.RectOffset&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Settings.DefaultPadding] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Settings.DefaultPadding] Unknown reference link target &#39;T:UnityEngine.RectOffset&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Settings.DefaultPadding] Unknown reference link target &#39;T:UnityEngine.RectOffset&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Settings.HierarchyPanelWidth] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Settings.InspectorPanelWidth] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Settings.LogEntrySize] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Settings.LowMargin] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Settings.LowMargin] Unknown reference link target &#39;T:UnityEngine.RectOffset&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Settings.LowMargin] Unknown reference link target &#39;T:UnityEngine.RectOffset&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Settings.LowPadding] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Settings.LowPadding] Unknown reference link target &#39;T:UnityEngine.RectOffset&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Settings.LowPadding] Unknown reference link target &#39;T:UnityEngine.RectOffset&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Settings.TreeEntryIndention] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:spaar.ModLoader.UI.Sliders] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Sliders.Horizontal] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Sliders.Horizontal] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Sliders.Horizontal] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Sliders.ThumbHorizontal] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Sliders.ThumbHorizontal] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Sliders.ThumbHorizontal] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Sliders.ThumbVertical] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Sliders.ThumbVertical] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Sliders.ThumbVertical] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Sliders.Vertical] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Sliders.Vertical] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Sliders.Vertical] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:spaar.ModLoader.UI.Tools] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,System.Boolean,System.Single,System.Single,UnityEngine.GUILayoutOption[])] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,System.Boolean,System.Single,System.Single,UnityEngine.GUILayoutOption[])] Missing &lt;returns&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,System.Boolean,System.Single,System.Single,UnityEngine.GUILayoutOption[])] Missing &lt;param name=&quot;isExpanded&quot;/&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,System.Boolean,System.Single,System.Single,UnityEngine.GUILayoutOption[])] Missing &lt;param name=&quot;enabled&quot;/&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,System.Boolean,System.Single,System.Single,UnityEngine.GUILayoutOption[])] Missing &lt;param name=&quot;width&quot;/&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,System.Boolean,System.Single,System.Single,UnityEngine.GUILayoutOption[])] Missing &lt;param name=&quot;height&quot;/&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,System.Boolean,System.Single,System.Single,UnityEngine.GUILayoutOption[])] Missing &lt;param name=&quot;options&quot;/&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,System.Boolean,System.Single,System.Single,UnityEngine.GUILayoutOption[])] Unknown reference link target &#39;T:UnityEngine.GUILayoutOption&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,System.Boolean,System.Single,System.Single,UnityEngine.GUILayoutOption[])] Unknown reference link target &#39;T:UnityEngine.GUILayoutOption&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,System.Boolean,UnityEngine.GUILayoutOption[])] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,System.Boolean,UnityEngine.GUILayoutOption[])] Missing &lt;returns&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,System.Boolean,UnityEngine.GUILayoutOption[])] Missing &lt;param name=&quot;isExpanded&quot;/&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,System.Boolean,UnityEngine.GUILayoutOption[])] Missing &lt;param name=&quot;enabled&quot;/&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,System.Boolean,UnityEngine.GUILayoutOption[])] Missing &lt;param name=&quot;options&quot;/&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,System.Boolean,UnityEngine.GUILayoutOption[])] Unknown reference link target &#39;T:UnityEngine.GUILayoutOption&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,System.Boolean,UnityEngine.GUILayoutOption[])] Unknown reference link target &#39;T:UnityEngine.GUILayoutOption&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,UnityEngine.GUILayoutOption[])] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,UnityEngine.GUILayoutOption[])] Missing &lt;returns&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,UnityEngine.GUILayoutOption[])] Missing &lt;param name=&quot;isExpanded&quot;/&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,UnityEngine.GUILayoutOption[])] Missing &lt;param name=&quot;options&quot;/&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,UnityEngine.GUILayoutOption[])] Unknown reference link target &#39;T:UnityEngine.GUILayoutOption&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:spaar.ModLoader.UI.Tools.DoCollapseArrow(System.Boolean,UnityEngine.GUILayoutOption[])] Unknown reference link target &#39;T:UnityEngine.GUILayoutOption&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:spaar.ModLoader.UI.Windows] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Windows.ClearDark] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Windows.ClearDark] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Windows.ClearDark] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:spaar.ModLoader.UI.Windows.Default] Missing &lt;summary&gt; documentation [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Windows.Default] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [P:spaar.ModLoader.UI.Windows.Default] Unknown reference link target &#39;T:UnityEngine.GUIStyle&#39;. [D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj]
+  Processed 172 topic(s)
+  213 warning(s)
   CopyFromIndexComponent: &quot;reflection&quot; in-memory cache entries used: 3 of 15.
-  CopyFromIndexComponent: &quot;comments&quot; in-memory cache entries used: 2 of 30.
+  CopyFromIndexComponent: &quot;comments&quot; in-memory cache entries used: 1 of 30.
 Die Erstellung von Projekt &quot;D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\BuildReferenceTopics.proj&quot; ist abgeschlossen (Standardziele).
 
 Der Buildvorgang wurde erfolgreich ausgefhrt.
 
-Verstrichene Zeit 00:00:06.24
-    Last step completed in 00:00:06,3507
+Verstrichene Zeit 00:00:07.87
+    Last step completed in 00:00:08,0147
 </buildStep>
 <buildStep step="CombiningIntermediateTocFiles">
 Combining conceptual and API intermediate TOC files...
-
-Clearing any prior web/markdown output
-    Last step completed in 00:00:00,0180
+    Last step completed in 00:00:00,0070
 </buildStep>
 <buildStep step="ExtractingHtmlInfo">
 Extracting HTML info for HTML Help 1 and/or website...
-[C:\Program Files (x86)\MSBuild\12.0\bin\MSBuild.exe]
-Sandcastle Help File Builder, version 2015.5.2.0
+[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - ExtractHtmlInfo.proj]
+Sandcastle Help File Builder and Tools, version 2015.7.25.0
 Copyright &#184; 2006-2015, Eric Woodruff, All Rights Reserved
 E-Mail: Eric@EWoodruff.us
 
 Using LCID &#39;1033&#39;, code page &#39;65001&#39;, encoding charset &#39;UTF-8&#39;.
 
 Processing Help 1 files in D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\HtmlHelp1
-Processed 28 HTML files
+Processed 173 HTML files
 Sorting keywords and generating See Also indices
 Saving HTML Help 1 keyword index to D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\ModLoaderHelp.hhk
 Saving HTML Help 1 table of contents to D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\ModLoaderHelp.hhc
 
 Processing website files in D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\Website
-Processed 28 HTML files
+Processed 173 HTML files
 Sorting keywords and generating See Also indices
 Saving website keyword index to D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\WebKI.xml
 Saving website table of contents to D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\WebTOC.xml
-    Last step completed in 00:00:00,2142
+    Last step completed in 00:00:00,6685
 </buildStep>
 <buildStep step="CopyStandardHelpContent">
 Copying standard help content...
@@ -291,7 +492,6 @@ D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\s
 D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-es-ES.css -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\HtmlHelp1\styles\branding-es-ES.css
 D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-fr-FR.css -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\HtmlHelp1\styles\branding-fr-FR.css
 D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-Help1.css -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\HtmlHelp1\styles\branding-Help1.css
-D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-Help2.css -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\HtmlHelp1\styles\branding-Help2.css
 D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-HelpViewer.css -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\HtmlHelp1\styles\branding-HelpViewer.css
 D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-it-IT.css -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\HtmlHelp1\styles\branding-it-IT.css
 D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ja-JP.css -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\HtmlHelp1\styles\branding-ja-JP.css
@@ -354,7 +554,6 @@ D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\s
 D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-es-ES.css -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\Website\styles\branding-es-ES.css
 D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-fr-FR.css -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\Website\styles\branding-fr-FR.css
 D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-Help1.css -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\Website\styles\branding-Help1.css
-D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-Help2.css -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\Website\styles\branding-Help2.css
 D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-HelpViewer.css -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\Website\styles\branding-HelpViewer.css
 D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-it-IT.css -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\Website\styles\branding-it-IT.css
 D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ja-JP.css -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\Website\styles\branding-ja-JP.css
@@ -380,7 +579,7 @@ D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\W
 D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\TocOpen.gif -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\Website\icons\TocOpen.gif
 D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\branding-Website.js -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\Website\scripts\branding-Website.js
 D:\Programme\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\jquery-1.11.0.min.js -&gt; D:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\Website\scripts\jquery-1.11.0.min.js
-    Last step completed in 00:00:00,4668
+    Last step completed in 00:00:00,5157
 </buildStep>
 <buildStep step="GenerateHelpFormatTableOfContents">
 Generating HTML Help 1 table of contents file...
@@ -392,11 +591,11 @@ Generating HTML Help 1 index file...
 </buildStep>
 <buildStep step="GenerateHelpProject">
 Generating HTML Help 1 project file...
-    Last step completed in 00:00:00,0020
+    Last step completed in 00:00:00,0050
 </buildStep>
 <buildStep step="CompilingHelpFile">
 Compiling HTML Help 1 file...
-[C:\Program Files (x86)\MSBuild\12.0\bin\MSBuild.exe]
+[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - Build1xHelpFile.proj]
   Microsoft HTML Help Compiler 4.74.8702
   
   
@@ -407,13 +606,13 @@ Compiling HTML Help 1 file...
   
   
   
-  Compile time: 0 minutes, 0 seconds
+  Compile time: 0 minutes, 1 second
   
-  30	Topics
+  175	Topics
   
-  269	Local links
+  2,019	Local links
   
-  19	Internet links
+  107	Internet links
   
   0	Graphics
   
@@ -421,36 +620,36 @@ Compiling HTML Help 1 file...
   
   
   
-  Created d:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\HtmlHelp1\ModLoaderHelp.chm, 88,604 bytes
+  Created d:\Programme\Besiege\Mod_Src\ModLoader\ModLoaderHelp\Help\Working\Output\HtmlHelp1\ModLoaderHelp.chm, 183,846 bytes
   
-  Compression decreased file by 176,682 bytes.
+  Compression decreased file by 1,088,511 bytes.
   
-    Last step completed in 00:00:00,9596
+    Last step completed in 00:00:01,5192
 </buildStep>
 <buildStep step="GenerateHelpFormatTableOfContents">
 Generating website table of contents file...
-    Last step completed in 00:00:00,0010
+    Last step completed in 00:00:00,0000
 </buildStep>
 <buildStep step="GenerateFullTextIndex">
 Generating full-text index for the website...
 
 <plugIn name="Lightweight Website Style" behavior="After" priority="1000">
 Adding lightweight search and TOC elements to each topic...
-</plugIn>    Last step completed in 00:00:00,1697
+</plugIn>    Last step completed in 00:00:01,1133
 </buildStep>
 <buildStep step="CopyingWebsiteFiles">
 Copying website files to output folder...
 
-Copied 142 files for the website content
-    Last step completed in 00:00:00,1281
+Copied 326 files for the website content
+    Last step completed in 00:00:00,2732
 </buildStep>
 <buildStep step="CleanIntermediates">
 Removing intermediate files...
-    Last step completed in 00:00:00,0370
+    Last step completed in 00:00:00,2807
 </buildStep>
 <buildStep step="Completed">
 
-Build completed successfully at 02.06.2015 19:59:31.  Total time: 00:00:13,3931
+Build completed successfully at 16.08.2015 14:07:42.  Total time: 00:00:17,6155
 
 </buildStep>
 </shfbBuild>

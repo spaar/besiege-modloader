@@ -7,7 +7,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>0c7deeac-34dd-4926-8402-a5ff86849d7f</ProjectGuid>
-    <SHFBSchemaVersion>1.9.9.0</SHFBSchemaVersion>
+    <SHFBSchemaVersion>2015.6.5.0</SHFBSchemaVersion>
     <!-- AssemblyName, Name, and RootNamespace are not used by SHFB but Visual Studio adds them anyway -->
     <AssemblyName>ModLoaderHelp</AssemblyName>
     <RootNamespace>ModLoaderHelp</RootNamespace>
@@ -37,8 +37,13 @@
     <CppCommentsFixup>False</CppCommentsFixup>
     <CleanIntermediates>True</CleanIntermediates>
     <NamespaceSummaries>
-      <NamespaceSummaryItem name="spaar" isDocumented="True">Namespace for every class in the mod loader.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="(global)" isDocumented="False" /></NamespaceSummaries>
+      <NamespaceSummaryItem name="(global)" isDocumented="False" />
+      <NamespaceSummaryItem name="spaar.ModLoader" isDocumented="True">Most APIs of the mod loader are located in spaar.ModLoader.
+This includes everything except GUI related things.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="spaar.ModLoader.UI" isDocumented="True">All UI-related things are in spaar.ModLoader.UI.
+This includes the skin and different styles for making your mod's GUI look like other GUIs including the mod loader's.
+It also contains some utilities such as ColorUtil and Elements.Tools.</NamespaceSummaryItem>
+    </NamespaceSummaries>
     <BuildLogFile>HelpFileBuilder</BuildLogFile>
     <MaximumGroupParts>2</MaximumGroupParts>
     <NamespaceGrouping>False</NamespaceGrouping>
@@ -47,10 +52,17 @@
     <RootNamespaceContainer>False</RootNamespaceContainer>
     <PresentationStyle>VS2013</PresentationStyle>
     <Preliminary>False</Preliminary>
-    <NamingMethod>Guid</NamingMethod>
+    <NamingMethod>MemberName</NamingMethod>
     <HelpTitle>spaar&amp;#39%3bs Mod Loader Documentation</HelpTitle>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <VisibleItems>Protected, ProtectedInternalAsProtected</VisibleItems>
+    <ApiFilter>
+      <Filter entryType="Namespace" fullName="SimpleJSON" isExposed="False" />
+      <Filter entryType="Namespace" fullName="spaar" isExposed="False" />
+      <Filter entryType="Namespace" fullName="spaar.ModLoader.Internal" isExposed="False" />
+      <Filter entryType="Namespace" fullName="spaar.ModLoader.Internal.Tools" isExposed="False" />
+    </ApiFilter>
+    <HelpFileVersion>1.0.0.0</HelpFileVersion>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->

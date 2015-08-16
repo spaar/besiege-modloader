@@ -52,6 +52,11 @@ namespace spaar.ModLoader
 
     private static Dictionary<string, Delegate>
       eventDelegates = new Dictionary<string, Delegate>();
+    /// <summary>
+    /// This event is raised whenever the configuration for your mod was changed.
+    /// Use this if your mod needs to react to changes that were made to its
+    /// configuration at runtime, possibly by the user via the console.
+    /// </summary>
     public static event EventHandler<ConfigurationEventArgs> OnConfigurationChange
     {
       add
@@ -102,6 +107,7 @@ namespace spaar.ModLoader
     /// </summary>
     /// <param name="key">Key of your value</param>
     /// <param name="defaultVal">Default value</param>
+    /// <returns>The retrieved value</returns>
     public static string GetString(string key, string defaultVal)
     {
       var val = GetValue(Assembly.GetCallingAssembly(), key);
@@ -120,6 +126,7 @@ namespace spaar.ModLoader
     /// </summary>
     /// <param name="key">Key of your value</param>
     /// <param name="defaultVal">Default value</param>
+    /// <returns>The retrieved value</returns>
     public static int GetInt(string key, int defaultVal)
     {
       var val = GetValue(Assembly.GetCallingAssembly(), key);
@@ -138,6 +145,7 @@ namespace spaar.ModLoader
     /// </summary>
     /// <param name="key">Key of your value</param>
     /// <param name="defaultVal">Default value</param>
+    /// <returns>The retrieved value</returns>
     public static float GetFloat(string key, float defaultVal)
     {
       var val = GetValue(Assembly.GetCallingAssembly(), key);
@@ -156,6 +164,7 @@ namespace spaar.ModLoader
     /// </summary>
     /// <param name="key">Key of your value</param>
     /// <param name="defaultVal">Default value</param>
+    /// <returns>The retrieved value</returns>
     public static double GetDouble(string key, double defaultVal)
     {
       var val = GetValue(Assembly.GetCallingAssembly(), key);
@@ -174,6 +183,7 @@ namespace spaar.ModLoader
     /// </summary>
     /// <param name="key">Key of your value</param>
     /// <param name="defaultVal">Default value</param>
+    /// <returns>The retrieved value</returns>
     public static bool GetBool(string key, bool defaultVal)
     {
       var val = GetValue(Assembly.GetCallingAssembly(), key);
@@ -331,6 +341,7 @@ namespace spaar.ModLoader
         && configs[mod.Mod.Name].ContainsKey(key);
     }
 
+    /// <exclude />
     [Obsolete("KeyExists is deprecated, use DoesKeyExist instead")]
     public static bool KeyExists(string key)
     {

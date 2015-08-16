@@ -85,7 +85,7 @@ namespace spaar.ModLoader
 
       var fxaa = settingsObjects.FindChild("FXAA");
 
-      var newSetting = UnityEngine.Object.Instantiate(fxaa, settingPos,
+      var newSetting = Instantiate(fxaa, settingPos,
         fxaa.rotation) as Transform;
       newSetting.parent = settingsObjects;
 
@@ -104,7 +104,7 @@ namespace spaar.ModLoader
       var fxaaToggle = newSettingButton.gameObject.GetComponent<ToggleAA>();
       settingsComponent.darkMaterial = fxaaToggle.darkMaterial;
       settingsComponent.redMaterial = fxaaToggle.redMaterial;
-      UnityEngine.Object.Destroy(fxaaToggle);
+      Destroy(fxaaToggle);
 
       settingsComponent.SetCallback(button.cb);
       settingsComponent.SetOn(button.defaultValue);
