@@ -190,6 +190,10 @@
   <PropertyGroup>
     <PostBuildEvent>copy /Y $(TargetPath) %25BESIEGE_LOCATION%25Besiege_Data\Mods\SpaarModLoader.dll</PostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(BESIEGE_LOCATION)Besiege.exe</StartProgram>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
