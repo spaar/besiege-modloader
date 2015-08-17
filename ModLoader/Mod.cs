@@ -68,6 +68,13 @@ namespace spaar.ModLoader
     public virtual bool CanBeUnloaded { get { return false; } }
 
     /// <summary>
+    /// Whether the mod should be loaded before all mods where this is set to false.
+    /// This is useful for mods that provide an API to other mods but need to
+    /// be initialized before users of the API.
+    /// </summary>
+    public virtual bool Preload { get { return false; } }
+
+    /// <summary>
     /// Called when your mod is loaded.
     /// You can perform any initialization here, such as creating game objects
     /// to control your mod.

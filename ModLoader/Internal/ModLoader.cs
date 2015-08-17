@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ namespace spaar.ModLoader.Internal
     public override string DisplayName { get { return "spaar's Mod Loader"; } }
     public override string Author { get { return "spaar"; } }
     public override Version Version { get { return ModLoader.ModLoaderVersion; } }
+    public override bool Preload { get { return true; } }
     public override void OnLoad() { }
     public override void OnUnload() { }
   }
@@ -259,8 +261,36 @@ namespace spaar.ModLoader.Internal
 
     private void InitializeMods()
     {
+      // Initialize mods marked as Preload first
+      var preloadMods = loadedMods.Where(m => m.Mod.Preload);
+      foreach (var mod in preloadMods)
+      {
+        if (mod.Mod.BesiegeVersion != BesiegeVersion)
+        {
+          Debug.LogWarning(mod.Mod.DisplayName
+            + " is not targeted at the current Besiege version."
+            + " Unexpected behaviour may occur.");
+        }
+
+        try
+        {
+          mod.Activate();
+        }
+        catch (Exception)
+        {
+          // Ignore the exception, it was printed to the console, modder's
+          // responsibility
+        }
+      }
+
       foreach (var mod in loadedMods)
       {
+        if (mod.Mod.Preload)
+        {
+          // Preload mods were already initialized
+          continue;
+        }
+
         if (mod.Mod.BesiegeVersion != BesiegeVersion)
         {
           Debug.LogWarning(mod.Mod.DisplayName
