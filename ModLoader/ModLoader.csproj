@@ -128,6 +128,7 @@
     <Compile Include="UI\ModGUI.cs" />
     <Compile Include="UI\Windows.cs" />
     <Compile Include="Util.cs" />
+    <Compile Include="Zone.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ModLoader.ruleset" />

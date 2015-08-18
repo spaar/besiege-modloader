@@ -101,10 +101,68 @@ namespace spaar.ModLoader
     /// </summary>
     public static event OnKeymapperOpen OnKeymapperOpen;
 
+    private static Zone[] zones = {
+      new Zone(1, "Southern Cottage", Island.Ipsilon),
+      new Zone(2, "Southern Mill", Island.Ipsilon),
+      new Zone(3, "Old Howl Battlefield", Island.Ipsilon),
+      new Zone(4, "Perimeter Wall", Island.Ipsilon),
+      new Zone(5, "The Queen's Fodder", Island.Ipsilon),
+      new Zone(6, "Old Mining Site", Island.Ipsilon),
+      new Zone(7, "Standing Stone", Island.Ipsilon),
+      new Zone(8, "Thinside Fort", Island.Ipsilon),
+      new Zone(9, "Midlands Encampment", Island.Ipsilon),
+      new Zone(10, "Lyre Peak", Island.Ipsilon),
+      new Zone(11, "Highland Tower", Island.Ipsilon),
+      new Zone(12, "Pine Lumber Site", Island.Ipsilon),
+      new Zone(13, "Solomon's Flock", Island.Ipsilon),
+      new Zone(14, "Marksman's Pass", Island.Ipsilon),
+      new Zone(15, "Wynnfrith's Keep", Island.Ipsilon),
+
+      new Zone(16, "The Duke's Plea", Island.Tolbrynd),
+      new Zone(17, "Southern Shrine", Island.Tolbrynd),
+      new Zone(18, "Scouts of Tolbrynd", Island.Tolbrynd),
+      new Zone(19, "The Duke's Prototypes", Island.Tolbrynd),
+      new Zone(20, "The Duke's Dear Freighers", Island.Tolbrynd),
+      new Zone(21, "Grand Crystal", Island.Tolbrynd),
+      new Zone(22, "Farmer Gascoigne", Island.Tolbrynd),
+      new Zone(23, "Village of Diom", Island.Tolbrynd),
+      new Zone(24, "Midland Patrol", Island.Tolbrynd),
+      new Zone(25, "Valley of the Wind", Island.Tolbrynd),
+    };
+
+    /// <summary>
+    /// Gets a Zone object representing the specified zone.
+    /// </summary>
+    /// <param name="index">Index of the zone</param>
+    /// <returns>Zone object for the specified zone.</returns>
+    public static Zone GetZone(int index)
+    {
+      return zones[index];
+    }
+
+    /// <summary>
+    /// Gets a Zone object representing the current zone.
+    /// Returns null if the current level is not a zone.
+    /// </summary>
+    /// <returns>Current Zone or null</returns>
+    public static Zone GetCurrentZone()
+    {
+      int index;
+      if (int.TryParse(Application.loadedLevelName, out index))
+      {
+        return GetZone(index - 1);
+      }
+      else
+      {
+        return null;
+      }
+    }
+
     private void Start()
     {
       Internal.ModLoader.MakeModule(this);
     }
+
 
     private bool hasNotifiedWinCondition = false;
     private bool hasNotifiedKeymapperOpen = false;
