@@ -308,7 +308,7 @@ namespace spaar.ModLoader.Internal.Tools
     }
 
 #if DEV_BUILD
-    private void OnApplicationExit()
+    private void OnApplicationQuit()
     {
       if (!Directory.Exists(Application.dataPath + "/Mods/Debug"))
       {
