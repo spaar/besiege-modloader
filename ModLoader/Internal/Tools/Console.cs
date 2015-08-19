@@ -297,7 +297,7 @@ namespace spaar.ModLoader.Internal.Tools
       }
     }
 
-    private void HandleLog(string logString, string stackTrace, LogType type)
+    public void HandleLog(string logString, string stackTrace, LogType type)
     {
       entries.Add(new LogEntry(type, logString, stackTrace));
       if (entries.Count > maxMessages)
