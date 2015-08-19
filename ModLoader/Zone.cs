@@ -7,6 +7,7 @@ namespace spaar.ModLoader
 {
   public enum Island
   {
+    Sandbox,
     Ipsilon,
     Tolbrynd
   }

@@ -102,6 +102,8 @@ namespace spaar.ModLoader
     public static event OnKeymapperOpen OnKeymapperOpen;
 
     private static Zone[] zones = {
+      new Zone(0, "Sandbox", Island.Sandbox),
+
       new Zone(1, "Southern Cottage", Island.Ipsilon),
       new Zone(2, "Southern Mill", Island.Ipsilon),
       new Zone(3, "Old Howl Battlefield", Island.Ipsilon),
@@ -132,6 +134,8 @@ namespace spaar.ModLoader
 
     /// <summary>
     /// Gets a Zone object representing the specified zone.
+    /// The Sandbox is Zone 0, all other zones are numbered as shown in the
+    /// level select screens.
     /// </summary>
     /// <param name="index">Index of the zone</param>
     /// <returns>Zone object for the specified zone.</returns>
@@ -150,7 +154,11 @@ namespace spaar.ModLoader
       int index;
       if (int.TryParse(Application.loadedLevelName, out index))
       {
-        return GetZone(index - 1);
+        return GetZone(index);
+      }
+      else if (Application.loadedLevelName == "SANDBOX")
+      {
+        return GetZone(0);
       }
       else
       {
@@ -198,6 +206,13 @@ namespace spaar.ModLoader
         {
           hasNotifiedKeymapperOpen = false;
         }
+      }
+
+      if (Input.GetKeyDown(KeyCode.L))
+      {
+        Debug.Log(Application.loadedLevel);
+        Debug.Log(Application.loadedLevelName);
+        Debug.Log(GetCurrentZone());
       }
     }
 
