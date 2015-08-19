@@ -332,8 +332,6 @@ namespace spaar.ModLoader.Internal
       }
 
       Configuration.Save();
-
-      throw new Exception("Test Exception");
     }
 
     /// <summary>

@@ -22,7 +22,8 @@ namespace spaar.ModLoader.UI
       LogEntry = new GUIStyle(Default)
       {
         margin = { top = 2 },
-        alignment = TextAnchor.MiddleLeft
+        alignment = TextAnchor.MiddleLeft,
+        richText = true
       };
 
       Title = new GUIStyle(Default)
