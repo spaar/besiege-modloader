@@ -61,6 +61,7 @@ namespace spaar.ModLoader.Internal
       Keys.Initialize();
       Game.Initialize();
       SettingsMenu.Initialize();
+      MachineData.Initialize();
 
 #if DEV_BUILD
       Tools.ObjectExplorer.Initialize();

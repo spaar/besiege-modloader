@@ -17,14 +17,6 @@ namespace spaar.ModLoader
 
     private static T _instance;
 
-    // Make it impossible to construct a SingleInstance manually
-    /// <exclude />
-    protected SingleInstance()
-    {
-
-    }
-
-
     /// <summary>
     /// Return the single instance.
     /// If none exists, a new game object is created and the component is added

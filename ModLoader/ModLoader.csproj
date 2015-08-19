@@ -72,6 +72,7 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -99,6 +100,7 @@
     <Compile Include="Internal\InternalMod.cs" />
     <Compile Include="Internal\Key.cs" />
     <Compile Include="Internal\lib\SimpleJSON.cs" />
+    <Compile Include="Internal\ModLoaderSaveMachine.cs" />
     <Compile Include="Internal\SettingsComponent.cs" />
     <Compile Include="Internal\Tools\ComponentEntry.cs" />
     <Compile Include="Internal\Tools\Console.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="Internal\Tools\LogEntry.cs" />
     <Compile Include="Internal\Tools\MemberValue.cs" />
     <Compile Include="Internal\UpdateChecker.cs" />
+    <Compile Include="MachineData.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="Internal\ModLoader.cs" />
     <Compile Include="Internal\Tools\ObjectExplorer.cs" />
