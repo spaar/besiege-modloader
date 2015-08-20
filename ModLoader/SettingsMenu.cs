@@ -78,12 +78,13 @@ namespace spaar.ModLoader
     {
       var settingsObjects = GameObject.Find("Settings").transform
         .FindChild("SettingsObjects");
-      var bottomDefaultSetting = settingsObjects.FindChild("ScreenshotIcon");
+      var bottomDefaultSetting = settingsObjects.FindChild("GOD/PYRO");
       const float SettingSize = 0.362f;
       var settingPos = bottomDefaultSetting.position;
+
       settingPos.y -= 0.575f + numRegistered * SettingSize;
 
-      var fxaa = settingsObjects.FindChild("FXAA");
+      var fxaa = settingsObjects.FindChild("SETTINGS/FXAA");
 
       var newSetting = Instantiate(fxaa, settingPos,
         fxaa.rotation) as Transform;
