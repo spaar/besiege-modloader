@@ -6,11 +6,37 @@ using UnityEngine;
 
 namespace spaar.ModLoader
 {
+  /// <summary>
+  /// Allows mods to add data to machine save files.
+  /// </summary>
+  /// <remarks>
+  /// Save files are organized in the following format:
+  /// <code>
+  /// SECTION 1
+  /// value of section 1
+  /// SECTION 2
+  /// value of section 2
+  /// ....
+  /// </code>
+  /// There are multiple sections predefined by the game. This class allows
+  /// you to add new ones.
+  /// </remarks>
   public class MachineData : SingleInstance<MachineData>
   {
     public override string Name { get { return "spaar's Mod Loader: Machine Data"; } }
 
+    /// <summary>
+    /// Called when the machine is saved to retrieve the value to be saved.
+    /// </summary>
+    /// <param name="title">Title of the section to be written</param>
+    /// <returns>Value to be saved</returns>
     public delegate string SaveCallback(string title);
+    /// <summary>
+    /// Called when a machine is loaded with the value that was loaded from
+    /// the save file.
+    /// </summary>
+    /// <param name="title">Title of the section that was loaded</param>
+    /// <param name="value">Value that was loaded</param>
     public delegate void LoadCallback(string title, string value);
 
     private struct Metadata
@@ -22,6 +48,14 @@ namespace spaar.ModLoader
     private static Dictionary<string, Metadata> metadata
       = new Dictionary<string, Metadata>();
 
+
+    /// <summary>
+    /// Add a section to the save files with the specified callbacks for
+    /// retrieving values to be saved and notifying the mod of loaded values.
+    /// </summary>
+    /// <param name="title">Title of the section</param>
+    /// <param name="saveCb">Callback for saving</param>
+    /// <param name="loadCb">Callback for loading</param>
     public static void Add(string title,
       SaveCallback saveCb, LoadCallback loadCb)
     {
@@ -61,12 +95,6 @@ namespace spaar.ModLoader
     private void Start()
     {
       Internal.ModLoader.MakeModule(this);
-    }
-
-    private void Update()
-    {
-      if (Input.GetKeyDown(KeyCode.J))
-        Debug.Log(FindObjectOfType<MySaveMachine>());
     }
 
     private void OnLevelWasLoaded(int level)

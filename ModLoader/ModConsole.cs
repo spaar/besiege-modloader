@@ -4,21 +4,38 @@ using UnityEngine;
 
 namespace spaar.ModLoader
 {
+  /// <summary>
+  /// Provides methods for interacting with the in-game console.
+  /// </summary>
   public static class ModConsole
   {
+    /// <summary>
+    /// Add a message to the console.
+    /// </summary>
+    /// <param name="type">Type of the message</param>
+    /// <param name="text">Main message text</param>
+    /// <param name="collapsedText">Collapsed text</param>
     public static void AddMessage(LogType type, string text,
       string collapsedText = "")
     {
       Console.Instance.HandleLog(text, collapsedText, type);
     }
 
+    /// <summary>
+    /// Add a message to the console.
+    /// </summary>
+    /// <param name="type">Type of the message</param>
+    /// <param name="text">Main message text</param>
+    /// <param name="collapsedText">
+    /// Collapsed text. Each entry in the list will be on its own line.
+    /// </param>
     public static void AddMessage(LogType type, string text,
       List<string> collapsedText)
     {
       var collapsedString = "";
       foreach (var s in collapsedText)
       {
-        collapsedString += collapsedText + "\n";
+        collapsedString += s + "\n";
       }
       collapsedString.Trim();
 
