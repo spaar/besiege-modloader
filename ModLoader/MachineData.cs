@@ -34,9 +34,14 @@ namespace spaar.ModLoader
     /// <summary>
     /// Called when a machine is loaded with the value that was loaded from
     /// the save file.
+    /// <para>Please note you also have to handle the case that a save file
+    /// that was created without your mod installed is loaded. In this case,
+    /// a value of NOTFOUND will be passed.</para>
     /// </summary>
     /// <param name="title">Title of the section that was loaded</param>
-    /// <param name="value">Value that was loaded</param>
+    /// <param name="value">
+    /// Value that was loaded or NOTFOUND if the section was not present
+    /// in the loaded save file</param>
     public delegate void LoadCallback(string title, string value);
 
     private struct Metadata
@@ -82,12 +87,22 @@ namespace spaar.ModLoader
     internal static void LoadData(string saveData)
     {
       var lines = saveData.Split(Environment.NewLine.ToCharArray());
+      var foundMetadata = new List<string>();
       for (int i = 0; i < lines.Length; i++)
       {
         if (metadata.ContainsKey(lines[i]))
         {
           metadata[lines[i]].loadCb(lines[i], lines[i + 1]);
+          foundMetadata.Add(lines[i]);
           i++;
+        }
+      }
+      foreach (var md in metadata)
+      {
+        if (!foundMetadata.Contains(md.Key))
+        {
+          // Section is registered but was not found in save file
+          md.Value.loadCb(md.Key, "NOTFOUND");
         }
       }
     }
