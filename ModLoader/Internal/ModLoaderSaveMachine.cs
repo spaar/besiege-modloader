@@ -25,12 +25,19 @@ namespace spaar.ModLoader.Internal
     {
       base.LoadAll(namey);
 
-      var streamReader = new StreamReader(Application.dataPath
-        + "/SavedMachines/" + namey + ".bsg");
-      var saveData = streamReader.ReadToEnd();
-      streamReader.Close();
+      try
+      {
+        var streamReader = new StreamReader(Application.dataPath
+          + "/SavedMachines/" + namey + ".bsg");
+        var saveData = streamReader.ReadToEnd();
+        streamReader.Close();
 
-      MachineData.LoadData(saveData);
+        MachineData.LoadData(saveData);
+      }
+      catch (Exception)
+      {
+
+      }
     }
 
     public override void WorkshopLoadAll(string fullPath)
