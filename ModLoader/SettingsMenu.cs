@@ -74,21 +74,64 @@ namespace spaar.ModLoader
       }
     }
 
+    private static Transform modSection;
+
     private static void RegisterSettingsButtonInternal(SettingsButton button)
     {
       var settingsObjects = GameObject.Find("Settings").transform
         .FindChild("SettingsObjects");
       var bottomDefaultSetting = settingsObjects.FindChild("GOD/PYRO");
-      const float SettingSize = 0.362f;
+      Vector3 SettingSize = new Vector3(0.748f, 0.375f);
+
+      if (modSection == null)
+      {
+        // Create a MODS section
+        var settings = settingsObjects.FindChild("SETTINGS");
+
+        var modsPos = settings.position;
+        modsPos.y = bottomDefaultSetting.position.y - 1.2f;
+
+        modSection = (Transform)Instantiate(settings, modsPos,
+          settings.rotation);
+        modSection.parent = settingsObjects;
+        modSection.name = "MOD SETTINGS";
+
+        foreach (Transform child in modSection)
+        {
+          if (child.name == "GENERAL")
+          {
+            child.GetComponent<TextMesh>().text = "M O D S";
+            child.name = "Title";
+          }
+          else
+          {
+            Destroy(child.gameObject);
+          }
+        }
+
+        var bg = settingsObjects.FindChild("BG");
+        var bgScale = bg.localScale;
+        bgScale.y += 1.35f; // Adjust background to include mods section title
+        bg.localScale = bgScale;
+      }
       var settingPos = bottomDefaultSetting.position;
 
-      settingPos.y -= 0.575f + numRegistered * SettingSize;
+      settingPos.x += (numRegistered % 2) * SettingSize.x;
+      settingPos.y -= 1.25f + (numRegistered / 2) * SettingSize.y;
 
       var fxaa = settingsObjects.FindChild("SETTINGS/FXAA");
 
-      var newSetting = Instantiate(fxaa, settingPos,
-        fxaa.rotation) as Transform;
-      newSetting.parent = settingsObjects;
+      var newSetting = (Transform)Instantiate(fxaa, settingPos, fxaa.rotation);
+      newSetting.parent = modSection;
+
+      if (numRegistered % 2 == 0)
+      {
+        // Expand background to include new toggle
+        var background = settingsObjects.FindChild("BG");
+        var backgroundScale = background.localScale;
+        backgroundScale.y += SettingSize.y * 2;
+        background.localScale = backgroundScale;
+      }
 
       var newSettingButton = newSetting.FindChild("AA BUTTON");
       var newSettingText = newSetting.FindChild("AA text");
