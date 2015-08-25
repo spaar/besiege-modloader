@@ -119,11 +119,15 @@ namespace spaar.ModLoader
         //Not a menu level
 
         var saveMachineGO = FindObjectOfType<MySaveMachine>().gameObject;
-        DestroyImmediate(saveMachineGO.GetComponent<MySaveMachine>());
+        var oldSaveMachine = saveMachineGO.GetComponent<MySaveMachine>();
         var newSaveMachine = saveMachineGO.AddComponent<ModLoaderSaveMachine>();
-        newSaveMachine.machineObjTrackerCode = Game.MachineObjectTracker;
+        newSaveMachine.CopyFrom(oldSaveMachine);
+        DestroyImmediate(oldSaveMachine);
         Game.MachineObjectTracker.mySaveCode = newSaveMachine;
-        FindObjectOfType<SaveAndDestroyOnClick>().mySaveCode = newSaveMachine;
+        foreach (var saveCode in FindObjectsOfType<SaveAndDestroyOnClick>())
+        {
+          saveCode.mySaveCode = newSaveMachine;
+        }
       }
     }
 
