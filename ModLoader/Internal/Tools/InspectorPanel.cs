@@ -134,6 +134,12 @@ namespace spaar.ModLoader.Internal.Tools
       inspectorScroll = GUILayout.BeginScrollView(inspectorScroll,
         GUILayout.Width(panelWidth), GUILayout.ExpandWidth(false));
 
+      if (IsGameObjectSelected)
+      {
+        GUILayout.Label("Tag: " + SelectedGameObject.tag);
+        GUILayout.Label("Layer: " + SelectedGameObject.layer);
+      }
+
       GUILayout.Label("Components:", Elements.Labels.Title);
 
       foreach (var entry in new HashSet<ComponentEntry>(entries))
