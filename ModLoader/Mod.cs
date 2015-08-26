@@ -45,6 +45,16 @@ namespace spaar.ModLoader
     public abstract Version Version { get; }
 
     /// <summary>
+    /// An additional text part of your version. If it is overriden,
+    /// it will be appended to Version when a version is printed, with a '-'
+    /// in between.
+    /// </summary>
+    /// <example>
+    /// Set this to <c>"beta"</c> to indicate a beta version.
+    /// </example>
+    public virtual string VersionExtra { get { return ""; } }
+
+    /// <summary>
     /// The version of Besiege the mod is targeted at.
     /// <para>
     /// Versions follow the format used by the game itself, 'vMajor.Minor'.
@@ -91,5 +101,16 @@ namespace spaar.ModLoader
     /// user at runtime.
     /// </summary>
     public abstract void OnUnload();
+
+    public override string ToString()
+    {
+      if (VersionExtra == "")
+      {
+        return string.Format("{0} ({1}) by {2}",
+          DisplayName, Version, Author);
+      }
+      return string.Format("{0} ({1}-{2}) by {3}",
+        DisplayName, Version, VersionExtra, Author);
+    }
   }
 }
