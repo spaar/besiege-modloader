@@ -100,6 +100,7 @@
     <Compile Include="Internal\Key.cs" />
     <Compile Include="Internal\lib\SimpleJSON.cs" />
     <Compile Include="Internal\ModLoaderSaveMachine.cs" />
+    <Compile Include="Internal\ScrollSettingsMenu.cs" />
     <Compile Include="Internal\SettingsComponent.cs" />
     <Compile Include="Internal\Tools\ComponentEntry.cs" />
     <Compile Include="Internal\Tools\Console.cs" />

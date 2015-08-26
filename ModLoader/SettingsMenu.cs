@@ -113,6 +113,17 @@ namespace spaar.ModLoader
         var bgScale = bg.localScale;
         bgScale.y += 1.35f; // Adjust background to include mods section title
         bg.localScale = bgScale;
+        bg.gameObject.AddComponent<BoxCollider>();
+        var scrollCollider = new GameObject("Scrolling").transform;
+        scrollCollider.parent = settingsObjects;
+        scrollCollider.rotation = bg.rotation;
+        scrollCollider.localScale = bg.localScale;
+        scrollCollider.gameObject.layer = bg.gameObject.layer;
+        var pos = bg.position;
+        pos.z = 15.0f; // Put collider behind all settings items
+        scrollCollider.position = pos;
+        scrollCollider.gameObject.AddComponent<ScrollSettingsMenu>()
+          .settingsObjects = settingsObjects;
       }
       var settingPos = bottomDefaultSetting.position;
 
@@ -131,6 +142,20 @@ namespace spaar.ModLoader
         var backgroundScale = background.localScale;
         backgroundScale.y += SettingSize.y * 2;
         background.localScale = backgroundScale;
+
+        // Expand the scrolling object to the same size
+        var scrolling = settingsObjects.FindChild("Scrolling");
+        scrolling.localScale = backgroundScale;
+        scrolling.GetComponent<ScrollSettingsMenu>().CalcBounds();
+
+        // Check whether the new element row is outside of the screen
+        // and enable scrolling if it is
+        var lowestPoint = newSetting.position - SettingSize;
+        var cam = GameObject.Find("HUD Cam").GetComponent<Camera>();
+        if (cam.WorldToViewportPoint(lowestPoint).y < 0.0f)
+        {
+          scrolling.GetComponent<ScrollSettingsMenu>().scrollingEnabled = true;
+        }
       }
 
       var newSettingButton = newSetting.FindChild("AA BUTTON");
