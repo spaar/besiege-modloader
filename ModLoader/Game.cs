@@ -207,13 +207,6 @@ namespace spaar.ModLoader
           hasNotifiedKeymapperOpen = false;
         }
       }
-
-      if (Input.GetKeyDown(KeyCode.L))
-      {
-        Debug.Log(Application.loadedLevel);
-        Debug.Log(Application.loadedLevelName);
-        Debug.Log(GetCurrentZone());
-      }
     }
 
     private void OnLevelWasLoaded(int level)
