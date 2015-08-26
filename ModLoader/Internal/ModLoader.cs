@@ -100,14 +100,16 @@ namespace spaar.ModLoader.Internal
 
     private void LoadMods()
     {
-      FileInfo[] files = (new DirectoryInfo(Application.dataPath + "/Mods"))
+      var files = (new DirectoryInfo(Application.dataPath + "/Mods"))
         .GetFiles("*.dll");
-      foreach (FileInfo fileInfo in files)
+      var loadingOutput = "";
+
+      foreach (var fileInfo in files)
       {
         if (!fileInfo.Name.EndsWith(".no.dll", StringComparison.CurrentCulture)
           && fileInfo.Name != "SpaarModLoader.dll")
         {
-          Debug.Log("Trying to load " + fileInfo.Name);
+          loadingOutput += "Trying to load " + fileInfo.Name + "\n";
           try
           {
             var assembly = Assembly.LoadFrom(fileInfo.FullName);
@@ -123,8 +125,8 @@ namespace spaar.ModLoader.Internal
             if (modTypes.Count < 1)
             {
 #if COMPAT
-              Debug.LogError(fileInfo.Name
-                + " contains no implementation of Mod. Trying fallback system.");
+              loadingOutput += fileInfo.Name + " contains"
+                + " no implementation of Mod. Trying fallback system.\n";
 
               // Fallback to old attribute-way of loading, this will be removed
               // in the future.
@@ -138,28 +140,31 @@ namespace spaar.ModLoader.Internal
                   gameObject.AddComponent(type);
                   attrib.assembly = assembly;
                   ModCompatWrapper wrapper = new ModCompatWrapper();
-                  wrapper.SetCompatInfo(attrib.author, attrib.Name(), attrib.version);
-                  Debug.Log("Loaded " + attrib.Name() + " (" + attrib.version + ") by " + attrib.author);
-                  Debug.LogWarning("This mod was loade using a compatibility wrapper for the old system.\nPlease upgrade the mod.");
+                  wrapper.SetCompatInfo(attrib.author, attrib.Name(),
+                    attrib.version);
+                  loadingOutput += "Loaded " + attrib.Name()
+                    + " (" + attrib.version + ") by " + attrib.author + "\n";
+                  loadingOutput += "This mod was loade using a compatibility "
+                    + "wrapper for the old system.\nPlease upgrade the mod.\n";
                   loadedMods.Add(new InternalMod(wrapper, assembly));
                   fallbackWorked = true;
                 }
               }
               if (!fallbackWorked)
               {
-                Debug.Log("Fallback system failed too. Skipping.");
+                loadingOutput += "Fallback system failed too. Skipping.\n";
               }
               continue;
 #else
-              Debug.LogError(fileInfo.Name
-                + " contains no implementation of Mod. Not loading it.");
+              loadingOutput += fileInfo.Name
+                + " contains no implementation of Mod. Not loading it."\n";
               continue;
 #endif
             }
             else if (modTypes.Count > 1)
             {
-              Debug.LogError(fileInfo.Name
-                + " contains more than one implementation of Mod. Not loading it.");
+              loadingOutput += fileInfo.Name + " contains"
+                + " more than one implementation of Mod. Not loading it.\n";
               continue;
             }
 
@@ -167,12 +172,13 @@ namespace spaar.ModLoader.Internal
 
             if (modStatus.ContainsKey(mod.Name) && !modStatus[mod.Name])
             {
-              Debug.Log("Not activating mod " + mod.DisplayName + ": Is disabled");
+              loadingOutput += "Not activating mod " + mod.DisplayName
+                + ": Is disabled\n";
               continue;
             }
 
             loadedMods.Add(new InternalMod(mod, assembly));
-            Debug.Log(mod.DisplayName + " was loaded!");
+            loadingOutput += "\t" + mod.ToString() + " was loaded!\n";
           }
           catch (Exception exception)
           {
@@ -181,6 +187,8 @@ namespace spaar.ModLoader.Internal
           }
         }
       }
+
+      ModConsole.AddMessage(LogType.Log, "Loaded mods", loadingOutput);
     }
 
     private void RegisterModManagementCommands()
@@ -190,8 +198,10 @@ namespace spaar.ModLoader.Internal
         var result = "Loaded mods:";
         foreach (var mod in loadedMods)
         {
-          string name = args.Length > 0 ? mod.Mod.Name : mod.Mod.DisplayName;
-          result += "\n" + name + " (" + mod.Mod.Version + ") by " + mod.Mod.Author;
+          var name = args.Length > 0 ? mod.Mod.Name : mod.Mod.DisplayName;
+          var version = mod.Mod.VersionExtra == "" ? mod.Mod.Version.ToString()
+            : mod.Mod.Version.ToString() + "-" + mod.Mod.VersionExtra;
+          result += "\n" + name + " (" + version + ") by " + mod.Mod.Author;
         }
         return result;
       }, "Print a list of all mods. If 'internalNames' is passed,"
