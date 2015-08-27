@@ -342,7 +342,7 @@ namespace spaar.ModLoader
     }
 
     /// <exclude />
-    [Obsolete("KeyExists is deprecated, use DoesKeyExist instead")]
+    [Obsolete("KeyExists is deprecated, use DoesKeyExist instead", true)]
     public static bool KeyExists(string key)
     {
       Debug.LogWarning("Use Configuration.DoesKeyExist instead of Configuration.KeyExists.\n"
