@@ -18,6 +18,9 @@ namespace spaar.ModLoader.Internal.Tools
     private FieldType activeMemberFieldType = FieldType.Normal;
     private object activeMemberNewValue;
 
+    private bool layerTextInputActive;
+    private string layerTextInputNewValue;
+
     private GameObject _selectedGameObject;
     // null indicates no object selected
     public GameObject SelectedGameObject
@@ -106,8 +109,19 @@ namespace spaar.ModLoader.Internal.Tools
         activeMemberFieldType = FieldType.Normal;
         activeMemberNewValue = null;
       }
+
+      if (layerTextInputActive && Event.current.keyCode == KeyCode.Return)
+      {
+        int i;
+        if (int.TryParse(layerTextInputNewValue, out i))
+        {
+          SelectedGameObject.layer = i;
+          layerTextInputActive = false;
+        }
+      }
     }
 
+    private bool tagExpanded, layerExpanded;
     public void Display()
     {
       float panelWidth = Elements.Settings.InspectorPanelWidth;
@@ -136,8 +150,39 @@ namespace spaar.ModLoader.Internal.Tools
 
       if (IsGameObjectSelected)
       {
-        GUILayout.Label("Tag: " + SelectedGameObject.tag);
-        GUILayout.Label("Layer: " + SelectedGameObject.layer);
+        GUILayout.BeginHorizontal();
+        if (Elements.Tools.DoCollapseArrow(tagExpanded, false))
+          tagExpanded = !tagExpanded;
+        GUILayout.Label("Tag: " + SelectedGameObject.tag,
+          Elements.Labels.LogEntry, GUILayout.ExpandWidth(false));
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        if (Elements.Tools.DoCollapseArrow(layerExpanded))
+          layerExpanded = !layerExpanded;
+        GUILayout.Label("Layer: " + SelectedGameObject.layer,
+          Elements.Labels.LogEntry, GUILayout.ExpandWidth(false));
+        GUILayout.EndHorizontal();
+
+        if (layerExpanded)
+        {
+          if (layerTextInputActive)
+          {
+            layerTextInputNewValue = GUILayout.TextField(
+              layerTextInputNewValue, Elements.InputFields.ComponentField);
+          }
+          else
+          {
+            string newLayer = GUILayout.TextField(
+              SelectedGameObject.layer.ToString(),
+              Elements.InputFields.ComponentField);
+            if (newLayer != SelectedGameObject.layer.ToString())
+            {
+              layerTextInputActive = true;
+              layerTextInputNewValue = newLayer;
+            }
+          }
+        }
       }
 
       GUILayout.Label("Components:", Elements.Labels.Title);
