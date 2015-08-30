@@ -119,8 +119,12 @@ namespace spaar.ModLoader.Internal
 
             foreach (var type in types)
             {
-              if (typeof(Mod).IsAssignableFrom(type))
-                modTypes.Add(type);
+              if (typeof(Mod).IsAssignableFrom(type)
+                && Attribute.GetCustomAttribute(type, typeof(TemplateAttribute))
+                  == null)
+              {
+                  modTypes.Add(type);
+              }
             }
 
             if (modTypes.Count < 1)
