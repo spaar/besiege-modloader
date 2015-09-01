@@ -34,7 +34,31 @@ namespace spaar.ModLoader
   /// </remarks>
   /// <example>
   /// <code>
-  ///   Commands.RegisterCommand("myCommand", myCallback);
+  ///   Commands.RegisterCommand("myCommand", MyCallback);
+  /// </code>
+  /// An example implementation of the callback might looks like this:
+  /// <code>
+  /// private string MyCallback(string[] args,
+  /// IDictionary&lt;string, string&gt; namedArgs)
+  /// {
+  ///   if (args.Length != 2)
+  ///   {
+  ///     return "Usage: myCommand &gt;param1&lt; &gt;param2&lt;
+  ///   }
+  ///   return "You passed " + args[0] + " and " + args[1];
+  /// }
+  /// </code>
+  /// Of course it is also possible to implement the callback as a lambda or
+  /// anonymous delegate instead of a full function:
+  /// <code>
+  ///   Commands.RegisterCommand("myCommand", (args, namedArgs) =>
+  ///   {
+  ///     if (args.Length != 2)
+  ///     {
+  ///       return "Usage: myCommand &gt;param1&lt; &gt;param2&lt;
+  ///     }
+  ///     return "You passed " + args[0] + " and " + args[1];
+  ///   });
   /// </code>
   /// Registers a new command called myCommand. This can then be used like this:
   /// <code>

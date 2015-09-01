@@ -5,6 +5,9 @@ using System.Text;
 
 namespace spaar.ModLoader
 {
+  /// <summary>
+  /// Represents an in-game island. The sandbox is counted as a seperate island.
+  /// </summary>
   public enum Island
   {
     Sandbox,
@@ -12,6 +15,9 @@ namespace spaar.ModLoader
     Tolbrynd
   }
 
+  /// <summary>
+  /// Represents a zone, which is an in-game level.
+  /// </summary>
   public class Zone
   {
     public int Index { get; private set; }

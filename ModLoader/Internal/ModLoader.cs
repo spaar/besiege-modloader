@@ -261,7 +261,8 @@ namespace spaar.ModLoader.Internal
         if (mod.Mod.CanBeUnloaded)
         {
           Debug.Log("Unloading " + mod.Mod.DisplayName);
-          mod.Mod.OnUnload();
+          mod.Deactivate();
+          loadedMods.Remove(mod);
         }
         else
         {
