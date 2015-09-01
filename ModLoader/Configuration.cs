@@ -370,6 +370,29 @@ namespace spaar.ModLoader
       return new List<string>(configs[modName].Keys);
     }
 
+    /// <summary>
+    /// Removes the specified key and its associated value from the configuration.
+    /// </summary>
+    /// <param name="key">The key to remove</param>
+    /// <returns>true if the element is successfully found and removed;
+    /// otherwise, false</returns>
+    public static bool RemoveKey(string key)
+    {
+      var mod = GetModFromAssembly(Assembly.GetCallingAssembly());
+      if (mod == null)
+      {
+        throw new InvalidOperationException("Cannot get configuration keys: "
+          + "Unable to determine mod");
+      }
+      var modName = mod.Mod.Name;
+      if (configs.ContainsKey(modName))
+      {
+        return configs[modName].Remove(key);
+      }
+
+      return false;
+    }
+
     private static void InitializeCommand()
     {
       Commands.RegisterCommand("setConfigValue", (args, nArgs) =>
