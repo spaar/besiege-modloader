@@ -9,7 +9,7 @@ namespace spaar.ModLoader.Internal.Tools
   {
     enum FieldType
     {
-      Normal, VectorX, VectorY, VectorZ
+      Normal, VectorX, VectorY, VectorZ, ColorR, ColorG, ColorB, ColorA
     }
 
     private const string FIELD_EDIT_INPUT_NAME = "field_edit_input";
@@ -88,11 +88,48 @@ namespace spaar.ModLoader.Internal.Tools
           if (activeMemberNewValue != null
             && float.TryParse(activeMemberNewValue.ToString(), out v))
           {
-            if (activeMemberFieldType == FieldType.VectorX) vector3.x = v;
-            else if (activeMemberFieldType == FieldType.VectorY) vector3.y = v;
-            else if (activeMemberFieldType == FieldType.VectorZ) vector3.z = v;
+            switch (activeMemberFieldType)
+            {
+              case FieldType.VectorX: vector3.x = v; break;
+              case FieldType.VectorY: vector3.y = v; break;
+              case FieldType.VectorZ: vector3.z = v; break;
+            }
           }
           activeMember.SetValue(vector3);
+        }
+        else if (@object is Color)
+        {
+          var color = (Color)activeMember.GetValue();
+          float v;
+          if (activeMemberNewValue != null
+            && float.TryParse(activeMemberNewValue.ToString(), out v))
+          {
+            switch (activeMemberFieldType)
+            {
+              case FieldType.ColorR: color.r = v; break;
+              case FieldType.ColorG: color.g = v; break;
+              case FieldType.ColorB: color.b = v; break;
+              case FieldType.ColorA: color.a = v; break;
+            }
+          }
+          activeMember.SetValue(color);
+        }
+        else if (@object is Quaternion)
+        {
+          var quat = (Quaternion)activeMember.GetValue();
+          float v;
+          if (activeMemberNewValue != null
+            && float.TryParse(activeMemberNewValue.ToString(), out v))
+          {
+            switch (activeMemberFieldType)
+            {
+              case FieldType.ColorR: quat.x = v; break;
+              case FieldType.ColorG: quat.y = v; break;
+              case FieldType.ColorB: quat.z = v; break;
+              case FieldType.ColorA: quat.w = v; break;
+            }
+          }
+          activeMember.SetValue(quat);
         }
         else if (@object is float)
         {
@@ -346,7 +383,6 @@ namespace spaar.ModLoader.Internal.Tools
           {
             var vec3Value = (Vector3)value;
 
-
             // X
             GUILayout.BeginHorizontal();
             GUILayout.Label("X: ", Elements.Labels.LogEntry,
@@ -364,6 +400,64 @@ namespace spaar.ModLoader.Internal.Tools
             GUILayout.Label("Z: ", Elements.Labels.LogEntry,
               GUILayout.ExpandWidth(false));
             DoInputField(member, vec3Value.z, FieldType.VectorZ, 80);
+            GUILayout.EndHorizontal();
+          }
+          else if (value is Color)
+          {
+            var colorValue = (Color)value;
+
+            // R
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("R: ", Elements.Labels.LogEntry,
+              GUILayout.ExpandWidth(false));
+            DoInputField(member, colorValue.r, FieldType.ColorR, 80);
+            GUILayout.EndHorizontal();
+            // G
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("G: ", Elements.Labels.LogEntry,
+              GUILayout.ExpandWidth(false));
+            DoInputField(member, colorValue.g, FieldType.ColorG, 80);
+            GUILayout.EndHorizontal();
+            // B
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("B: ", Elements.Labels.LogEntry,
+              GUILayout.ExpandWidth(false));
+            DoInputField(member, colorValue.b, FieldType.ColorB, 80);
+            GUILayout.EndHorizontal();
+            // A
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("A: ", Elements.Labels.LogEntry,
+              GUILayout.ExpandWidth(false));
+            DoInputField(member, colorValue.a, FieldType.ColorA, 80);
+            GUILayout.EndHorizontal();
+          }
+         else if (value is Quaternion)
+          {
+            var quatValue = (Quaternion)value;
+
+            // X
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("X: ", Elements.Labels.LogEntry,
+              GUILayout.ExpandWidth(false));
+            DoInputField(member, quatValue.x, FieldType.ColorR, 80);
+            GUILayout.EndHorizontal();
+            // Y
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Y: ", Elements.Labels.LogEntry,
+              GUILayout.ExpandWidth(false));
+            DoInputField(member, quatValue.y, FieldType.ColorG, 80);
+            GUILayout.EndHorizontal();
+            // Z
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Z: ", Elements.Labels.LogEntry,
+              GUILayout.ExpandWidth(false));
+            DoInputField(member, quatValue.z, FieldType.ColorB, 80);
+            GUILayout.EndHorizontal();
+            // W
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("W: ", Elements.Labels.LogEntry,
+              GUILayout.ExpandWidth(false));
+            DoInputField(member, quatValue.w, FieldType.ColorA, 80);
             GUILayout.EndHorizontal();
           }
           else if (value is int)
@@ -425,7 +519,8 @@ namespace spaar.ModLoader.Internal.Tools
     public bool IsSupported(object value)
     {
       return value is string || value is bool || value is Vector3
-          || value is int || value is float;
+          || value is int || value is float || value is Color
+          || value is Quaternion;
     }
   }
 }
