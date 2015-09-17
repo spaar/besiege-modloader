@@ -266,10 +266,15 @@ namespace spaar.ModLoader.Internal.Tools
                              : Elements.Buttons.Disabled;
 
       GUILayout.FlexibleSpace();
+
+      if (GUILayout.Button("Destroy"))
+      {
+        Destroy(SelectedGameObject);
+      }
       if (GUILayout.Button("Focus"))
       {
         var mo = Camera.main.GetComponent<MouseOrbit>();
-        if (mo != null)
+        if (mo != null && IsGameObjectSelected)
           mo.target = SelectedGameObject.transform;
       }
       if (GUILayout.Button("Select focused"))
