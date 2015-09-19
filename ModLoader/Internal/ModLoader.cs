@@ -18,7 +18,7 @@ namespace spaar.ModLoader.Internal
     public override string DisplayName { get { return "spaar's Mod Loader"; } }
     public override string Author { get { return "spaar"; } }
     public override Version Version { get { return ModLoader.ModLoaderVersion; } }
-    public override string VersionExtra { get { return "beta6"; } }
+    public override string VersionExtra { get { return "beta8"; } }
     public override string BesiegeVersion { get { return ModLoader.BesiegeVersion; } }
     public override bool Preload { get { return true; } }
     public override void OnLoad() { }
@@ -42,7 +42,7 @@ namespace spaar.ModLoader.Internal
       get { return new List<InternalMod>(loadedMods); }
     }
 
-    private Dictionary<string, bool> modStatus;
+    //private Dictionary<string, bool> modStatus;
 
     private void Start()
     {
@@ -63,6 +63,7 @@ namespace spaar.ModLoader.Internal
       Game.Initialize();
       SettingsMenu.Initialize();
       MachineData.Initialize();
+      Tools.ModToggle.Initialize();
 
 #if DEV_BUILD
       Tools.ObjectExplorer.Initialize();
@@ -72,8 +73,6 @@ namespace spaar.ModLoader.Internal
       // for the correct keys to use.
       console.EnableInterface();
 
-      LoadModStatus();
-
       LoadMods();
 
       RegisterModManagementCommands();
@@ -81,22 +80,6 @@ namespace spaar.ModLoader.Internal
       InitializeMods();
 
       UpdateChecker.Initialize();
-    }
-
-    private void LoadModStatus()
-    {
-      modStatus = new Dictionary<string, bool>();
-
-      var keys = Configuration.GetKeys();
-      foreach (var key in keys)
-      {
-        if (key.StartsWith("modStatus:", StringComparison.CurrentCulture))
-        {
-          var mod = key.Replace("modStatus:", "");
-          var modEnabled = Configuration.GetBool(key, true);
-          modStatus[mod] = modEnabled;
-        }
-      }
     }
 
     private void LoadMods()
@@ -174,15 +157,8 @@ namespace spaar.ModLoader.Internal
             }
 
             var mod = (Mod)System.Activator.CreateInstance(modTypes[0]);
-
-            if (modStatus.ContainsKey(mod.Name) && !modStatus[mod.Name])
-            {
-              loadingOutput += "Not activating mod " + mod.DisplayName
-                + ": Is disabled\n";
-              continue;
-            }
-
             loadedMods.Add(new InternalMod(mod, assembly));
+
             loadingOutput += "\t" + mod.ToString() + " was loaded!\n";
           }
           catch (Exception exception)
@@ -220,9 +196,16 @@ namespace spaar.ModLoader.Internal
           return usage;
         }
 
-        EnableMod(args[0]);
-
-        return "Enabled mod " + args[0];
+        var mod = loadedMods.Find(m => m.Mod.Name == args[0]);
+        if (mod != null)
+        {
+          mod.Enable();
+          return "";
+        }
+        else
+        {
+          return "Can't find mod " + mod.Mod.Name + ", not enabling it.";
+        }
       });
 
       Commands.RegisterCommand("disableMod", (args, nArgs) =>
@@ -233,78 +216,83 @@ namespace spaar.ModLoader.Internal
           return usage;
         }
 
-        DisableMod(args[0]);
-
-        if (loadedMods.FindIndex(m => m.Mod.Name == args[0]) == -1)
+        var mod = loadedMods.Find(m => m.Mod.Name == args[0]);
+        if (mod != null)
         {
-          Debug.LogWarning("There is currently no mod named " + args[0]
-            + " loaded. Did you spell the name correctly? Remember to use "
-            + "internal names.");
-        }
-
-        return "Disabled mod " + args[0];
-      });
-    }
-
-    public void EnableMod(string modName)
-    {
-      modStatus[modName] = true;
-    }
-
-    public void DisableMod(string modName)
-    {
-      modStatus[modName] = false;
-
-      var mod = loadedMods.Find(m => m.Mod.Name == modName);
-      if (mod != null)
-      {
-        if (mod.Mod.CanBeUnloaded)
-        {
-          Debug.Log("Unloading " + mod.Mod.DisplayName);
-          mod.Deactivate();
-          loadedMods.Remove(mod);
+          mod.Disable();
+          return "Disabled mod " + args[0];
         }
         else
         {
-          Debug.Log("Not unloading " + mod.Mod.DisplayName
-            + ", it cannot be unloaded at runtime.");
+          return "There is currently no mod named " + args[0]
+            + " loaded. Did you spell the name correctly? Remember to use "
+            + "internal names.";
         }
-      }
-      else
-      {
-        Debug.Log("Not unloading " + modName + ", can't find it.");
-      }
+      });
     }
+
+    //public void EnableMod(string modName)
+    //{
+    //  //modStatus[modName] = true;
+    //  Debug.Log("Enabled " + modName);
+
+    //  var mod = loadedMods.Find(m => m.Mod.Name == modName);
+    //  if (mod != null)
+    //  {
+    //    try
+    //    {
+    //      mod.Activate();
+    //      Debug.Log("Activated " + modName);
+    //    }
+    //    catch (Exception)
+    //    { /* Was printed to console, ignore it */ }
+    //  }
+    //  else
+    //  {
+    //    Debug.Log("Not activating " + modName + ", can't find it.");
+    //  }
+    //}
+
+    //public void DisableMod(string modName)
+    //{
+    //  //modStatus[modName] = false;
+    //  Debug.Log("Disabled " + modName);
+
+    //  var mod = loadedMods.Find(m => m.Mod.Name == modName);
+    //  if (mod != null)
+    //  {
+    //    if (mod.Mod.CanBeUnloaded)
+    //    {
+    //      Debug.Log("Unloading " + mod.Mod.DisplayName);
+    //      mod.Deactivate();
+    //    }
+    //    else
+    //    {
+    //      Debug.Log("Not unloading " + mod.Mod.DisplayName
+    //        + ", it cannot be unloaded at runtime.");
+    //      Debug.Log("It was disabled and will not be loaded when the game is "
+    //        + "started the next time.");
+    //    }
+    //  }
+    //  else
+    //  {
+    //    Debug.Log("Not unloading " + modName + ", can't find it.");
+    //  }
+    //}
 
     private void InitializeMods()
     {
+      string output = "";
+
       // Initialize mods marked as Preload first
       var preloadMods = loadedMods.Where(m => m.Mod.Preload);
       foreach (var mod in preloadMods)
       {
-        if (mod.Mod.BesiegeVersion != BesiegeVersion)
-        {
-          Debug.LogWarning(mod.Mod.DisplayName
-            + " is not targeted at the current Besiege version."
-            + " Unexpected behaviour may occur.");
-        }
+        mod.IsEnabled = Configuration.GetBool("modStatus:" + mod.Mod.Name, true);
 
-        try
+        if (!mod.IsEnabled)
         {
-          mod.Activate();
-        }
-        catch (Exception)
-        {
-          // Ignore the exception, it was printed to the console, modder's
-          // responsibility
-        }
-      }
-
-      foreach (var mod in loadedMods)
-      {
-        if (mod.Mod.Preload)
-        {
-          // Preload mods were already initialized
+          output += "Not activating " + mod.Mod.DisplayName + "\n";
           continue;
         }
 
@@ -315,37 +303,50 @@ namespace spaar.ModLoader.Internal
             + " Unexpected behaviour may occur.");
         }
 
-        try
-        {
-          mod.Activate();
-        }
-        catch (Exception)
-        {
-          // Ignore the exception, it was printed to the console, modder's
-          // responsibility
-        }
+        mod.Activate();
+
+        output += "Activated " + mod.Mod.ToString() + "\n";
       }
+
+      foreach (var mod in loadedMods)
+      {
+        if (mod.Mod.Preload)
+        {
+          // Preload mods were already initialized
+          continue;
+        }
+
+        mod.IsEnabled = Configuration.GetBool("modStatus:" + mod.Mod.Name, true);
+
+        if (!mod.IsEnabled)
+        {
+          output += "Not activating " + mod.Mod.DisplayName + "\n";
+          continue;
+        }
+
+        if (mod.Mod.BesiegeVersion != BesiegeVersion)
+        {
+          Debug.LogWarning(mod.Mod.DisplayName
+            + " is not targeted at the current Besiege version."
+            + " Unexpected behaviour may occur.");
+        }
+
+        mod.Activate();
+
+        output += "Activated " + mod.Mod.ToString() + "\n";
+      }
+
+      ModConsole.AddMessage(LogType.Log, "Activated mods", output);
     }
 
     private void OnApplicationQuit()
     {
       foreach (var mod in loadedMods)
       {
-        try
-        {
-          mod.Deactivate();
-        }
-        catch (Exception)
-        {
-          // Ignore the exception, it was printed to the console, modder's
-          // responsibility
-        }
+        mod.Deactivate();
+        Configuration.SetBool("modStatus:" + mod.Mod.Name, mod.IsEnabled);
       }
 
-      foreach (var pair in modStatus)
-      {
-        Configuration.SetBool("modStatus:" + pair.Key, pair.Value);
-      }
 
       Configuration.Save();
     }

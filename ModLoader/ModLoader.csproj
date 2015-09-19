@@ -110,6 +110,7 @@
     <Compile Include="Internal\Tools\InspectorPanel.cs" />
     <Compile Include="Internal\Tools\LogEntry.cs" />
     <Compile Include="Internal\Tools\MemberValue.cs" />
+    <Compile Include="Internal\Tools\ModToggle.cs" />
     <Compile Include="Internal\UpdateChecker.cs" />
     <Compile Include="ModConsole.cs" />
     <Compile Include="MachineData.cs" />

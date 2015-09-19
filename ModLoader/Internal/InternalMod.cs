@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
+using UnityEngine;
 
 namespace spaar.ModLoader.Internal
 {
@@ -11,6 +13,8 @@ namespace spaar.ModLoader.Internal
     public Mod Mod { get; private set; }
 
     public bool IsActive { get; private set; }
+
+    public bool IsEnabled { get; internal set; }
 
     public string AssemblyName { get; private set; }
 
@@ -25,7 +29,12 @@ namespace spaar.ModLoader.Internal
     {
       if (IsActive) return;
 
-      Mod.OnLoad();
+      try
+      {
+        Mod.OnLoad();
+      }
+      catch (Exception)
+      { /* Printed to console, ignore */ }
       IsActive = true;
     }
 
@@ -33,8 +42,43 @@ namespace spaar.ModLoader.Internal
     {
       if (!IsActive) return;
 
-      Mod.OnUnload();
+      try
+      {
+        Mod.OnUnload();
+      }
+      catch (Exception)
+      { /* Printed to console, ignore */ }
       IsActive = false;
+    }
+
+    public void Enable()
+    {
+      if (IsEnabled) return;
+
+      //ModLoader.Instance.EnableMod(Mod.Name);
+      Activate();
+      IsEnabled = true;
+      Debug.Log("Activated and enabled " + Mod.DisplayName);
+    }
+
+    public void Disable()
+    {
+      if (!IsEnabled) return;
+
+      //ModLoader.Instance.DisableMod(Mod.Name);
+
+      IsEnabled = false;
+      Debug.Log("Disabled " + Mod.DisplayName);
+
+      if (Mod.CanBeUnloaded)
+      {
+        Deactivate();
+        Debug.Log("Deactivated " + Mod.DisplayName);
+      }
+      else
+      {
+        Debug.Log("Not deactivating it, it won't be loaded next time.");
+      }
     }
   }
 }
