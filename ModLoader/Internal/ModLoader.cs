@@ -42,8 +42,6 @@ namespace spaar.ModLoader.Internal
       get { return new List<InternalMod>(loadedMods); }
     }
 
-    //private Dictionary<string, bool> modStatus;
-
     private void Start()
     {
       DontDestroyOnLoad(this);
@@ -230,55 +228,6 @@ namespace spaar.ModLoader.Internal
         }
       });
     }
-
-    //public void EnableMod(string modName)
-    //{
-    //  //modStatus[modName] = true;
-    //  Debug.Log("Enabled " + modName);
-
-    //  var mod = loadedMods.Find(m => m.Mod.Name == modName);
-    //  if (mod != null)
-    //  {
-    //    try
-    //    {
-    //      mod.Activate();
-    //      Debug.Log("Activated " + modName);
-    //    }
-    //    catch (Exception)
-    //    { /* Was printed to console, ignore it */ }
-    //  }
-    //  else
-    //  {
-    //    Debug.Log("Not activating " + modName + ", can't find it.");
-    //  }
-    //}
-
-    //public void DisableMod(string modName)
-    //{
-    //  //modStatus[modName] = false;
-    //  Debug.Log("Disabled " + modName);
-
-    //  var mod = loadedMods.Find(m => m.Mod.Name == modName);
-    //  if (mod != null)
-    //  {
-    //    if (mod.Mod.CanBeUnloaded)
-    //    {
-    //      Debug.Log("Unloading " + mod.Mod.DisplayName);
-    //      mod.Deactivate();
-    //    }
-    //    else
-    //    {
-    //      Debug.Log("Not unloading " + mod.Mod.DisplayName
-    //        + ", it cannot be unloaded at runtime.");
-    //      Debug.Log("It was disabled and will not be loaded when the game is "
-    //        + "started the next time.");
-    //    }
-    //  }
-    //  else
-    //  {
-    //    Debug.Log("Not unloading " + modName + ", can't find it.");
-    //  }
-    //}
 
     private void InitializeMods()
     {
