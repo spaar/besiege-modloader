@@ -28,7 +28,7 @@ namespace spaar.ModLoader.Internal.Tools
 
     private void Update()
     {
-      if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.M))
+      if (Keys.K["ModToggle"])
       {
         visible = !visible;
       }

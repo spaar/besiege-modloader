@@ -33,6 +33,8 @@ namespace spaar.ModLoader.Internal
         Configuration.GetString("consoleK2", "K"));
       Keymap["ObjectExplorer"] = new Key(Configuration.GetString("objExpK1", "LeftControl"),
         Configuration.GetString("objExpK2", "O"));
+      Keymap["ModToggle"] = new Key(Configuration.GetString("modToggleK1", "LeftControl"),
+        Configuration.GetString("modToggleK2", "M"));
     }
 
     /// <summary>
