@@ -129,6 +129,7 @@
     <Compile Include="UI\Scrollview.cs" />
     <Compile Include="UI\Settings.cs" />
     <Compile Include="UI\Sliders.cs" />
+    <Compile Include="UI\Toggle.cs" />
     <Compile Include="UI\Tools.cs" />
     <Compile Include="UI\ModGUI.cs" />
     <Compile Include="UI\Windows.cs" />

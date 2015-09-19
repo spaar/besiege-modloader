@@ -23,6 +23,7 @@ namespace spaar.ModLoader.UI
     public static InputFields InputFields { get; private set; }
     public static Scrollview Scrollview { get; private set; }
     public static Sliders Sliders { get; private set; }
+    public static Toggle Toggle { get; private set; }
     
     /// <summary>
     /// Rebuilds all elements to make them match the settings in Elements.Settings.
@@ -40,6 +41,7 @@ namespace spaar.ModLoader.UI
       InputFields = new InputFields();
       Scrollview = new Scrollview();
       Sliders = new Sliders();
+      Toggle = new Toggle();
 
       ModGUI.Instance.RebuildSkin();
     }

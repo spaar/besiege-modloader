@@ -57,6 +57,7 @@ namespace spaar.ModLoader.UI
       Skin.horizontalSliderThumb = Elements.Sliders.ThumbHorizontal;
       Skin.verticalSlider = Elements.Sliders.Vertical;
       Skin.verticalSliderThumb = Elements.Sliders.ThumbVertical;
+      Skin.toggle = Elements.Toggle.Default;
     }
   }
 }
