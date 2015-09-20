@@ -33,8 +33,10 @@ namespace spaar.ModLoader.Internal
       {
         Mod.OnLoad();
       }
-      catch (Exception)
-      { /* Printed to console, ignore */ }
+      catch (Exception e)
+      {
+        Debug.LogException(e);
+      }
       IsActive = true;
     }
 
@@ -46,8 +48,10 @@ namespace spaar.ModLoader.Internal
       {
         Mod.OnUnload();
       }
-      catch (Exception)
-      { /* Printed to console, ignore */ }
+      catch (Exception e)
+      {
+        Debug.LogException(e);
+      }
       IsActive = false;
     }
 
