@@ -108,6 +108,7 @@
     <Compile Include="Internal\Tools\HierarchyEntry.cs" />
     <Compile Include="Internal\Tools\HierarchyPanel.cs" />
     <Compile Include="Internal\Tools\InspectorPanel.cs" />
+    <Compile Include="Internal\Tools\Keymapper.cs" />
     <Compile Include="Internal\Tools\LogEntry.cs" />
     <Compile Include="Internal\Tools\MemberValue.cs" />
     <Compile Include="Internal\Tools\ModToggle.cs" />

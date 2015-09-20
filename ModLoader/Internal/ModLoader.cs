@@ -62,6 +62,7 @@ namespace spaar.ModLoader.Internal
       SettingsMenu.Initialize();
       MachineData.Initialize();
       Tools.ModToggle.Initialize();
+      Tools.Keymapper.Initialize();
 
 #if DEV_BUILD
       Tools.ObjectExplorer.Initialize();
