@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace spaar.ModLoader
+﻿namespace spaar.ModLoader
 {
   /// <summary>
   /// All block types in the game. These values can be used as indices to

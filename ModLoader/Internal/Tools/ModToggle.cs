@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using spaar.ModLoader.UI;
+﻿using spaar.ModLoader.UI;
 using UnityEngine;
 
 namespace spaar.ModLoader.Internal.Tools

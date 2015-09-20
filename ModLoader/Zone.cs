@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace spaar.ModLoader
+﻿namespace spaar.ModLoader
 {
   /// <summary>
   /// Represents an in-game island. The sandbox is counted as a seperate island.
