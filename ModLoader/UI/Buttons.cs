@@ -9,6 +9,7 @@ namespace spaar.ModLoader.UI
   {
     public GUIStyle Default { get; set; }
     public GUIStyle Disabled { get; set; }
+    public GUIStyle Red { get; set; }
     public GUIStyle ComponentField { get; set; }
     public GUIStyle LogEntryLabel { get; set; }
     public GUIStyle ThinNoTopBotMargin { get; set; }
@@ -32,6 +33,12 @@ namespace spaar.ModLoader.UI
         alignment = TextAnchor.MiddleCenter,
         fontSize = 14,
         fontStyle = FontStyle.Bold
+      };
+
+      Red = new GUIStyle(Default)
+      {
+        normal = { background = Elements.LoadImage("button-light-grey.png"), },
+        hover = { background = Elements.LoadImage("button-red.png"), },
       };
 
       Disabled = new GUIStyle(Default)
