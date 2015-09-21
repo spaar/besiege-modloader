@@ -60,6 +60,7 @@ namespace spaar.ModLoader.Internal
       Keys.Initialize();
       Game.Initialize();
       SettingsMenu.Initialize();
+      OptionsMenu.Initialize();
       MachineData.Initialize();
       Tools.ModToggle.Initialize();
       Tools.Keymapper.Initialize();

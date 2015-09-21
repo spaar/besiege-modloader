@@ -119,6 +119,8 @@
     <Compile Include="Internal\ModLoader.cs" />
     <Compile Include="Internal\Tools\ObjectExplorer.cs" />
     <Compile Include="Compat\ModCompat.cs" />
+    <Compile Include="Internal\OptionsComponent.cs" />
+    <Compile Include="OptionsMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsMenu.cs" />
     <Compile Include="SingleInstance.cs" />
