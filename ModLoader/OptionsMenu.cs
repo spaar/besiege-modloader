@@ -4,8 +4,16 @@ using UnityEngine;
 
 namespace spaar.ModLoader
 {
+  /// <summary>
+  /// Callback delegate for an option toggle.
+  /// </summary>
+  /// <param name="active">Whether the toggle is active</param>
   public delegate void OptionsToggle(bool active);
 
+  /// <summary>
+  /// OptionsMenu contains methods for adding an option (toggle button) to the
+  /// options menu in the main menu of Besiege.
+  /// </summary>
   public class OptionsMenu : SingleInstance<OptionsMenu>
   {
     public override string Name { get; } = "spaar's Mod Loader: Options Utility";
@@ -22,6 +30,14 @@ namespace spaar.ModLoader
 
     private static List<OptionsButton> toAdd = new List<OptionsButton>();
 
+    /// <summary>
+    /// Registers a new toggle button. It will be placed below all others that
+    /// are currently registered.
+    /// </summary>
+    /// <param name="text">The text to display on the button</param>
+    /// <param name="cb">Callback to call when the button is clicked</param>
+    /// <param name="defaultValue">Starting state of the toggle</param>
+    /// <param name="fontSize">Font size of the text on the button</param>
     public static void RegisterOptionsToggle(string text, OptionsToggle cb,
       bool defaultValue = false, int fontSize = 0)
     {
