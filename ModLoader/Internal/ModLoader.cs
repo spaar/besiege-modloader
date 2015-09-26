@@ -18,7 +18,7 @@ namespace spaar.ModLoader.Internal
     public override string DisplayName { get { return "spaar's Mod Loader"; } }
     public override string Author { get { return "spaar"; } }
     public override Version Version { get { return ModLoader.ModLoaderVersion; } }
-    public override string VersionExtra { get { return "beta8"; } }
+    public override string VersionExtra { get { return "beta9"; } }
     public override string BesiegeVersion { get { return ModLoader.BesiegeVersion; } }
     public override bool Preload { get { return true; } }
     public override void OnLoad() { }
@@ -31,7 +31,7 @@ namespace spaar.ModLoader.Internal
     /// The currently running Besiege version.
     /// </summary>
     public static readonly string BesiegeVersion = "v0.11";
-    public static readonly Version ModLoaderVersion = new Version(1, 0);
+    public static readonly Version ModLoaderVersion = new Version(1, 0, 0);
 
     public override string Name { get { return "spaar's Mod Loader"; } }
 
