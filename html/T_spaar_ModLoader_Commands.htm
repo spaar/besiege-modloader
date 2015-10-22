@@ -33,7 +33,27 @@
             arguments. Unnamed arguments are simply values entered on the console
             after the command, seperated by spaces.
             Named arguments follow this format: <span class="code">--name value</span>.
-            </div><div class="collapsibleAreaRegion"><span class="collapsibleRegionTitle" onclick="SectionExpandCollapse('ID6RB')" onkeypress="SectionExpandCollapse_CheckKey('ID6RB', event)" tabindex="0"><img id="ID6RBToggle" class="collapseToggle" src="../icons/SectionExpanded.png" />Examples</span></div><div id="ID6RBSection" class="collapsibleSection"><div class="codeSnippetContainer"><div class="codeSnippetContainerCodeContainer"><div class="codeSnippetToolBar"><div class="codeSnippetToolBarText"><a id="ID1EAJABA_copyCode" href="#" onclick="javascript:CopyToClipboard('ID1EAJABA');return false;" title="Copy">Copy</a></div></div><div id="ID1EAJABA_code_Div1" class="codeSnippetContainerCode" style="display: block"><pre xml:space="preserve">Commands.RegisterCommand(<span class="highlight-literal">"myCommand"</span>, myCallback);</pre></div></div></div><script type="text/javascript">AddLanguageTabSet("ID1EAJABA");</script>
+            </div><div class="collapsibleAreaRegion"><span class="collapsibleRegionTitle" onclick="SectionExpandCollapse('ID6RB')" onkeypress="SectionExpandCollapse_CheckKey('ID6RB', event)" tabindex="0"><img id="ID6RBToggle" class="collapseToggle" src="../icons/SectionExpanded.png" />Examples</span></div><div id="ID6RBSection" class="collapsibleSection"><div class="codeSnippetContainer"><div class="codeSnippetContainerCodeContainer"><div class="codeSnippetToolBar"><div class="codeSnippetToolBarText"><a id="ID1EANABA_copyCode" href="#" onclick="javascript:CopyToClipboard('ID1EANABA');return false;" title="Copy">Copy</a></div></div><div id="ID1EANABA_code_Div1" class="codeSnippetContainerCode" style="display: block"><pre xml:space="preserve">Commands.RegisterCommand(<span class="highlight-literal">"myCommand"</span>, MyCallback);</pre></div></div></div><script type="text/javascript">AddLanguageTabSet("ID1EANABA");</script>
+            An example implementation of the callback might looks like this:
+            <div class="codeSnippetContainer"><div class="codeSnippetContainerCodeContainer"><div class="codeSnippetToolBar"><div class="codeSnippetToolBarText"><a id="ID1EALABA_copyCode" href="#" onclick="javascript:CopyToClipboard('ID1EALABA');return false;" title="Copy">Copy</a></div></div><div id="ID1EALABA_code_Div1" class="codeSnippetContainerCode" style="display: block"><pre xml:space="preserve"><span class="highlight-keyword">private</span> <span class="highlight-keyword">string</span> MyCallback(<span class="highlight-keyword">string</span>[] args,
+IDictionary&lt;<span class="highlight-keyword">string</span>, <span class="highlight-keyword">string</span>&gt; namedArgs)
+{
+  <span class="highlight-keyword">if</span> (args.Length != <span class="highlight-number">2</span>)
+  {
+    <span class="highlight-keyword">return</span> "Usage: myCommand &gt;param1&lt; &gt;param2&lt;
+  }
+  <span class="highlight-keyword">return</span> <span class="highlight-literal">"You passed "</span> + args[<span class="highlight-number">0</span>] + <span class="highlight-literal">" and "</span> + args[<span class="highlight-number">1</span>];
+}</pre></div></div></div><script type="text/javascript">AddLanguageTabSet("ID1EALABA");</script>
+            Of course it is also possible to implement the callback as a lambda or
+            anonymous delegate instead of a full function:
+            <div class="codeSnippetContainer"><div class="codeSnippetContainerCodeContainer"><div class="codeSnippetToolBar"><div class="codeSnippetToolBarText"><a id="ID1EAJABA_copyCode" href="#" onclick="javascript:CopyToClipboard('ID1EAJABA');return false;" title="Copy">Copy</a></div></div><div id="ID1EAJABA_code_Div1" class="codeSnippetContainerCode" style="display: block"><pre xml:space="preserve">Commands.RegisterCommand(<span class="highlight-literal">"myCommand"</span>, (args, namedArgs) =&gt;
+{
+  <span class="highlight-keyword">if</span> (args.Length != <span class="highlight-number">2</span>)
+  {
+    <span class="highlight-keyword">return</span> "Usage: myCommand &gt;param1&lt; &gt;param2&lt;
+  }
+  <span class="highlight-keyword">return</span> <span class="highlight-literal">"You passed "</span> + args[<span class="highlight-number">0</span>] + <span class="highlight-literal">" and "</span> + args[<span class="highlight-number">1</span>];
+});</pre></div></div></div><script type="text/javascript">AddLanguageTabSet("ID1EAJABA");</script>
             Registers a new command called myCommand. This can then be used like this:
             <div class="codeSnippetContainer"><div class="codeSnippetContainerCodeContainer"><div class="codeSnippetToolBar"><div class="codeSnippetToolBarText"><a id="ID1EAHABA_copyCode" href="#" onclick="javascript:CopyToClipboard('ID1EAHABA');return false;" title="Copy">Copy</a></div></div><div id="ID1EAHABA_code_Div1" class="codeSnippetContainerCode" style="display: block"><pre xml:space="preserve">myCommand arg1 <span class="highlight-literal">"second unnamed arg"</span> --namedArg1 value1 --namedArg2 <span class="highlight-literal">"second value"</span></pre></div></div></div><script type="text/javascript">AddLanguageTabSet("ID1EAHABA");</script>
             If called as above, <span class="code">args</span> passed to the callback will contain
