@@ -1,3 +1,8 @@
+1.0.0
+=====
+Finally the full 1.0.0 release!
+This barely changes anything from 1.0.0-beta9, but the whole project was brought to release-ready state.
+
 1.0.0-beta9
 ===========
 - [Feature] Add window to remap mod loader keys (Ctrl+J by default)
