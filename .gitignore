@@ -16,7 +16,9 @@ bld/
 [Bb]in/
 [Oo]bj/
 
+# Documentation
 ModLoaderHelp/Help
+ModLoaderHelp/HelpFileBuilder
 
 # Roslyn cache directories
 *.ide/
@@ -189,5 +191,3 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
-
-UnityEngine.dll

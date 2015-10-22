@@ -7,29 +7,34 @@
     <ProjectGuid>{975AD54A-4D46-4028-8BFB-E847C527C409}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>spaar</RootNamespace>
+    <RootNamespace>spaar.ModLoader</RootNamespace>
     <AssemblyName>SpaarModLoader</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;COMPAT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\SpaarModLoader.XML</DocumentationFile>
+    <CodeAnalysisRuleSet>ModLoader.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;COMPAT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\SpaarModLoader.XML</DocumentationFile>
+    <CodeAnalysisRuleSet>ModLoader.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build and Install|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -38,63 +43,167 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>ModLoader.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\SpaarModLoader.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugDeveloper|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\DebugDeveloper\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;DEV_BUILD</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;DEV_BUILD,COMPAT</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>ModLoader.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\SpaarModLoader.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseDeveloper|AnyCPU'">
     <OutputPath>bin\ReleaseDeveloper\</OutputPath>
-    <DefineConstants>TRACE;DEV_BUILD</DefineConstants>
+    <DefineConstants>TRACE;DEV_BUILD,COMPAT</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>ModLoader.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\SpaarModLoader.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-UnityScript, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Assembly-UnityScript.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Assembly-UnityScript, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(BESIEGE_LOCATION)Besiege_Data\Managed\Assembly-UnityScript.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\UnityEngine.dll</HintPath>
+      <HintPath>$(BESIEGE_LOCATION)Besiege_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands.cs" />
+    <Compile Include="Compat\CommandsCompat.cs" />
     <Compile Include="Configuration.cs" />
-    <Compile Include="GameObserver.cs" />
-    <Compile Include="Key.cs" />
-    <Compile Include="KeySettings.cs" />
-    <Compile Include="Console.cs" />
-    <Compile Include="Keys.cs" />
+    <Compile Include="ConfigurationEventArgs.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="Internal\Activator.cs" />
+    <Compile Include="Internal\InternalMod.cs" />
+    <Compile Include="Internal\Key.cs" />
+    <Compile Include="Internal\lib\SimpleJSON.cs" />
+    <Compile Include="Internal\ModLoaderSaveMachine.cs" />
+    <Compile Include="Internal\ScrollSettingsMenu.cs" />
+    <Compile Include="Internal\SettingsComponent.cs" />
+    <Compile Include="Internal\Tools\ComponentEntry.cs" />
+    <Compile Include="Internal\Tools\Console.cs" />
+    <Compile Include="Internal\Keys.cs" />
+    <Compile Include="Internal\Tools\HierarchyEntry.cs" />
+    <Compile Include="Internal\Tools\HierarchyPanel.cs" />
+    <Compile Include="Internal\Tools\InspectorPanel.cs" />
+    <Compile Include="Internal\Tools\Keymapper.cs" />
+    <Compile Include="Internal\Tools\LogEntry.cs" />
+    <Compile Include="Internal\Tools\MemberValue.cs" />
+    <Compile Include="Internal\Tools\ModToggle.cs" />
+    <Compile Include="Internal\UpdateChecker.cs" />
+    <Compile Include="ModConsole.cs" />
+    <Compile Include="MachineData.cs" />
     <Compile Include="Mod.cs" />
-    <Compile Include="ModLoader.cs" />
-    <Compile Include="ModLoaderStats.cs" />
-    <Compile Include="ObjectExplorer.cs" />
+    <Compile Include="Internal\ModLoader.cs" />
+    <Compile Include="Internal\Tools\ObjectExplorer.cs" />
+    <Compile Include="Compat\ModCompat.cs" />
+    <Compile Include="Internal\OptionsComponent.cs" />
+    <Compile Include="OptionsMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsMenu.cs" />
+    <Compile Include="SingleInstance.cs" />
+    <Compile Include="Template.cs" />
+    <Compile Include="UI\Buttons.cs" />
+    <Compile Include="UI\Colors.cs" />
+    <Compile Include="UI\Elements.cs" />
+    <Compile Include="UI\InputFields.cs" />
+    <Compile Include="UI\Labels.cs" />
+    <Compile Include="UI\Scrollview.cs" />
+    <Compile Include="UI\Settings.cs" />
+    <Compile Include="UI\Sliders.cs" />
+    <Compile Include="UI\Toggle.cs" />
+    <Compile Include="UI\Tools.cs" />
+    <Compile Include="UI\ModGUI.cs" />
+    <Compile Include="UI\Windows.cs" />
+    <Compile Include="Util.cs" />
+    <Compile Include="Zone.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ModLoader.ruleset" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\arrow-disabled-down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\arrow-disabled-right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\arrow-hover-down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\arrow-hover-right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\arrow-normal-down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\arrow-normal-right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\background-44px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\background-dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\blue-dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\blue-light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\blue-normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\scroll-horizontal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\scroll-thumb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\scroll-thumb-active.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\scroll-thumb-hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\scroll-vertical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\thumb-horizontal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UI\thumb-vertical.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /Y $(TargetPath) %25BESIEGE_LOCATION%25Besiege_Data\Mods\SpaarModLoader.dll</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(BESIEGE_LOCATION)Besiege.exe</StartProgram>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
