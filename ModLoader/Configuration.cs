@@ -16,6 +16,12 @@ namespace spaar.ModLoader
   /// This class also provides the setConfigValue command to users.
   /// Configuration is stored in <![CDATA[Mods/Config/<modname>.json]]>.
   /// </summary>
+  /// <remarks>
+  /// Your configuration is loaded automatically when access it, but you will
+  /// need to manually save it. To do so, call <c>Configuration.Save()</c>.
+  /// It is recommended that you do this in your <c>Mod.OnUnload()</c> method
+  /// if you use the Configuration at all.
+  /// </remarks>
   public static class Configuration
   {
 
