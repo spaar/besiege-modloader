@@ -1,19 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Mono.Cecil;
 
-using spaar.injector;
-
-namespace ModLoader_Injector
+namespace spaar.ModLoader.Injector
 {
-    class Program
+  class Program
+  {
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            Injector injector = new Injector(args[0], args[1]);
-            injector.InjectModLoader();
-        }
+      Console.WriteLine("Assembly-UnityScript.dll location:");
+      string pathUnityScript = Console.ReadLine();
+
+      Console.WriteLine("Output path:");
+      string pathOutput = Console.ReadLine();
+
+      Console.WriteLine("Using Assembly-UnityScript.dll at " + pathUnityScript
+        + " and writing to " + pathOutput);
+
+      AssemblyDefinition aUnityScript
+        = AssemblyDefinition.ReadAssembly(pathUnityScript);
+
+      Injector.Inject(aUnityScript, pathOutput);
+
+      Console.WriteLine("Done.");
+      Console.Read();
     }
+  }
 }
