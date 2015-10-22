@@ -18,7 +18,7 @@ namespace spaar.ModLoader.Internal
     public override string DisplayName { get { return "spaar's Mod Loader"; } }
     public override string Author { get { return "spaar"; } }
     public override Version Version { get { return ModLoader.ModLoaderVersion; } }
-    public override string VersionExtra { get { return "beta9"; } }
+    public override string VersionExtra { get { return ""; } }
     public override string BesiegeVersion { get { return ModLoader.BesiegeVersion; } }
     public override bool Preload { get { return true; } }
     public override void OnLoad() { }
