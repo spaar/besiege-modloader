@@ -10,6 +10,7 @@ Features
 - An in-game console to show output from the game and from mods and to enter commands to interact with mods. (Open with Ctrl+K by default)
 - An in-game GUI for enabling and disabling mods without having to install/uninstall them. (Open with Ctrl+M) by default)
 - An in-game key remapper for all key combinations in the mod loader itself. (Open with Ctrl+J by default)
+- Update checker that will notify you about new updates.
 - A graphical installer for Windows
 
 - Many APIs to make developing mods much easier and to make mods more compatible to each other.
