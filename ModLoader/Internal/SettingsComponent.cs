@@ -21,11 +21,11 @@ namespace spaar.ModLoader.Internal
       isOn = on;
       if (isOn)
       {
-        renderer.material = redMaterial;
+        GetComponent<Renderer>().material = redMaterial;
       }
       else
       {
-        renderer.material = darkMaterial;
+        GetComponent<Renderer>().material = darkMaterial;
       }
     }
 

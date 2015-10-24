@@ -50,13 +50,14 @@ namespace spaar.ModLoader.Internal.Tools
     {
       ModLoader.MakeModule(this);
 
-      Application.RegisterLogCallback(HandleLog);
+      Application.logMessageReceived += HandleLog;
       entries = new List<LogEntry>();
       windowRect = new Rect(50f, 50f, Elements.Settings.ConsoleSize.x,
         Elements.Settings.ConsoleSize.y);
 
       initMessageFiltering();
       registerClear();
+
     }
 
     private void initMessageFiltering()
@@ -106,7 +107,7 @@ namespace spaar.ModLoader.Internal.Tools
 
     private void OnDisable()
     {
-      Application.RegisterLogCallback(null);
+      Application.logMessageReceived -= HandleLog;
     }
 
     /// <summary>

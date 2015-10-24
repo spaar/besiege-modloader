@@ -30,8 +30,8 @@ namespace spaar.ModLoader.Internal
     /// <summary>
     /// The currently running Besiege version.
     /// </summary>
-    public static readonly string BesiegeVersion = "v0.11";
-    public static readonly Version ModLoaderVersion = new Version(1, 0, 0);
+    public static readonly string BesiegeVersion = "v0.2";
+    public static readonly Version ModLoaderVersion = new Version(1, 0, 1);
 
     public override string Name { get { return "spaar's Mod Loader"; } }
 

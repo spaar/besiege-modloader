@@ -77,7 +77,7 @@ namespace spaar.ModLoader
     {
       var settingsObjects = GameObject.Find("Settings").transform
         .FindChild("SettingsObjects");
-      var bottomDefaultSetting = settingsObjects.FindChild("GOD/PYRO");
+      var bottomDefaultSetting = settingsObjects.FindChild("GOD/INFINITE AMMO");
       Vector3 SettingSize = new Vector3(0.748f, 0.375f);
 
       if (modSection == null)
@@ -106,10 +106,15 @@ namespace spaar.ModLoader
           }
         }
 
+        // Adjust background to include mods section title
         var bg = settingsObjects.FindChild("BG");
         var bgScale = bg.localScale;
-        bgScale.y += 1.35f; // Adjust background to include mods section title
+        bgScale.y += 2.85f;
         bg.localScale = bgScale;
+        // Also need to remove background of infinite ammo as long as it's
+        // the only thing in its row.
+        Destroy(settingsObjects.FindChild("GOD/INFINITE AMMO/BG (1)").gameObject);
+
         bg.gameObject.AddComponent<BoxCollider>();
         var scrollCollider = new GameObject("Scrolling").transform;
         scrollCollider.parent = settingsObjects;
