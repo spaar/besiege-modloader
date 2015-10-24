@@ -14,13 +14,17 @@ namespace spaar.ModLoader.Internal
 
     private bool closed = false;
     private int windowID = Util.GetWindowID();
-    private Rect windowRect = new Rect(200, 200, 370, 170);
+    private Rect windowRect = new Rect(200, 200, 370, 175);
 
     private IEnumerator Start()
     {
       ModLoader.MakeModule(this);
 
-      if (Configuration.GetBool("enableUpdateChecker", true)) yield break;
+      Debug.Log("Initializing update checker...");
+
+      if (!Configuration.GetBool("enableUpdateChecker", true)) yield break;
+
+      Debug.Log("Haven't gotten here");
 
       var www = new WWW(
         "https://api.github.com/repos/spaar/besiege-modloader/releases");
@@ -40,6 +44,10 @@ namespace spaar.ModLoader.Internal
       var newestVersion = new Version(newestVersionS);
 
       var myVersion = ModLoader.ModLoaderVersion;
+
+      Debug.Log(newestVersionS);
+      Debug.Log(newestVersion);
+      Debug.Log(myVersion);
 
       if (newestVersion > myVersion)
       {
@@ -61,7 +69,8 @@ namespace spaar.ModLoader.Internal
     {
       GUILayout.TextField("An updated version of the mod loader is available!"
                          + "\nIt is recommended to update as soon as possible."
-                         + "\nCheck back in the forum to update!");
+                         + "\nCheck back in the forum or open the installer"
+                         + "\nagain to update!");
       if (GUILayout.Button("Close"))
       {
         closed = true;
