@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using UnityEngine;
 
 namespace spaar.ModLoader
 {
@@ -84,6 +85,38 @@ namespace spaar.ModLoader
       }
     }
 
+    private static bool[] _completedLevels;
+
+    /// <summary>
+    /// Array specifying whether each level is completed or not.
+    /// </summary>
+    public static bool[] CompletedLevels
+    {
+      get
+      {
+        if (_completedLevels == null)
+        {
+          LoadCompletedLevels();
+        }
+
+        return (bool[]) _completedLevels.Clone();
+      }
+    }
+
+    private static void LoadCompletedLevels()
+    {
+      using (var reader = new StreamReader(
+        Application.dataPath + "/CompletedLevels.txt")) {
+        var text = reader.ReadToEnd().Trim();
+        var items = text.Split('|');
+        _completedLevels = new bool[items.Length];
+        for (int i = 0; i < items.Length; i++)
+        {
+          _completedLevels[i] = items[i] == "1";
+        }
+      }
+    }
+
     /// <summary>
     /// This event is fired whenever the simulation started or stopped.
     /// </summary>
@@ -100,34 +133,34 @@ namespace spaar.ModLoader
     public static event OnKeymapperOpen OnKeymapperOpen;
 
     private static Zone[] zones = {
-      new Zone(0, "Sandbox", Island.Sandbox),
+      new Zone(0, 30, "Sandbox", Island.Sandbox),
 
-      new Zone(1, "Southern Cottage", Island.Ipsilon),
-      new Zone(2, "Southern Mill", Island.Ipsilon),
-      new Zone(3, "Old Howl Battlefield", Island.Ipsilon),
-      new Zone(4, "Perimeter Wall", Island.Ipsilon),
-      new Zone(5, "The Queen's Fodder", Island.Ipsilon),
-      new Zone(6, "Old Mining Site", Island.Ipsilon),
-      new Zone(7, "Standing Stone", Island.Ipsilon),
-      new Zone(8, "Thinside Fort", Island.Ipsilon),
-      new Zone(9, "Midlands Encampment", Island.Ipsilon),
-      new Zone(10, "Lyre Peak", Island.Ipsilon),
-      new Zone(11, "Highland Tower", Island.Ipsilon),
-      new Zone(12, "Pine Lumber Site", Island.Ipsilon),
-      new Zone(13, "Solomon's Flock", Island.Ipsilon),
-      new Zone(14, "Marksman's Pass", Island.Ipsilon),
-      new Zone(15, "Wynnfrith's Keep", Island.Ipsilon),
+      new Zone(1, 5, "Southern Cottage", Island.Ipsilon),
+      new Zone(2, 6, "Mill", Island.Ipsilon),
+      new Zone(3, 7, "Old Howl Battlefield", Island.Ipsilon),
+      new Zone(4, 8, "Perimeter Wall", Island.Ipsilon),
+      new Zone(5, 9, "The Queen's Fodder", Island.Ipsilon),
+      new Zone(6, 10, "Old Mining Site", Island.Ipsilon),
+      new Zone(7, 11, "Standing Stone", Island.Ipsilon),
+      new Zone(8, 12, "Thinside Fort", Island.Ipsilon),
+      new Zone(9, 13, "Midlands Encampment", Island.Ipsilon),
+      new Zone(10, 14, "Lyre Peak", Island.Ipsilon),
+      new Zone(11, 15, "Highland Tower", Island.Ipsilon),
+      new Zone(12, 16, "Pine Lumber Site", Island.Ipsilon),
+      new Zone(13, 17, "Solomon's Flock", Island.Ipsilon),
+      new Zone(14, 18, "Marksman's Pass", Island.Ipsilon),
+      new Zone(15, 19, "Wynnfrith's Keep", Island.Ipsilon),
 
-      new Zone(16, "The Duke's Plea", Island.Tolbrynd),
-      new Zone(17, "Southern Shrine", Island.Tolbrynd),
-      new Zone(18, "Scouts of Tolbrynd", Island.Tolbrynd),
-      new Zone(19, "The Duke's Prototypes", Island.Tolbrynd),
-      new Zone(20, "The Duke's Dear Freighers", Island.Tolbrynd),
-      new Zone(21, "Grand Crystal", Island.Tolbrynd),
-      new Zone(22, "Farmer Gascoigne", Island.Tolbrynd),
-      new Zone(23, "Village of Diom", Island.Tolbrynd),
-      new Zone(24, "Midland Patrol", Island.Tolbrynd),
-      new Zone(25, "Valley of the Wind", Island.Tolbrynd),
+      new Zone(16, 20, "The Duke's Plea", Island.Tolbrynd),
+      new Zone(17, 21, "Southern Shrine", Island.Tolbrynd),
+      new Zone(18, 22, "Scouts of Tolbrynd", Island.Tolbrynd),
+      new Zone(19, 23, "The Duke's Prototypes", Island.Tolbrynd),
+      new Zone(20, 24, "The Duke's Dear Freighers", Island.Tolbrynd),
+      new Zone(21, 25, "Grand Crystal", Island.Tolbrynd),
+      new Zone(22, 26, "Farmer Gascoigne", Island.Tolbrynd),
+      new Zone(23, 27, "Village of Diom", Island.Tolbrynd),
+      new Zone(24, 28, "Midland Patrol", Island.Tolbrynd),
+      new Zone(25, 29, "Valley of the Wind", Island.Tolbrynd),
     };
 
     /// <summary>

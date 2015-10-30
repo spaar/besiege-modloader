@@ -16,12 +16,23 @@
   public class Zone
   {
     public int Index { get; private set; }
+    public int LevelIndex { get; private set; }
     public string Name { get; private set; }
     public Island Island { get; private set; }
 
-    public Zone(int index, string name, Island island)
+    public bool IsCompleted {
+      get
+      {
+        if (Island == Island.Sandbox) return false;
+
+        return Game.CompletedLevels[Index - 1];
+      }
+    }
+
+    public Zone(int index, int levelIndex, string name, Island island)
     {
       Index = index;
+      LevelIndex = levelIndex;
       Name = name;
       Island = island;
     }
