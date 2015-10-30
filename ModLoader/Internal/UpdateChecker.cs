@@ -20,11 +20,7 @@ namespace spaar.ModLoader.Internal
     {
       ModLoader.MakeModule(this);
 
-      Debug.Log("Initializing update checker...");
-
       if (!Configuration.GetBool("enableUpdateChecker", true)) yield break;
-
-      Debug.Log("Haven't gotten here");
 
       var www = new WWW(
         "https://api.github.com/repos/spaar/besiege-modloader/releases");
@@ -44,10 +40,6 @@ namespace spaar.ModLoader.Internal
       var newestVersion = new Version(newestVersionS);
 
       var myVersion = ModLoader.ModLoaderVersion;
-
-      Debug.Log(newestVersionS);
-      Debug.Log(newestVersion);
-      Debug.Log(myVersion);
 
       if (newestVersion > myVersion)
       {
