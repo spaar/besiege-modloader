@@ -40,7 +40,7 @@ Mac OS X
 ---
 Locate your Besiege installation (Besiege.app, right-click on Besiege and choose Show Package Content).
 I will from now on refer to this directory as simply Besiege in any paths.
-Copy the file Assembly-UnityScript.dll into Besiege/Contents/Data/Managed.
+Copy the file Assembly-UnityScript.dll into Besiege/Contents/Data/Managed. If that does not exist, try Besiege/Contents/Resources/Data/Managed.
 When asked, choose to replace the original file. You may also want to make a backup of the original file before doing this.
 Then create the folder Besiege/Contents/Mods. Copy SpaarModLoader.dll and the Resources folder into it. You will also place any mods you install into this folder.
 
