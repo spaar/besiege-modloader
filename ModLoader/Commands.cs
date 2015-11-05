@@ -42,7 +42,7 @@ namespace spaar.ModLoader
   /// {
   ///   if (args.Length != 2)
   ///   {
-  ///     return "Usage: myCommand &gt;param1&lt; &gt;param2&lt;
+  ///     return "Usage: myCommand &lt;param1&gt; &lt;param2&gt;";
   ///   }
   ///   return "You passed " + args[0] + " and " + args[1];
   /// }
@@ -54,7 +54,7 @@ namespace spaar.ModLoader
   ///   {
   ///     if (args.Length != 2)
   ///     {
-  ///       return "Usage: myCommand &gt;param1&lt; &gt;param2&lt;
+  ///       return "Usage: myCommand &lt;param1&gt; &lt;param2&gt;";
   ///     }
   ///     return "You passed " + args[0] + " and " + args[1];
   ///   });
