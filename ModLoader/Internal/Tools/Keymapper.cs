@@ -134,10 +134,12 @@ namespace spaar.ModLoader.Internal.Tools
 
       foreach (var modPair in keybindings)
       {
-        DoSectionTitle(modPair.Key);
-        foreach (var bindingPair in keybindings[modPair.Key])
+        if (DoSectionTitle(modPair.Key))
         {
-          DoKeybinding(modPair.Key, bindingPair.Key, bindingPair.Value);
+          foreach (var bindingPair in keybindings[modPair.Key])
+          {
+            DoKeybinding(modPair.Key, bindingPair.Key, bindingPair.Value);
+          }
         }
       }
 
@@ -190,12 +192,18 @@ namespace spaar.ModLoader.Internal.Tools
       GUILayout.EndHorizontal();
     }
 
-    private void DoSectionTitle(string mod)
+    private bool DoSectionTitle(string mod)
     {
-      var title = ModLoader.Instance.LoadedMods
-        .Find(m => m.Mod.Name == mod).Mod.DisplayName;
+      var internalMod = ModLoader.Instance.LoadedMods
+        .Find(m => m.Mod.Name == mod);
+
+      if (internalMod == null) return false;
+
+      var title = internalMod.Mod.DisplayName;
 
       GUILayout.Label("<b>" + title + "</b>", sectionTitleStyle);
+
+      return true;
     }
   }
 }
