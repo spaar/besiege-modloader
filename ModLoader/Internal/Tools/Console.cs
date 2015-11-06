@@ -132,7 +132,7 @@ namespace spaar.ModLoader.Internal.Tools
 
     private void Update()
     {
-      if (interfaceEnabled && key.IsDown())
+      if (interfaceEnabled && key.Pressed())
       {
         visible = !visible;
       }

@@ -20,12 +20,20 @@ namespace spaar.ModLoader
       Trigger = trigger;
     }
 
-    public bool IsDown()
+    public bool Pressed()
     {
       return (((Modifier == KeyCode.None && Trigger != KeyCode.None)
           || Input.GetKey(Modifier))
         && ((Trigger == KeyCode.None && Modifier != KeyCode.None)
           || Input.GetKeyDown(Trigger)));
+    }
+
+    public bool IsDown()
+    {
+      return (((Modifier == KeyCode.None && Trigger != KeyCode.None)
+          || Input.GetKey(Modifier))
+        && ((Trigger == KeyCode.None && Modifier != KeyCode.None)
+          || Input.GetKey(Trigger)));
     }
   }
 }

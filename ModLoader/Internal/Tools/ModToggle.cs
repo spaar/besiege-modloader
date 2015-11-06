@@ -30,7 +30,7 @@ namespace spaar.ModLoader.Internal.Tools
 
     private void Update()
     {
-      if (key.IsDown())
+      if (key.Pressed())
       {
         visible = !visible;
       }
