@@ -22,7 +22,10 @@ namespace spaar.ModLoader
 
     public bool IsDown()
     {
-      return Input.GetKey(Modifier) && Input.GetKeyDown(Trigger);
+      return (((Modifier == KeyCode.None && Trigger != KeyCode.None)
+          || Input.GetKey(Modifier))
+        && ((Trigger == KeyCode.None && Modifier != KeyCode.None)
+          || Input.GetKeyDown(Trigger)));
     }
   }
 }

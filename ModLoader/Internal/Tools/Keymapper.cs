@@ -38,10 +38,14 @@ namespace spaar.ModLoader.Internal.Tools
 
       if (visible && currentKeyToMap != null)
       {
-        if (Input.inputString.Length > 0)
+        if (Input.inputString.Length > 0
+          // Make sure inputString is not the BACKSPACE character (U+0008) since
+          // that is a special case down below
+          && !Input.inputString.Contains('\u0008' + ""))
         {
           if (currentlyModifier)
           {
+            Debug.Log(Input.inputString);
             currentKeyToMap.Modifier = (KeyCode)Enum.Parse(typeof(KeyCode),
               (Input.inputString[0] + "").ToUpper());
           }
@@ -77,13 +81,27 @@ namespace spaar.ModLoader.Internal.Tools
         {
           keyCode = KeyCode.RightAlt;
         }
+        else if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+          keyCode = KeyCode.Backspace;
+        }
 
         if (keyCode != KeyCode.None)
         {
           if (currentlyModifier)
-            currentKeyToMap.Modifier = keyCode;
+          {
+            if (keyCode == KeyCode.Backspace)
+              currentKeyToMap.Modifier = KeyCode.None;
+            else
+              currentKeyToMap.Modifier = keyCode;
+          }
           else
-            currentKeyToMap.Trigger = keyCode;
+          {
+            if (keyCode == KeyCode.Backspace)
+              currentKeyToMap.Trigger = KeyCode.None;
+            else
+              currentKeyToMap.Trigger = keyCode;
+          }
         }
       }
     }

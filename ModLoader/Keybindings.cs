@@ -47,7 +47,6 @@ namespace spaar.ModLoader
       {
         if (keybindings[modName].ContainsKey(name))
         {
-          Debug.Log("Returned existing entry for " + name);
           return keybindings[modName][name];
         }
         else
