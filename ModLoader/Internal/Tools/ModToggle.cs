@@ -8,6 +8,7 @@ namespace spaar.ModLoader.Internal.Tools
     public override string Name { get; } = "spaar's Mod Loader: Mod Toggle";
 
     private bool visible = false;
+    private Key key;
     private int windowID = Util.GetWindowID();
     private Rect windowRect = new Rect(400, 300, 400, 550);
     private Vector2 scrollPosition = new Vector2(0f, 0f);
@@ -22,11 +23,14 @@ namespace spaar.ModLoader.Internal.Tools
     private void Start()
     {
       ModLoader.MakeModule(this);
+
+      key = Keybindings.AddKeybinding("Mod Toggle",
+        new Key(KeyCode.LeftControl, KeyCode.M));
     }
 
     private void Update()
     {
-      if (Keys.K["ModToggle"])
+      if (key.IsDown())
       {
         visible = !visible;
       }

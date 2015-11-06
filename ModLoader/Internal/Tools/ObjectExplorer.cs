@@ -21,6 +21,7 @@ namespace spaar.ModLoader.Internal.Tools
 
     private readonly int windowID = Util.GetWindowID();
     private Rect windowRect = new Rect(20, 20, 800, 600);
+    private Key key;
 
     public bool IsVisible = false;
 
@@ -30,11 +31,14 @@ namespace spaar.ModLoader.Internal.Tools
 
       HierarchyPanel = gameObject.AddComponent<HierarchyPanel>();
       InspectorPanel = gameObject.AddComponent<InspectorPanel>();
+
+      key = Keybindings.AddKeybinding("Object Explorer",
+        new Key(KeyCode.LeftControl, KeyCode.O));
     }
 
     private void Update()
     {
-      if (Keys.K["ObjectExplorer"])
+      if (key.IsDown())
       {
         IsVisible = !IsVisible;
       }

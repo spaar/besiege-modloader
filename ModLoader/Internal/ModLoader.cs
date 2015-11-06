@@ -57,15 +57,13 @@ namespace spaar.ModLoader.Internal
       var console = Tools.Console.Instance;
 
       Configuration.Load();
-      Keys.Initialize();
+      Keybindings.LoadFromConfig();
       Game.Initialize();
       SettingsMenu.Initialize();
       OptionsMenu.Initialize();
       MachineData.Initialize();
       Tools.ModToggle.Initialize();
       Tools.Keymapper.Initialize();
-
-      Keybindings.LoadFromConfig();
 
 #if DEV_BUILD
       Tools.ObjectExplorer.Initialize();

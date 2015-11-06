@@ -5,8 +5,8 @@ namespace spaar.ModLoader
 {
   public class Key
   {
-    public KeyCode Modifier { get; private set; }
-    public KeyCode Trigger { get; private set; }
+    public KeyCode Modifier { get; set; }
+    public KeyCode Trigger { get; set; }
 
     public Key(string modifier, string trigger)
     {

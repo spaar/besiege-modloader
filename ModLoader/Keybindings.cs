@@ -47,6 +47,7 @@ namespace spaar.ModLoader
       {
         if (keybindings[modName].ContainsKey(name))
         {
+          Debug.Log("Returned existing entry for " + name);
           return keybindings[modName][name];
         }
         else
@@ -104,7 +105,6 @@ namespace spaar.ModLoader
 
     internal static void SaveToConfig()
     {
-      Debug.Log("Saving keybindings...");
       foreach (var modPair in keybindings)
       {
         foreach (var bindingPair in modPair.Value)
@@ -113,11 +113,7 @@ namespace spaar.ModLoader
             + bindingPair.Key + ":modifier", bindingPair.Value.Modifier.ToString());
           Configuration.SetString("keybinding:" + modPair.Key + ":"
             + bindingPair.Key + ":trigger", bindingPair.Value.Trigger.ToString());
-
-          Debug.Log("Saved keybinding: " + bindingPair.Key);
         }
-
-        Debug.Log("Saved keyindings for mod: " + modPair.Key);
       }
     }
 
@@ -156,10 +152,25 @@ namespace spaar.ModLoader
               keybindings[mod] = new Dictionary<string, Key>();
             }
 
-            keybindings[mod][name] = new Key(modifier, trigger);
+            if (keybindings[mod].ContainsKey(name))
+            {
+              var tempKey = new Key(modifier, trigger);
+              keybindings[mod][name].Modifier = tempKey.Modifier;
+              keybindings[mod][name].Trigger = tempKey.Trigger;
+            }
+            else
+            {
+              keybindings[mod][name] = new Key(modifier, trigger);
+            }
           }
         }
       }
+    }
+
+    internal static Dictionary<string, Dictionary<string, Key>>
+      GetAllKeybindings()
+    {
+      return keybindings;
     }
 
   }

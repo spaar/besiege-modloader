@@ -104,7 +104,6 @@
     <Compile Include="Internal\SettingsComponent.cs" />
     <Compile Include="Internal\Tools\ComponentEntry.cs" />
     <Compile Include="Internal\Tools\Console.cs" />
-    <Compile Include="Internal\Keys.cs" />
     <Compile Include="Internal\Tools\HierarchyEntry.cs" />
     <Compile Include="Internal\Tools\HierarchyPanel.cs" />
     <Compile Include="Internal\Tools\InspectorPanel.cs" />

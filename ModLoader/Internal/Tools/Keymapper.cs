@@ -1,4 +1,5 @@
-﻿using spaar.ModLoader.UI;
+﻿using System;
+using spaar.ModLoader.UI;
 using UnityEngine;
 
 namespace spaar.ModLoader.Internal.Tools
@@ -9,52 +10,80 @@ namespace spaar.ModLoader.Internal.Tools
 
     private bool visible = false;
     private int windowID = Util.GetWindowID();
-    private Rect windowRect = new Rect(500, 300, 400, 207);
+    private Key key;
+    private Rect windowRect = new Rect(500, 300, 412, 600);
+    private Vector2 scrollPos = new Vector2(0f, 0f);
 
-    private string currentKeyToMap = "";
+    private Key currentKeyToMap = null;
+    private bool currentlyModifier = false;
+
+    private GUIStyle textStyle;
+    private GUIStyle sectionTitleStyle;
+    private GUILayoutOption buttonWidth = GUILayout.Width(110f);
 
     private void Start()
     {
       ModLoader.MakeModule(this);
+
+      key = Keybindings.AddKeybinding("Keymaper",
+        new Key(KeyCode.LeftControl, KeyCode.J));
     }
 
     private void Update()
     {
-      if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.J))
+      if (key.IsDown())
       {
         visible = !visible;
       }
 
-      if (visible && currentKeyToMap != "")
+      if (visible && currentKeyToMap != null)
       {
         if (Input.inputString.Length > 0)
         {
-          Configuration.SetString(currentKeyToMap,
-            (Input.inputString[0] + "").ToUpper());
+          if (currentlyModifier)
+          {
+            currentKeyToMap.Modifier = (KeyCode)Enum.Parse(typeof(KeyCode),
+              (Input.inputString[0] + "").ToUpper());
+          }
+          else
+          {
+            currentKeyToMap.Trigger = (KeyCode)Enum.Parse(typeof(KeyCode),
+              (Input.inputString[0] + "").ToUpper());
+          }
         }
+
+        KeyCode keyCode = KeyCode.None;
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-          Configuration.SetString(currentKeyToMap, "LeftControl");
+          keyCode = KeyCode.LeftControl;
         }
         else if (Input.GetKeyDown(KeyCode.RightControl))
         {
-          Configuration.SetString(currentKeyToMap, "RightControl");
+          keyCode = KeyCode.RightControl;
         }
         else if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-          Configuration.SetString(currentKeyToMap, "LeftShift");
+          keyCode = KeyCode.LeftShift;
         }
         else if (Input.GetKeyDown(KeyCode.RightShift))
         {
-          Configuration.SetString(currentKeyToMap, "RightShift");
+          keyCode = KeyCode.RightShift;
         }
         else if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
-          Configuration.SetString(currentKeyToMap, "LeftAlt");
+          keyCode = KeyCode.LeftAlt;
         }
         else if (Input.GetKeyDown(KeyCode.RightAlt))
         {
-          Configuration.SetString(currentKeyToMap, "RightAlt");
+          keyCode = KeyCode.RightAlt;
+        }
+
+        if (keyCode != KeyCode.None)
+        {
+          if (currentlyModifier)
+            currentKeyToMap.Modifier = keyCode;
+          else
+            currentKeyToMap.Trigger = keyCode;
         }
       }
     }
@@ -64,69 +93,91 @@ namespace spaar.ModLoader.Internal.Tools
       if (!visible) return;
 
       GUI.skin = ModGUI.Skin;
+      textStyle = new GUIStyle(Elements.Labels.Title)
+      {
+        margin = { top = 10 },
+        fontSize = 15
+      };
+      sectionTitleStyle = new GUIStyle(Elements.Labels.Title)
+      {
+        margin = { top = 10 },
+        fontSize = 20,
+        richText = true
+      };
 
       windowRect = GUI.Window(windowID, windowRect, DoWindow, "Keymapper");
     }
 
     private void DoWindow(int id)
     {
-      var textStyle = new GUIStyle(Elements.Labels.Title)
+      var keybindings = Keybindings.GetAllKeybindings();
+
+      scrollPos = GUILayout.BeginScrollView(scrollPos);
+
+      foreach (var modPair in keybindings)
       {
-        margin = { top = 10 },
-        fontSize = 15
-      };
-      var buttonWidth = GUILayout.Width(110f);
+        DoSectionTitle(modPair.Key);
+        foreach (var bindingPair in keybindings[modPair.Key])
+        {
+          DoKeybinding(modPair.Key, bindingPair.Key, bindingPair.Value);
+        }
+      }
 
-      GUILayout.BeginHorizontal();
-      GUILayout.Label("Console:", textStyle);
-      GUILayout.FlexibleSpace();
-      GUILayout.Button(new GUIContent(
-          Keys.getKey("Console").Modifier.ToString(), "consoleK1"),
-        Elements.Buttons.Red, buttonWidth);
-      GUILayout.Button(new GUIContent(
-        Keys.getKey("Console").Trigger.ToString(), "consoleK2"),
-        Elements.Buttons.Red, buttonWidth);
-      GUILayout.EndHorizontal();
+      GUILayout.EndScrollView();
 
-#if DEV_BUILD
-      GUILayout.BeginHorizontal();
-      GUILayout.Label("Object Explorer:", textStyle);
-      GUILayout.FlexibleSpace();
-      GUILayout.Button(new GUIContent(
-        Keys.getKey("ObjectExplorer").Modifier.ToString(), "objExpK1"),
-        Elements.Buttons.Red, buttonWidth);
-      GUILayout.Button(new GUIContent(
-        Keys.getKey("ObjectExplorer").Trigger.ToString(), "objExpK2"),
-        Elements.Buttons.Red, buttonWidth);
-      GUILayout.EndHorizontal();
-#endif
-
-      GUILayout.BeginHorizontal();
-      GUILayout.Label("Mod Toggle:", textStyle);
-      GUILayout.FlexibleSpace();
-      GUILayout.Button(new GUIContent(
-        Keys.getKey("ModToggle").Modifier.ToString(), "modToggleK1"),
-        Elements.Buttons.Red, buttonWidth);
-      GUILayout.Button(new GUIContent(
-        Keys.getKey("ModToggle").Trigger.ToString(), "modToggleK2"),
-        Elements.Buttons.Red, buttonWidth);
-      GUILayout.EndHorizontal();
-
-      GUILayout.BeginHorizontal();
-      GUILayout.Label("Keymapper:", textStyle);
-      GUILayout.FlexibleSpace();
-      GUILayout.Button(new GUIContent(
-        Keys.getKey("Keymapper").Modifier.ToString(), "keymapK1"),
-        Elements.Buttons.Red, buttonWidth);
-      GUILayout.Button(new GUIContent(
-        Keys.getKey("Keymapper").Trigger.ToString(), "keymapK2"),
-        Elements.Buttons.Red, buttonWidth);
-      GUILayout.EndHorizontal();
-
-      if (Event.current.type == EventType.Repaint) 
-        currentKeyToMap = GUI.tooltip;
+      if (Event.current.type == EventType.Repaint)
+      {
+        if (GUI.tooltip == "")
+        {
+          currentKeyToMap = null;
+        }
+        else
+        {
+          var parts = GUI.tooltip.Split(':');
+          if (parts.Length != 3)
+          {
+            currentKeyToMap = null;
+          }
+          else
+          {
+            currentKeyToMap = keybindings[parts[0]][parts[1]];
+            if (parts[2] == "modifier")
+            {
+              currentlyModifier = true;
+            }
+            else
+            {
+              currentlyModifier = false;
+            }
+          }
+        }
+      }
 
       GUI.DragWindow(new Rect(0, 0, windowRect.width, GUI.skin.window.padding.top));
+    }
+
+    private void DoKeybinding(string mod, string name, Key key)
+    {
+      var tooltip = mod + ":" + name;
+
+      GUILayout.BeginHorizontal();
+      GUILayout.Label(name + ":", textStyle);
+      GUILayout.FlexibleSpace();
+      GUILayout.Button(new GUIContent(
+        key.Modifier.ToString(), tooltip + ":modifier"),
+        Elements.Buttons.Red, buttonWidth);
+      GUILayout.Button(new GUIContent(
+        key.Trigger.ToString(), tooltip + ":trigger"),
+        Elements.Buttons.Red, buttonWidth);
+      GUILayout.EndHorizontal();
+    }
+
+    private void DoSectionTitle(string mod)
+    {
+      var title = ModLoader.Instance.LoadedMods
+        .Find(m => m.Mod.Name == mod).Mod.DisplayName;
+
+      GUILayout.Label("<b>" + title + "</b>", sectionTitleStyle);
     }
   }
 }

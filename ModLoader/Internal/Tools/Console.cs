@@ -32,6 +32,7 @@ namespace spaar.ModLoader.Internal.Tools
     private int historyIndex = 0;
 
     private bool visible = false;
+    private Key key;
     private bool interfaceEnabled;
     private Dictionary<LogType, bool> messageFilter;
 
@@ -58,6 +59,8 @@ namespace spaar.ModLoader.Internal.Tools
       initMessageFiltering();
       registerClear();
 
+      key = Keybindings.AddKeybinding("Console",
+        new Key(KeyCode.LeftControl, KeyCode.K));
     }
 
     private void initMessageFiltering()
@@ -129,7 +132,7 @@ namespace spaar.ModLoader.Internal.Tools
 
     private void Update()
     {
-      if (interfaceEnabled && Keys.K["Console"])
+      if (interfaceEnabled && key.IsDown())
       {
         visible = !visible;
       }
