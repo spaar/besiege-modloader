@@ -65,6 +65,8 @@ namespace spaar.ModLoader.Internal
       Tools.ModToggle.Initialize();
       Tools.Keymapper.Initialize();
 
+      Keybindings.LoadFromConfig();
+
 #if DEV_BUILD
       Tools.ObjectExplorer.Initialize();
 #endif
@@ -298,6 +300,7 @@ namespace spaar.ModLoader.Internal
         Configuration.SetBool("modStatus:" + mod.Mod.Name, mod.IsEnabled);
       }
 
+      Keybindings.SaveToConfig();
 
       Configuration.Save();
     }
