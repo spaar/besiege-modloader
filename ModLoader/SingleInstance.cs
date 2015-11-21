@@ -24,7 +24,12 @@ namespace spaar.ModLoader
     /// </summary>
     public static T Instance
     {
-      get { return _instance ?? (_instance = CreateOrFind()); }
+      get
+      {
+        if (_instance == null)
+          _instance = CreateOrFind();
+        return _instance;
+      }
     }
 
     /// <summary>
