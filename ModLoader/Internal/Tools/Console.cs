@@ -242,7 +242,7 @@ namespace spaar.ModLoader.Internal.Tools
         GUI.FocusControl("ConsoleInput");
       }
 
-      if (input.IndexOfAny(Environment.NewLine.ToCharArray()) != -1)
+      if (input.IndexOfAny(new char[] { '\n', '\r' }) != -1)
       {
         commandText = "";
         Commands.HandleCommand(input.Replace("\n", "").Replace("\r", ""));
