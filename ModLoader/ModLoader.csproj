@@ -97,6 +97,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="Internal\Activator.cs" />
     <Compile Include="Internal\InternalMod.cs" />
+    <Compile Include="Internal\Tools\DebugServer.cs" />
     <Compile Include="Key.cs" />
     <Compile Include="Internal\lib\SimpleJSON.cs" />
     <Compile Include="Internal\ModLoaderSaveMachine.cs" />

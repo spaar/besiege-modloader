@@ -309,6 +309,10 @@ namespace spaar.ModLoader.Internal.Tools
         entries.RemoveAt(0);
       }
       scrollPosition.y = float.PositiveInfinity; // Auto-scrolling
+
+#if DEV_BUILD
+      DebugServer.Instance.SendLogEntry(logString + "\n" + stackTrace);
+#endif
     }
 
 #if DEV_BUILD

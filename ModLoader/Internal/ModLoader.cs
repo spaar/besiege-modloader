@@ -67,6 +67,8 @@ namespace spaar.ModLoader.Internal
 
 #if DEV_BUILD
       Tools.ObjectExplorer.Initialize();
+      Tools.DebugServer.Initialize();
+      Tools.DebugServer.Instance.StartDebugServer(5000);
 #endif
 
       // Enable the console interface since it can now ask the configuration
