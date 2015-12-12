@@ -158,7 +158,7 @@ namespace spaar.ModLoader.Installer
     {
       SetPath(txtBesiegeLocation.Text);
 
-      tsLblStatus.Text = "Downloading&Installing mod loader. This may take while...";
+      tsLblStatus.Text = "Downloading and Installing mod loader. This may take while...";
 
       Installer.InstallModLoader(txtBesiegeLocation.Text,
         (ModLoaderVersion)cobVersion.SelectedItem, cbDeveloper.Checked);
