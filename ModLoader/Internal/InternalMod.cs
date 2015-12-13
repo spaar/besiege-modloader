@@ -59,7 +59,6 @@ namespace spaar.ModLoader.Internal
     {
       if (IsEnabled) return;
 
-      //ModLoader.Instance.EnableMod(Mod.Name);
       Activate();
       IsEnabled = true;
       Debug.Log("Activated and enabled " + Mod.DisplayName);
@@ -68,8 +67,6 @@ namespace spaar.ModLoader.Internal
     public void Disable()
     {
       if (!IsEnabled) return;
-
-      //ModLoader.Instance.DisableMod(Mod.Name);
 
       IsEnabled = false;
       Debug.Log("Disabled " + Mod.DisplayName);
@@ -82,6 +79,40 @@ namespace spaar.ModLoader.Internal
       else
       {
         Debug.Log("Not deactivating it, it won't be loaded next time.");
+      }
+    }
+
+    public void SetOverrideName(string overrideName)
+    {
+      Mod = new OverrideMod(Mod, overrideName);
+    }
+
+    private class OverrideMod : Mod
+    {
+      private string overrideName;
+      private Mod mod;
+
+      public OverrideMod(Mod originalMod, string overrideName)
+      {
+        this.overrideName = overrideName;
+        mod = originalMod;
+      }
+
+      public override string Name { get { return overrideName; } }
+      public override string DisplayName { get { return mod.DisplayName; } }
+      public override string Author { get { return mod.Author; } }
+      public override Version Version { get { return mod.Version; } }
+      public override string BesiegeVersion { get { return mod.BesiegeVersion; } }
+      public override string VersionExtra { get { return mod.VersionExtra; } }
+      public override bool CanBeUnloaded { get { return mod.CanBeUnloaded; } }
+      public override bool Preload { get { return mod.Preload; } }
+      public override void OnLoad()
+      {
+        mod.OnLoad();
+      }
+      public override void OnUnload()
+      {
+        mod.OnUnload();
       }
     }
   }

@@ -67,8 +67,11 @@ namespace spaar.ModLoader.Internal
 
 #if DEV_BUILD
       Tools.ObjectExplorer.Initialize();
-      Tools.DebugServer.Initialize();
-      Tools.DebugServer.Instance.StartDebugServer(5000);
+      if (Environment.CommandLine.Contains("-enable-debug-server"))
+      {
+        Tools.DebugServer.Initialize();
+        Tools.DebugServer.Instance.StartDebugServer(5000);
+      }
 #endif
 
       // Enable the console interface since it can now ask the configuration
@@ -95,83 +98,95 @@ namespace spaar.ModLoader.Internal
         if (!fileInfo.Name.EndsWith(".no.dll", StringComparison.CurrentCulture)
           && fileInfo.Name != "SpaarModLoader.dll")
         {
-          loadingOutput += "Trying to load " + fileInfo.Name + "\n";
-          try
-          {
-            var assembly = Assembly.LoadFrom(fileInfo.FullName);
-            var types = assembly.GetExportedTypes();
-            var modTypes = new List<Type>();
-
-            foreach (var type in types)
-            {
-              if (typeof(Mod).IsAssignableFrom(type)
-                && Attribute.GetCustomAttribute(type, typeof(TemplateAttribute))
-                  == null)
-              {
-                  modTypes.Add(type);
-              }
-            }
-
-            if (modTypes.Count < 1)
-            {
-#if COMPAT
-              loadingOutput += fileInfo.Name + " contains"
-                + " no implementation of Mod. Trying fallback system.\n";
-
-              // Fallback to old attribute-way of loading, this will be removed
-              // in the future.
-
-              bool fallbackWorked = false;
-              foreach (var type in types)
-              {
-                var attrib = Attribute.GetCustomAttribute(type, typeof(spaar.Mod)) as spaar.Mod;
-                if (attrib != null)
-                {
-                  gameObject.AddComponent(type);
-                  attrib.assembly = assembly;
-                  ModCompatWrapper wrapper = new ModCompatWrapper();
-                  wrapper.SetCompatInfo(attrib.author, attrib.Name(),
-                    attrib.version);
-                  loadingOutput += "Loaded " + attrib.Name()
-                    + " (" + attrib.version + ") by " + attrib.author + "\n";
-                  loadingOutput += "This mod was loade using a compatibility "
-                    + "wrapper for the old system.\nPlease upgrade the mod.\n";
-                  loadedMods.Add(new InternalMod(wrapper, assembly));
-                  fallbackWorked = true;
-                }
-              }
-              if (!fallbackWorked)
-              {
-                loadingOutput += "Fallback system failed too. Skipping.\n";
-              }
-              continue;
-#else
-              loadingOutput += fileInfo.Name
-                + " contains no implementation of Mod. Not loading it."\n";
-              continue;
-#endif
-            }
-            else if (modTypes.Count > 1)
-            {
-              loadingOutput += fileInfo.Name + " contains"
-                + " more than one implementation of Mod. Not loading it.\n";
-              continue;
-            }
-
-            var mod = (Mod)System.Activator.CreateInstance(modTypes[0]);
-            loadedMods.Add(new InternalMod(mod, assembly));
-
-            loadingOutput += "\t" + mod.ToString() + " was loaded!\n";
-          }
-          catch (Exception exception)
-          {
-            Debug.Log("Could not load " + fileInfo.Name + ":");
-            Debug.LogException(exception);
-          }
+          loadingOutput += LoadMod(fileInfo);
         }
       }
 
       ModConsole.AddMessage(LogType.Log, "Loaded mods", loadingOutput);
+    }
+
+    private string LoadMod(FileInfo file, string overrideName = "")
+    {
+      var output = "Trying to load " + file.Name + "\n";
+      try
+      {
+        var assembly = Assembly.LoadFile(file.FullName);
+        var types = assembly.GetExportedTypes();
+        var modTypes = new List<Type>();
+
+        foreach (var type in types)
+        {
+          if (typeof(Mod).IsAssignableFrom(type)
+            && Attribute.GetCustomAttribute(type, typeof(TemplateAttribute))
+              == null)
+          {
+            modTypes.Add(type);
+          }
+        }
+
+        if (modTypes.Count < 1)
+        {
+#if COMPAT
+          output += file.Name + " contains"
+            + " no implementation of Mod. Trying fallback system.\n";
+
+          // Fallback to old attribute-way of loading, this will be removed
+          // in the future.
+
+          bool fallbackWorked = false;
+          foreach (var type in types)
+          {
+            var attrib = Attribute.GetCustomAttribute(type, typeof(spaar.Mod)) as spaar.Mod;
+            if (attrib != null)
+            {
+              gameObject.AddComponent(type);
+              attrib.assembly = assembly;
+              ModCompatWrapper wrapper = new ModCompatWrapper();
+              wrapper.SetCompatInfo(attrib.author, attrib.Name(),
+                attrib.version);
+              output += "Loaded " + attrib.Name()
+                + " (" + attrib.version + ") by " + attrib.author + "\n";
+              output += "This mod was loade using a compatibility "
+                + "wrapper for the old system.\nPlease upgrade the mod.\n";
+              loadedMods.Add(new InternalMod(wrapper, assembly));
+              fallbackWorked = true;
+            }
+          }
+          if (!fallbackWorked)
+          {
+            output += "Fallback system failed too. Skipping.\n";
+          }
+          return output;
+#else
+          output += file.Name
+            + " contains no implementation of Mod. Not loading it."\n";
+          return output;
+#endif
+        }
+        else if (modTypes.Count > 1)
+        {
+          output += file.Name + " contains"
+            + " more than one implementation of Mod. Not loading it.\n";
+          return output;
+        }
+
+        var mod = (Mod)System.Activator.CreateInstance(modTypes[0]);
+        var internalMod = new InternalMod(mod, assembly);
+        if (overrideName != "")
+        {
+          internalMod.SetOverrideName(overrideName);
+        }
+        loadedMods.Add(internalMod);
+
+        output += "\t" + mod.ToString() + " was loaded!\n";
+      }
+      catch (Exception exception)
+      {
+        Debug.Log("Could not load " + file.Name + ":");
+        Debug.LogException(exception);
+      }
+
+      return output;
     }
 
     private void RegisterModManagementCommands()
@@ -230,6 +245,24 @@ namespace spaar.ModLoader.Internal
             + " loaded. Did you spell the name correctly? Remember to use "
             + "internal names.";
         }
+      });
+
+      Commands.RegisterCommand("loadMod", (args, nArgs) =>
+      {
+        const string usage = "Usage: loadMods <filename> <name>";
+        if (args.Length != 2)
+        {
+          return usage;
+        }
+
+        var file = args[0];
+        var fakeName = args[1];
+
+        var fileInfo = new FileInfo(file);
+        var output = LoadMod(fileInfo, fakeName);
+
+        return output + "\n" +
+          "Loaded " + file + " with overriden name " + fakeName;
       });
     }
 
