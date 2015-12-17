@@ -26,13 +26,14 @@ namespace DebugHelper
     private void btnStart_Click(object sender, EventArgs e)
     {
       modsFolder = (new FileInfo(txtBesiegeLocation.Text).Directory)
-        + "/Besiege_Data/Mods/";
+        + "\\Besiege_Data\\Mods\\";
       baseModFileName = new FileInfo(txtModLocation.Text).Name.Replace(".dll", "");
 
-      if (File.Exists(modsFolder + baseModFileName + ".dll"))
-        File.Delete(modsFolder + baseModFileName + ".dll");
-
-      File.Copy(txtModLocation.Text, modsFolder + baseModFileName + ".dll");
+      if (txtModLocation.Text != (modsFolder + baseModFileName + ".dll"))
+      {
+        File.Copy(txtModLocation.Text, modsFolder + baseModFileName + ".dll",
+          true);
+      }
 
       Process.Start(txtBesiegeLocation.Text, "-popupwindow -enable-debug-server");
 
