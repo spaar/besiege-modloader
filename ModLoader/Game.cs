@@ -20,6 +20,10 @@ namespace spaar.ModLoader
   /// </summary>
   public delegate void OnKeymapperOpen();
 
+  public delegate void OnBlockPlaced(Transform block);
+
+  public delegate void OnBlockRemoved();
+
   /// <summary>
   /// Provides convenient access to various parts of the game that are often
   /// needed by mods.
@@ -132,6 +136,10 @@ namespace spaar.ModLoader
     /// </summary>
     public static event OnKeymapperOpen OnKeymapperOpen;
 
+    public static event OnBlockPlaced OnBlockPlaced;
+
+    public static event OnBlockRemoved OnBlockRemoved;
+
     private static Zone[] zones = {
       new Zone(0, 30, "Sandbox", Island.Sandbox),
 
@@ -205,6 +213,7 @@ namespace spaar.ModLoader
 
     private bool hasNotifiedWinCondition = false;
     private bool hasNotifiedKeymapperOpen = false;
+    private int machineChildCount = 0;
     private void Update()
     {
       if (IsSimulating)
@@ -236,6 +245,29 @@ namespace spaar.ModLoader
           && hasNotifiedKeymapperOpen)
         {
           hasNotifiedKeymapperOpen = false;
+        }
+      }
+
+      if (!IsSimulating && (OnBlockPlaced != null || OnBlockRemoved != null)
+        && AddPiece != null && AddPiece.machineParent != null)
+      {
+        var currentCount = AddPiece.machineParent.childCount;
+        if (machineChildCount == 0)
+        {
+          machineChildCount = currentCount;
+        }
+        else
+        {
+          if (machineChildCount > currentCount)
+          {
+            if (OnBlockRemoved != null) OnBlockRemoved();
+          }
+          else if (machineChildCount < currentCount)
+          {
+            if (OnBlockPlaced != null)
+              OnBlockPlaced(AddPiece.machineParent.GetChild(currentCount - 1));
+          }
+          machineChildCount = currentCount;
         }
       }
     }
