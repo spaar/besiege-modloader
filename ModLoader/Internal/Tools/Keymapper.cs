@@ -114,6 +114,46 @@ namespace spaar.ModLoader.Internal.Tools
         {
           keyCode = KeyCode.Mouse6;
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+          keyCode = KeyCode.Alpha0;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+          keyCode = KeyCode.Alpha1;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+          keyCode = KeyCode.Alpha2;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+          keyCode = KeyCode.Alpha3;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+          keyCode = KeyCode.Alpha4;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+          keyCode = KeyCode.Alpha5;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+          keyCode = KeyCode.Alpha6;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+          keyCode = KeyCode.Alpha7;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+          keyCode = KeyCode.Alpha8;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+          keyCode = KeyCode.Alpha9;
+        }
         #endregion
 
         if (keyCode != KeyCode.None)
