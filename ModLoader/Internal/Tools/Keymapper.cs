@@ -11,7 +11,7 @@ namespace spaar.ModLoader.Internal.Tools
     private bool visible = false;
     private int windowID = Util.GetWindowID();
     private Key key;
-    private Rect windowRect = new Rect(500, 300, 412, 600);
+    private Rect windowRect = new Rect(500, 300, 450, 600);
     private Vector2 scrollPos = new Vector2(0f, 0f);
 
     private Key currentKeyToMap = null;
@@ -57,6 +57,7 @@ namespace spaar.ModLoader.Internal.Tools
         }
 
         KeyCode keyCode = KeyCode.None;
+        #region Special Keys
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
           keyCode = KeyCode.LeftControl;
@@ -113,6 +114,7 @@ namespace spaar.ModLoader.Internal.Tools
         {
           keyCode = KeyCode.Mouse6;
         }
+        #endregion
 
         if (keyCode != KeyCode.None)
         {
