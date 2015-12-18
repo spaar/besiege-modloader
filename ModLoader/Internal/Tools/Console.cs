@@ -145,6 +145,7 @@ namespace spaar.ModLoader.Internal.Tools
       if (visible)
       {
         windowRect = GUI.Window(windowID, windowRect, OnWindow, "Console");
+        windowRect = Util.PreventOffScreenWindow(windowRect);
       }
     }
 

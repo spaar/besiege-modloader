@@ -52,6 +52,7 @@ namespace spaar.ModLoader.Internal.Tools
       {
         windowRect = GUILayout.Window(windowID, windowRect, DoWindow,
           WindowTitle);
+        windowRect = Util.PreventOffScreenWindow(windowRect);
       }
     }
 

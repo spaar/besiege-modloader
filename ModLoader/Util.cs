@@ -1,4 +1,6 @@
-﻿namespace spaar.ModLoader
+﻿using UnityEngine;
+
+namespace spaar.ModLoader
 {
   /// <summary>
   /// A collection of useful utility functions.
@@ -20,6 +22,23 @@
     public static int GetWindowID()
     {
       return currentWindowID--;
+    }
+
+    internal static Rect PreventOffScreenWindow(Rect windowRect)
+    {
+      if (windowRect.x < (-windowRect.width + 50))
+        windowRect.x = -windowRect.width + 50;
+
+      if (windowRect.x > (Screen.width -50))
+        windowRect.x = Screen.width - 50;
+
+      if (windowRect.y < 0)
+        windowRect.y = 0;
+
+      if (windowRect.y > (Screen.height - 50))
+        windowRect.y = Screen.height - 50;
+
+      return windowRect;
     }
 
   }

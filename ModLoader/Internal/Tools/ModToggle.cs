@@ -43,6 +43,7 @@ namespace spaar.ModLoader.Internal.Tools
       GUI.skin = ModGUI.Skin;
 
       windowRect = GUI.Window(windowID, windowRect, DoWindow, "Mod Toggle");
+      windowRect = Util.PreventOffScreenWindow(windowRect);
 
       if (displayError)
       {

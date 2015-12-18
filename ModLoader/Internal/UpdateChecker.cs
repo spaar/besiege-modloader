@@ -55,6 +55,7 @@ namespace spaar.ModLoader.Internal
       GUI.skin = ModGUI.Skin;
 
       windowRect = GUI.Window(windowID, windowRect, DoWindow, "Update");
+      windowRect = Util.PreventOffScreenWindow(windowRect);
     }
 
     private void DoWindow(int id)

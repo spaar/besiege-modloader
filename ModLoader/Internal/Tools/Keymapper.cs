@@ -194,6 +194,7 @@ namespace spaar.ModLoader.Internal.Tools
       };
 
       windowRect = GUI.Window(windowID, windowRect, DoWindow, "Keymapper");
+      windowRect = Util.PreventOffScreenWindow(windowRect);
     }
 
     private void DoWindow(int id)
