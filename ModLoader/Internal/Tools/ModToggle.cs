@@ -54,6 +54,21 @@ namespace spaar.ModLoader.Internal.Tools
     {
       scrollPosition = GUILayout.BeginScrollView(scrollPosition);
 
+      if (GUILayout.Button("Enable all"))
+      {
+        foreach (var mod in ModLoader.Instance.LoadedMods)
+        {
+          mod.Enable();
+        }
+      }
+      if (GUILayout.Button("Disable all"))
+      {
+        foreach (var mod in ModLoader.Instance.LoadedMods)
+        {
+          mod.Disable();
+        }
+      }
+
       foreach (var mod in ModLoader.Instance.LoadedMods)
       {
         DisplayMod(mod);
