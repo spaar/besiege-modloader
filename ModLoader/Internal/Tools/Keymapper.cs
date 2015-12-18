@@ -85,6 +85,34 @@ namespace spaar.ModLoader.Internal.Tools
         {
           keyCode = KeyCode.Backspace;
         }
+        else if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+          keyCode = KeyCode.Mouse0;
+        }
+        else if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+          keyCode = KeyCode.Mouse1;
+        }
+        else if (Input.GetKeyDown(KeyCode.Mouse2))
+        {
+          keyCode = KeyCode.Mouse2;
+        }
+        else if (Input.GetKeyDown(KeyCode.Mouse3))
+        {
+          keyCode = KeyCode.Mouse3;
+        }
+        else if (Input.GetKeyDown(KeyCode.Mouse4))
+        {
+          keyCode = KeyCode.Mouse4;
+        }
+        else if (Input.GetKeyDown(KeyCode.Mouse5))
+        {
+          keyCode = KeyCode.Mouse5;
+        }
+        else if (Input.GetKeyDown(KeyCode.Mouse6))
+        {
+          keyCode = KeyCode.Mouse6;
+        }
 
         if (keyCode != KeyCode.None)
         {
