@@ -22,10 +22,19 @@ namespace spaar.ModLoader
 
     public bool Pressed()
     {
-      return (((Modifier == KeyCode.None && Trigger != KeyCode.None)
+      var pressed = (((Modifier == KeyCode.None && Trigger != KeyCode.None)
           || Input.GetKey(Modifier))
         && ((Trigger == KeyCode.None && Modifier != KeyCode.None)
           || Input.GetKeyDown(Trigger)));
+
+      if (pressed && (Trigger == KeyCode.Tab))
+      {
+        // Prevent turning off the HUD when using Tab as keybinding
+        var hudControl = UnityEngine.Object.FindObjectOfType<HudInputControl>();
+        hudControl.hudCam.enabled = !hudControl.hudCam.enabled;
+      }
+
+      return pressed;
     }
 
     public bool IsDown()
