@@ -1,5 +1,6 @@
-﻿namespace spaar.ModLoader
+namespace spaar.ModLoader
 {
+
   /// <summary>
   /// All block types in the game. These values can be used as indices to
   /// AddPiece.blockTypes.
@@ -52,7 +53,7 @@
     Slider = 42,
     BalloonSmall = 43,
     BallAndSocket = 44,
-    RopeSimple = 45,
+    SimpleRopeWinch = 45,
     LargeWheel = 46,
     SmallFlameTorch = 47,
     Drill = 48,
@@ -62,7 +63,9 @@
     SmallPropellorBuildPoint = 52,
     ShrapnelCannon = 53,
     GrenadeBlock = 54,
-    SmallPropellor = 55
+    SmallPropellor = 55,
+    WaterCannon = 56,
+    Pin = 57,
   }
 
   /// <summary>
@@ -116,7 +119,7 @@
     Slider = 42,
     BalloonSmall = 43,
     BallAndSocket = 44,
-    RopeSimple = 45,
+    SimpleRopeWinch = 45,
     LargeWheel = 46,
     SmallFlameTorch = 47,
     Drill = 48,
@@ -126,8 +129,10 @@
     SmallPropellorBuildPoint = 52,
     ShrapnelCannon = 53,
     GrenadeBlock = 54,
-    SmallPropellor = 55
+    SmallPropellor = 55,
+    WaterCannon = 56,
+    Pin = 57,
   }
-#pragma warning restore CS1591
 
+#pragma warning restore CS1591
 }

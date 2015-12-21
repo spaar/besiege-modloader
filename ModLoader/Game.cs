@@ -169,6 +169,12 @@ namespace spaar.ModLoader
       new Zone(23, 27, "Village of Diom", Island.Tolbrynd),
       new Zone(24, 28, "Midland Patrol", Island.Tolbrynd),
       new Zone(25, 29, "Valley of the Wind", Island.Tolbrynd),
+
+      new Zone(26, 30, "Odd Contraption", Island.Tolbrynd),
+      new Zone(27, 31, "Diom Well", Island.Tolbrynd),
+      new Zone(28, 32, "Surrounded", Island.Tolbrynd),
+      new Zone(29, 33, "Sacred Flame", Island.Tolbrynd),
+      new Zone(30, 34, "Argus' Grounds", Island.Tolbrynd),
     };
 
     /// <summary>
