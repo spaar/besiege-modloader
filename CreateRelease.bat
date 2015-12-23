@@ -30,6 +30,7 @@ xcopy ModLoader\Resources %RELEASEPATH%\Normal\Resources\ModLoader\ /s/h/e/k/f/c
 :: Assemble developer release
 copy Changelog.md %RELEASEPATH%\Developer\Changelog.txt
 copy README_enduser.md %RELEASEPATH%\Developer\README.txt
+copy README_debughelper.md %RELEASEPATH%\Developer\README_debughelper.txt
 copy LICENSE %RELEASEPATH%\Developer\LICENSE
 copy Assembly-UnityScript.dll %RELEASEPATH%\Developer\Assembly-UnityScript.dll
 copy ModLoader\bin\ReleaseDeveloper\SpaarModLoader.dll %RELEASEPATH%\Developer\SpaarModLoader.dll

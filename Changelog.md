@@ -1,3 +1,16 @@
+1.2.0
+=====
+- Update for Besiege v0.23 compatibility
+- [Enhancement] Add ability to map mouse buttons in the keymapper
+- [Enhancement] Add ability to map number keys in the keymapper
+- [Enhancement] Add "Enable All" and "Disable All" buttons to mod toggle
+- [Enhancement] Make it impossible to move GUI windows completely off-screen
+- [BUGFIX] Prevent toggling of HUD when Tab is used in a keybinding
+- [API] Add OnBlockPlaced and OnBlockRemoved events to Game
+- [Feature] Add 'loadMod' command
+- [Feature, Developer Build] Add Debug Server, which allows connecting to the in-game console via a TCP server on port 5000
+- [Feature, Developer Build] Add beta version of Debug Helper
+
 1.1.0
 =====
 - [Feature, API] Add keybinding API so mods can register keys to be mapped in the Keybinding window (Ctrl+J)
