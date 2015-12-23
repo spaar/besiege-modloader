@@ -76,7 +76,7 @@ namespace spaar.ModLoader
       foreach (var md in metadata)
       {
         result += md.Key + "\n";
-        result += md.Value.saveCb(md.Key) + "\n";
+        result += md.Value.saveCb(md.Key) + Environment.NewLine;
       }
 
       return result;
