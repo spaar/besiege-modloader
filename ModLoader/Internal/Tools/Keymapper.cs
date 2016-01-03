@@ -45,7 +45,6 @@ namespace spaar.ModLoader.Internal.Tools
         {
           if (currentlyModifier)
           {
-            Debug.Log(Input.inputString);
             currentKeyToMap.Modifier = (KeyCode)Enum.Parse(typeof(KeyCode),
               (Input.inputString[0] + "").ToUpper());
           }
