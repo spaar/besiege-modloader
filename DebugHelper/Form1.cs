@@ -115,6 +115,7 @@ namespace DebugHelper
       var ver = modDefinition.Name.Version;
       var newVersion = new Version(ver.Major, ver.Minor, ver.Build, count);
       modDefinition.Name.Version = newVersion;
+      modDefinition.Name.Name += "-" + count;
       modDefinition.Write(newModPath);
 
       // Connect to mod loader, disable old mod, load new mod, enable new mod
