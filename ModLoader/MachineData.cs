@@ -114,18 +114,19 @@ namespace spaar.ModLoader
     {
       if (Game.AddPiece)
       {
-        //Not a menu level
+        // TODO: v0.24
+        ////Not a menu level
 
-        var saveMachineGO = FindObjectOfType<MySaveMachine>().gameObject;
-        var oldSaveMachine = saveMachineGO.GetComponent<MySaveMachine>();
-        var newSaveMachine = saveMachineGO.AddComponent<ModLoaderSaveMachine>();
-        newSaveMachine.CopyFrom(oldSaveMachine);
-        DestroyImmediate(oldSaveMachine);
-        Game.MachineObjectTracker.mySaveCode = newSaveMachine;
-        foreach (var saveCode in FindObjectsOfType<SaveAndDestroyOnClick>())
-        {
-          saveCode.mySaveCode = newSaveMachine;
-        }
+        //var saveMachineGO = FindObjectOfType<MySaveMachine>().gameObject;
+        //var oldSaveMachine = saveMachineGO.GetComponent<MySaveMachine>();
+        //var newSaveMachine = saveMachineGO.AddComponent<ModLoaderSaveMachine>();
+        //newSaveMachine.CopyFrom(oldSaveMachine);
+        //DestroyImmediate(oldSaveMachine);
+        //Game.MachineObjectTracker.mySaveCode = newSaveMachine;
+        //foreach (var saveCode in FindObjectsOfType<SaveAndDestroyOnClick>())
+        //{
+        //  saveCode.mySaveCode = newSaveMachine;
+        //}
       }
     }
 

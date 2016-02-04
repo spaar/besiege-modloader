@@ -17,7 +17,7 @@ namespace spaar.ModLoader.Internal
     private void Start()
     {
       cam = GameObject.Find("HUD Cam").GetComponent<Camera>();
-      mo = Camera.main.GetComponent<MouseOrbit>();
+      mo = MouseOrbit.Instance;
       CalcBounds();
     }
 
