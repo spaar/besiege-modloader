@@ -1,3 +1,8 @@
+1.3.1
+=====
+- Update for Besiege v0.25 Patch 1 compatibility
+- [BUGFIX] Fix the translate machine tool being completely broken
+
 1.3.0
 =====
 - Update for Besiege v0.25 compatibility
