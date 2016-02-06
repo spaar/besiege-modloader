@@ -10,6 +10,12 @@ namespace spaar.ModLoader.Internal
 
     private bool toRemove = false;
 
+    private void Update()
+    {
+      transform.position = Machine.Active().Blocks[0].transform.position;
+      transform.rotation = Machine.Active().Blocks[0].transform.rotation;
+    }
+
     private void Awake()
     {
       if (!prefabCreated)
@@ -22,16 +28,23 @@ namespace spaar.ModLoader.Internal
         .FindChild("Mod Loader Saving Object") != null)
       {
         toRemove = true;
+        StartCoroutine(RemoveSelf());
       }
+    }
+
+    private System.Collections.IEnumerator RemoveSelf()
+    {
+      yield return null;
+      Machine.Active().RemoveBlock(this);
     }
 
     public override void OnLoad(BlockXDataHolder stream)
     {
       if (toRemove)
       {
-        Machine.Active().RemoveBlock(this);
         return;
       }
+      if (AddPiece.isSimulating) return;
 
       if (stream.HasKey("modLoader-machineData"))
       {
@@ -47,9 +60,9 @@ namespace spaar.ModLoader.Internal
     {
       if (toRemove)
       {
-        Machine.Active().RemoveBlock(this);
         return;
       }
+      if (AddPiece.isSimulating) return;
 
       stream.Write("modLoader-machineData", MachineData.GetSaveData());
     }

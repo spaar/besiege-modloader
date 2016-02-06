@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using spaar.ModLoader.Internal;
+using UnityEngine;
 
 namespace spaar.ModLoader
 {
@@ -51,6 +52,7 @@ namespace spaar.ModLoader
     private static Dictionary<string, Metadata> metadata
       = new Dictionary<string, Metadata>();
 
+    internal static GameObject MachineDataBlockPrefab = null;
 
     /// <summary>
     /// Add a section to the save files with the specified callbacks for
@@ -112,6 +114,7 @@ namespace spaar.ModLoader
 
     private void OnLevelWasLoaded(int level)
     {
+      MachineDataBlockPrefab = null;
       if (Game.AddPiece)
       {
         MachineObjectTracker.Instance.AllPrefabs[(int)Prefab.StartingBlock]

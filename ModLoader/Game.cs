@@ -274,7 +274,7 @@ namespace spaar.ModLoader
             {
               for (int i = machineChildCount; i < currentCount; i++)
               {
-                OnBlockPlaced(Machine.Active().BuildingMachine.GetChild(i));
+                OnBlockPlaced(Machine.Active().BuildingBlocks[i].transform);
               }
             }
           }
