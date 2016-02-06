@@ -239,29 +239,26 @@ namespace spaar.ModLoader
       }
 
       // TODO: v0.24
-      //if (OnKeymapperOpen != null)
-      //{
-      //  if (BlockInfoController != null
-      //    && BlockInfoController.menuHolder.gameObject.activeSelf
-      //    && !hasNotifiedKeymapperOpen)
-      //  {
-      //    var handler = OnKeymapperOpen;
-      //    if (handler != null) handler();
-      //    hasNotifiedKeymapperOpen = true;
-      //  }
-      //  else if (BlockInfoController != null
-      //    && !BlockInfoController.menuHolder.gameObject.activeSelf
-      //    && hasNotifiedKeymapperOpen)
-      //  {
-      //    hasNotifiedKeymapperOpen = false;
-      //  }
-      //}
+      if (OnKeymapperOpen != null)
+      {
+        if (BlockMapper.CurrentInstance != null
+          && !hasNotifiedKeymapperOpen)
+        {
+          var handler = OnKeymapperOpen;
+          if (handler != null) handler();
+          hasNotifiedKeymapperOpen = true;
+        }
+        else if (BlockMapper.CurrentInstance == null
+          && hasNotifiedKeymapperOpen)
+        {
+          hasNotifiedKeymapperOpen = false;
+        }
+      }
 
-      // TODO: v0.24
       if (!IsSimulating && (OnBlockPlaced != null || OnBlockRemoved != null)
         && AddPiece != null && Machine.Active() != null)
       {
-        var currentCount = Machine.Active().BuildingMachine.childCount;
+        var currentCount = Machine.Active().BuildingBlocks.Count;
         if (machineChildCount == 0)
         {
           machineChildCount = currentCount;
@@ -275,7 +272,12 @@ namespace spaar.ModLoader
           else if (machineChildCount < currentCount)
           {
             if (OnBlockPlaced != null)
-              OnBlockPlaced(Machine.Active().BuildingMachine.GetChild(currentCount - 1));
+            {
+              for (int i = machineChildCount; i < currentCount; i++)
+              {
+                OnBlockPlaced(Machine.Active().BuildingMachine.GetChild(i));
+              }
+            }
           }
           machineChildCount = currentCount;
         }
