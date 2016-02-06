@@ -114,21 +114,12 @@ namespace spaar.ModLoader
     {
       if (Game.AddPiece)
       {
-        // TODO: v0.24
-        ////Not a menu level
+        MachineObjectTracker.Instance.AllPrefabs[(int)Prefab.StartingBlock]
+          .AddComponent<MachineDataStartingBlock>();
 
-        //var saveMachineGO = FindObjectOfType<MySaveMachine>().gameObject;
-        //var oldSaveMachine = saveMachineGO.GetComponent<MySaveMachine>();
-        //var newSaveMachine = saveMachineGO.AddComponent<ModLoaderSaveMachine>();
-        //newSaveMachine.CopyFrom(oldSaveMachine);
-        //DestroyImmediate(oldSaveMachine);
-        //Game.MachineObjectTracker.mySaveCode = newSaveMachine;
-        //foreach (var saveCode in FindObjectsOfType<SaveAndDestroyOnClick>())
-        //{
-        //  saveCode.mySaveCode = newSaveMachine;
-        //}
+        Machine.Active().BuildingBlocks[0].gameObject
+          .AddComponent<MachineDataStartingBlock>();
       }
     }
-
   }
 }

@@ -104,14 +104,15 @@ namespace spaar.ModLoader
           LoadCompletedLevels();
         }
 
-        return (bool[]) _completedLevels.Clone();
+        return (bool[])_completedLevels.Clone();
       }
     }
 
     private static void LoadCompletedLevels()
     {
       using (var reader = new StreamReader(
-        Application.dataPath + "/CompletedLevels.txt")) {
+        Application.dataPath + "/CompletedLevels.txt"))
+      {
         var text = reader.ReadToEnd().Trim();
         var items = text.Split('|');
         _completedLevels = new bool[items.Length];
