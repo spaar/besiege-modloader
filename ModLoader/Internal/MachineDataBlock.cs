@@ -10,8 +10,6 @@ namespace spaar.ModLoader.Internal
 
     private bool toRemove = false;
 
-    private int id = Util.GetWindowID();
-
     private void Awake()
     {
       if (!prefabCreated)

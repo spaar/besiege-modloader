@@ -238,7 +238,6 @@ namespace spaar.ModLoader
         }
       }
 
-      // TODO: v0.24
       if (OnKeymapperOpen != null)
       {
         if (BlockMapper.CurrentInstance != null
