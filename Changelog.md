@@ -1,3 +1,12 @@
+1.3.0
+=====
+- Update for Besiege v0.25 compatibility
+- [BUGFIX] Fix wrong line-endings being written in MachineData
+- [BUGFIX] Remove left-over debug output
+- [BUGFIX, Developer Build] Fix SingleInstance and possibly other classes not working with the debug helper
+Note that due to the new saving system in Besiege, MachineData behaves a bit differently now. The callbacks may be called more often than they used to be.
+Any data saved using MachineData will likely get lost when converting a save file from the old format to the new one unfortunately.
+
 1.2.0
 =====
 - Update for Besiege v0.23 compatibility
