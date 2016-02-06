@@ -273,13 +273,13 @@ namespace spaar.ModLoader.Internal.Tools
       }
       if (GUILayout.Button("Focus"))
       {
-        var mo = Camera.main.GetComponent<MouseOrbit>();
+        var mo = MouseOrbit.Instance;
         if (mo != null && IsGameObjectSelected)
           mo.target = SelectedGameObject.transform;
       }
       if (GUILayout.Button("Select focused"))
       {
-        var mo = Camera.main.GetComponent<MouseOrbit>();
+        var mo = MouseOrbit.Instance;
         if (mo != null && mo.target != null)
         {
           SelectedGameObject = mo.target.gameObject;

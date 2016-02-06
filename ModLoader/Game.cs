@@ -63,20 +63,21 @@ namespace spaar.ModLoader
       }
     }
 
-    private static BlockInfoController _boi;
-    /// <summary>
-    /// Reference to the BlockInfoController instance of the current scene.
-    /// Null if there is no BlockInfoController in the current scene.
-    /// </summary>
-    public static BlockInfoController BlockInfoController
-    {
-      get
-      {
-        if (_boi == null)
-          _boi = FindObjectOfType<BlockInfoController>();
-        return _boi;
-      }
-    }
+    // TODO: v0.24
+    //private static BlockInfoController _boi;
+    ///// <summary>
+    ///// Reference to the BlockInfoController instance of the current scene.
+    ///// Null if there is no BlockInfoController in the current scene.
+    ///// </summary>
+    //public static BlockInfoController BlockInfoController
+    //{
+    //  get
+    //  {
+    //    if (_boi == null)
+    //      _boi = FindObjectOfType<BlockInfoController>();
+    //    return _boi;
+    //  }
+    //}
 
     /// <summary>
     /// Whether the game is currently simulating.
@@ -103,14 +104,15 @@ namespace spaar.ModLoader
           LoadCompletedLevels();
         }
 
-        return (bool[]) _completedLevels.Clone();
+        return (bool[])_completedLevels.Clone();
       }
     }
 
     private static void LoadCompletedLevels()
     {
       using (var reader = new StreamReader(
-        Application.dataPath + "/CompletedLevels.txt")) {
+        Application.dataPath + "/CompletedLevels.txt"))
+      {
         var text = reader.ReadToEnd().Trim();
         var items = text.Split('|');
         _completedLevels = new bool[items.Length];
@@ -238,16 +240,14 @@ namespace spaar.ModLoader
 
       if (OnKeymapperOpen != null)
       {
-        if (BlockInfoController != null
-          && BlockInfoController.menuHolder.gameObject.activeSelf
+        if (BlockMapper.CurrentInstance != null
           && !hasNotifiedKeymapperOpen)
         {
           var handler = OnKeymapperOpen;
           if (handler != null) handler();
           hasNotifiedKeymapperOpen = true;
         }
-        else if (BlockInfoController != null
-          && !BlockInfoController.menuHolder.gameObject.activeSelf
+        else if (BlockMapper.CurrentInstance == null
           && hasNotifiedKeymapperOpen)
         {
           hasNotifiedKeymapperOpen = false;
@@ -255,9 +255,9 @@ namespace spaar.ModLoader
       }
 
       if (!IsSimulating && (OnBlockPlaced != null || OnBlockRemoved != null)
-        && AddPiece != null && AddPiece.machineParent != null)
+        && AddPiece != null && Machine.Active() != null)
       {
-        var currentCount = AddPiece.machineParent.childCount;
+        var currentCount = Machine.Active().BuildingBlocks.Count;
         if (machineChildCount == 0)
         {
           machineChildCount = currentCount;
@@ -271,7 +271,12 @@ namespace spaar.ModLoader
           else if (machineChildCount < currentCount)
           {
             if (OnBlockPlaced != null)
-              OnBlockPlaced(AddPiece.machineParent.GetChild(currentCount - 1));
+            {
+              for (int i = machineChildCount; i < currentCount; i++)
+              {
+                OnBlockPlaced(Machine.Active().BuildingMachine.GetChild(i));
+              }
+            }
           }
           machineChildCount = currentCount;
         }

@@ -30,8 +30,8 @@ namespace spaar.ModLoader
       if (pressed && (Trigger == KeyCode.Tab))
       {
         // Prevent turning off the HUD when using Tab as keybinding
-        var hudControl = UnityEngine.Object.FindObjectOfType<HudInputControl>();
-        hudControl.hudCam.enabled = !hudControl.hudCam.enabled;
+        if (Game.AddPiece != null)
+          Game.AddPiece.hudCam.enabled = !Game.AddPiece.hudCam.enabled;
       }
 
       return pressed;
