@@ -18,7 +18,7 @@ namespace spaar.ModLoader.Internal
     public override string DisplayName { get { return "spaar's Mod Loader"; } }
     public override string Author { get { return "spaar"; } }
     public override Version Version { get { return ModLoader.ModLoaderVersion; } }
-    public override string VersionExtra { get { return ""; } }
+    public override string VersionExtra { get { return "test1"; } }
     public override string BesiegeVersion { get { return ModLoader.BesiegeVersion; } }
     public override bool Preload { get { return true; } }
     public override void OnLoad() { }
@@ -116,8 +116,8 @@ namespace spaar.ModLoader.Internal
 
         foreach (var type in types)
         {
-          if (typeof(Mod).IsAssignableFrom(type)
-            && Attribute.GetCustomAttribute(type, typeof(TemplateAttribute))
+          if (typeof (Mod).IsAssignableFrom(type)
+              && Attribute.GetCustomAttribute(type, typeof (TemplateAttribute))
               == null)
           {
             modTypes.Add(type);
@@ -128,7 +128,7 @@ namespace spaar.ModLoader.Internal
         {
 #if COMPAT
           output += file.Name + " contains"
-            + " no implementation of Mod. Trying fallback system.\n";
+                    + " no implementation of Mod. Trying fallback system.\n";
 
           // Fallback to old attribute-way of loading, this will be removed
           // in the future.
@@ -136,7 +136,7 @@ namespace spaar.ModLoader.Internal
           bool fallbackWorked = false;
           foreach (var type in types)
           {
-            var attrib = Attribute.GetCustomAttribute(type, typeof(spaar.Mod)) as spaar.Mod;
+            var attrib = Attribute.GetCustomAttribute(type, typeof (spaar.Mod)) as spaar.Mod;
             if (attrib != null)
             {
               gameObject.AddComponent(type);
@@ -145,9 +145,9 @@ namespace spaar.ModLoader.Internal
               wrapper.SetCompatInfo(attrib.author, attrib.Name(),
                 attrib.version);
               output += "Loaded " + attrib.Name()
-                + " (" + attrib.version + ") by " + attrib.author + "\n";
+                        + " (" + attrib.version + ") by " + attrib.author + "\n";
               output += "This mod was loade using a compatibility "
-                + "wrapper for the old system.\nPlease upgrade the mod.\n";
+                        + "wrapper for the old system.\nPlease upgrade the mod.\n";
               loadedMods.Add(new InternalMod(wrapper, assembly));
               fallbackWorked = true;
             }
@@ -166,11 +166,11 @@ namespace spaar.ModLoader.Internal
         else if (modTypes.Count > 1)
         {
           output += file.Name + " contains"
-            + " more than one implementation of Mod. Not loading it.\n";
+                    + " more than one implementation of Mod. Not loading it.\n";
           return output;
         }
 
-        var mod = (Mod)System.Activator.CreateInstance(modTypes[0]);
+        var mod = (Mod) System.Activator.CreateInstance(modTypes[0]);
         var internalMod = new InternalMod(mod, assembly);
         if (overrideName != "")
         {
@@ -179,6 +179,32 @@ namespace spaar.ModLoader.Internal
         loadedMods.Add(internalMod);
 
         output += "\t" + mod.ToString() + " was loaded!\n";
+      }
+      catch (ReflectionTypeLoadException e)
+      {
+        Debug.Log("Could not load " + file.Name + ":");
+        Debug.LogException(e);
+
+        Debug.Log("Inner Exception: " + e.InnerException);
+        Debug.LogException(e.InnerException);
+
+        Debug.Log("Types:");
+        foreach (var type in e.Types)
+        {
+          Debug.Log(type.AssemblyQualifiedName + ", " + type.FullName);
+        }
+
+        Debug.Log("Loader Exceptions: ");
+        foreach (var ex in e.LoaderExceptions)
+        {
+          Debug.LogException(ex);
+        }
+
+        Debug.Log("Data: ");
+        foreach (var datum in e.Data.Keys)
+        {
+          Debug.Log(datum + " => " + e.Data[datum]);
+        }
       }
       catch (Exception exception)
       {
