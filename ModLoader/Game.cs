@@ -289,6 +289,16 @@ namespace spaar.ModLoader
       if (addPiece == null) return;
 
       addPiece.sendSimulateMessage.Add(transform);
+
+      var global = GameObject.Find("GLOBAL");
+      if (global != null)
+      {
+        var hudInputControl = global.GetComponent<HudInputControl>();
+        var modLoaderControl = global
+          .AddComponent<Internal.ModLoaderHudInputControl>();
+        modLoaderControl.CopyFrom(hudInputControl);
+        DestroyImmediate(hudInputControl);
+      }
     }
 
     private void OnSimulate()

@@ -31,7 +31,10 @@ namespace spaar.ModLoader
       {
         // Prevent turning off the HUD when using Tab as keybinding
         if (Game.AddPiece != null)
-          Game.AddPiece.hudCam.enabled = !Game.AddPiece.hudCam.enabled;
+        {
+          GameObject.Find("GLOBAL")
+            .GetComponent<Internal.ModLoaderHudInputControl>().ToggleHud();
+        }
       }
 
       return pressed;

@@ -102,6 +102,7 @@
     <Compile Include="Internal\Activator.cs" />
     <Compile Include="Internal\InternalMod.cs" />
     <Compile Include="Internal\MachineDataStartingBlock.cs" />
+    <Compile Include="Internal\ModLoaderHudInputControl.cs" />
     <Compile Include="Internal\Tools\DebugServer.cs" />
     <Compile Include="Key.cs" />
     <Compile Include="Internal\lib\SimpleJSON.cs" />
