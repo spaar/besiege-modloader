@@ -1,4 +1,0 @@
-Changelog for version 0.1.3:
-
--Updated for Besiege v0.08
--Fixed console for large number of messages

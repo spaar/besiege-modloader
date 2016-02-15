@@ -20,6 +20,9 @@ bld/
 ModLoaderHelp/Help
 ModLoaderHelp/HelpFileBuilder
 
+# Releases
+Releases/
+
 # Roslyn cache directories
 *.ide/
 
