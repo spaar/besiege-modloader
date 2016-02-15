@@ -4,8 +4,7 @@ The mod loader currently consists of three projects:
 - ModLoader: The core mod loader, outputs SpaarModLoader.dll
 - ModLoader Injector: Used to create a patched Assembly-UnityScript.dll file that loads the mod loader
 - ModLoader Installer: The Windows GUI installer
-
-The file Patchset.txt contains all the modifications to Assembly-UnityScript.dll that have been made.
+- DebugHelper: The debug helper program, allowing reloading of mods without restarting the game
 
 Building
 ========
@@ -16,3 +15,7 @@ need to set the BESIEGE_LOCATION environment variable to the path to your Besieg
 Futher information
 ==================
 Check the README_enduser.md file for information about installing the mod loader and a list of features.
+
+License
+=======
+The mod loader is licensed under the MIT license. The full license text can be found in the LICENSE file.
