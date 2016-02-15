@@ -73,11 +73,11 @@ namespace spaar.ModLoader
 
     internal static string GetSaveData()
     {
-      string result = "";
+      string result = "MachineData" + Environment.NewLine;
 
       foreach (var md in metadata)
       {
-        result += md.Key + "\n";
+        result += md.Key + Environment.NewLine;
         result += md.Value.saveCb(md.Key) + Environment.NewLine;
       }
 
@@ -90,6 +90,7 @@ namespace spaar.ModLoader
       var foundMetadata = new List<string>();
       for (int i = 0; i < lines.Length; i++)
       {
+        if (lines[i] == "MachineData") continue;
         if (metadata.ContainsKey(lines[i]))
         {
           metadata[lines[i]].loadCb(lines[i], lines[i + 1]);
@@ -122,6 +123,10 @@ namespace spaar.ModLoader
 
         Machine.Active().BuildingBlocks[0].gameObject
           .AddComponent<MachineDataStartingBlock>();
+
+        GameObject.Find(
+          "HUD/TopBar/AlignTopRight/STATS/SettingsObjects/BlockCounter")
+          .AddComponent<BlockCount>();
       }
     }
   }

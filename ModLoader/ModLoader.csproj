@@ -100,6 +100,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Internal\Activator.cs" />
+    <Compile Include="Internal\BlockCount.cs" />
     <Compile Include="Internal\InternalMod.cs" />
     <Compile Include="Internal\MachineDataStartingBlock.cs" />
     <Compile Include="Internal\ModLoaderHudInputControl.cs" />
