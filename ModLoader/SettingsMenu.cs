@@ -87,6 +87,7 @@ namespace spaar.ModLoader
 
         var modsPos = settings.position;
         modsPos.y = bottomDefaultSetting.position.y - 1.2f;
+        modsPos.z = 7.0f; // Prevent blocks GUI from being over the toggles
 
         modSection = (Transform)Instantiate(settings, modsPos,
           settings.rotation);
@@ -131,6 +132,7 @@ namespace spaar.ModLoader
 
       settingPos.x += (numRegistered % 2) * SettingSize.x;
       settingPos.y -= 1.25f + (numRegistered / 2) * SettingSize.y;
+      settingPos.z = 7.0f; // Prevent blocks GUI from being over any toggles
 
       var fxaa = settingsObjects.FindChild("SETTINGS/FXAA");
 
