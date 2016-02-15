@@ -59,6 +59,7 @@ where you can ask me and many other modders for assistance.
 License and Source code
 ===
 The mod loader is an open-source project licensed under the MIT license.
+In the developer version, a build of Mono.Cecil is included, which follows a similiar license.
 Take a look at the [GitHub page](https://github.com/spaar/besiege-modloader) for details. Contributions in the form of pull-requests or issues are always welcome!
 
 
