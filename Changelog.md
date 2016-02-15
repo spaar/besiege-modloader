@@ -1,3 +1,9 @@
+1.3.2
+=====
+- [BUGFIX] Fix various bugs related to the MachineData API (these are also the red springs bugs)
+- [BUGFIX] Fix block chooser background being over settings toggles registered by mods
+- [BUGFIX] Prevent tab toggling the HUD when being used as keybinding again
+
 1.3.1
 =====
 - Update for Besiege v0.25 Patch 1 compatibility
