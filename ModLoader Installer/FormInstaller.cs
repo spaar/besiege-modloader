@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -10,9 +11,6 @@ namespace spaar.ModLoader.Installer
 {
   public partial class FormInstaller : Form
   {
-
-    private StreamWriter output;
-
     public FormInstaller()
     {
       InitializeComponent();
@@ -50,85 +48,101 @@ namespace spaar.ModLoader.Installer
 
     private void SetPath(string path)
     {
-      if (path != "")
+      try
       {
-        var dir = new DirectoryInfo(path);
-        if (dir.Name == "Besiege_Data") path = dir.Parent.FullName;
-      }
+        if (path != "")
+        {
+          var dir = new DirectoryInfo(path);
+          if (dir.Name == "Besiege_Data") path = dir.Parent.FullName;
+        }
 
-      txtBesiegeLocation.Text = path;
-      btnInstall.Enabled = true;
-      btnUninstall.Enabled = true;
+        txtBesiegeLocation.Text = path;
+        btnInstall.Enabled = true;
+        btnUninstall.Enabled = true;
+      }
+      catch (DirectoryNotFoundException)
+      {
+        // It's enough to not set the path and keep the install buttons disabled
+      }
+      catch (SecurityException)
+      {
+        // It's enough to not set the path and keep the install buttons disabled
+      }
     }
 
     private bool ValidatePath(string path)
     {
-      if (path == "") return false;
-      
-      var directory = new DirectoryInfo(path);
-      var files = new List<FileInfo>(directory.GetFiles());
-      var dirs = new List<DirectoryInfo>(directory.GetDirectories());
+      try
+      {
+        if (path == "") return false;
 
-      if (files.Find(f => f.Name == "Besiege.exe") != null) return true;
-      if (dirs.Find(d => d.Name == "Besiege_Data") != null) return true;
+        var directory = new DirectoryInfo(path);
+        var files = new List<FileInfo>(directory.GetFiles());
+        var dirs = new List<DirectoryInfo>(directory.GetDirectories());
 
-      if (directory.Name == "Besiege_Data") return true;
+        if (files.Find(f => f.Name == "Besiege.exe") != null) return true;
+        if (dirs.Find(d => d.Name == "Besiege_Data") != null) return true;
 
-      return false;
+        if (directory.Name == "Besiege_Data") return true;
+
+        return false;
+      }
+      catch (SecurityException)
+      {
+        return false;
+      }
+      catch (DirectoryNotFoundException)
+      {
+        return false;
+      }
     }
 
     private string FindSteamInstallation()
     {
-      string keypath = @"Software\Valve\Steam";
-      var key = Registry.CurrentUser.OpenSubKey(keypath);
-      if (key == null) return null; // Key does not exist, Steam not installed
-      output.WriteLine("Openend registry key...");
-      string registeredFilePath = key.GetValue("SteamPath").ToString();
-      output.WriteLine("SteamPath: " + registeredFilePath);
-
-      var reader = new StreamReader(registeredFilePath + "/config/config.vdf");
-      string config = reader.ReadToEnd();
-      reader.Close();
-
-      var baseInstallFolderPattern = "\"BaseInstallFolder_1\"\\t{2}\"(.+)\"";
-      var regex = new Regex(baseInstallFolderPattern);
-      var match = regex.Match(config);
-      if (!match.Success) output.WriteLine("Regex didn't match!");
-      if (!match.Success) return "";
-      var capture = match.Groups[1];
-
-      output.WriteLine("Library location: " + capture);
-
-      var path = capture + "\\steamapps\\common\\Besiege";
-
-      output.WriteLine("Raw path: " + path);
-
-      path = path.Replace("\\\\", "\\") + "\\";
-
-      output.WriteLine("Cleaned path: " + path);
-
-      if (ValidatePath(path))
+      try
       {
-        output.WriteLine("Path valid");
-        return path;
+        string keypath = @"Software\Valve\Steam";
+        var key = Registry.CurrentUser.OpenSubKey(keypath);
+        if (key == null) return null; // Key does not exist, Steam not installed
+        string registeredFilePath = key.GetValue("SteamPath").ToString();
+
+        var reader = new StreamReader(registeredFilePath + "/config/config.vdf");
+        string config = reader.ReadToEnd();
+        reader.Close();
+
+        var baseInstallFolderPattern = "\"BaseInstallFolder_1\"\\t{2}\"(.+)\"";
+        var regex = new Regex(baseInstallFolderPattern);
+        var match = regex.Match(config);
+        if (!match.Success) return "";
+        var capture = match.Groups[1];
+
+        var path = capture + "\\steamapps\\common\\Besiege";
+
+        path = path.Replace("\\\\", "\\") + "\\";
+
+        if (ValidatePath(path))
+        {
+          return path;
+        }
+        else
+        {
+          return "";
+        }
       }
-      else
+      catch (Exception)
       {
-        output.WriteLine("Path invalid");
+        // Any exceptions here just mean no install could be detected
         return "";
       }
     }
 
     private void FormInstaller_FormClosed(object sender, FormClosedEventArgs e)
     {
-      output.Close();
       Application.Exit();
     }
 
     private void FormInstaller_Load(object sender, EventArgs e)
     {
-      output = new StreamWriter("./output.txt");
-
       // First try the directory the .exe is in as Besiege location
       if (ValidatePath(new FileInfo(Application.ExecutablePath).Directory.FullName))
       {
@@ -160,8 +174,15 @@ namespace spaar.ModLoader.Installer
 
       tsLblStatus.Text = "Downloading and Installing mod loader. This may take while...";
 
-      Installer.InstallModLoader(txtBesiegeLocation.Text,
-        (ModLoaderVersion)cobVersion.SelectedItem, cbDeveloper.Checked);
+      try
+      {
+        Installer.InstallModLoader(txtBesiegeLocation.Text,
+          (ModLoaderVersion) cobVersion.SelectedItem, cbDeveloper.Checked);
+      }
+      catch (Exception)
+      {
+        MessageBox.Show("Error installing the mod loader.");
+      }
 
       tsLblStatus.Text = "Done";
 
@@ -171,7 +192,16 @@ namespace spaar.ModLoader.Installer
     private void btnUninstall_Click(object sender, EventArgs e)
     {
       SetPath(txtBesiegeLocation.Text);
-      Installer.UninstallModLoader(txtBesiegeLocation.Text);
+      try
+      {
+        Installer.UninstallModLoader(txtBesiegeLocation.Text);
+      }
+      catch (Exception)
+      {
+        MessageBox.Show("Error uninstalling mod loader.");
+      }
+
+      MessageBox.Show("Done. You can now close the installer.");
     }
   }
 }
