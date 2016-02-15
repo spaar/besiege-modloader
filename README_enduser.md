@@ -1,7 +1,5 @@
 spaar's Mod Loader is currently the only Besiege mod loader out there and enables you to use many mods at once.
 
-Version 1.0.0 was just released and is a very big change from the previous 0.x.x versions.
-Most of the code was completely rewritten, the GUI has a new (better!) style and many new features were added.
 Many thanks to everyone who made this possible, especially @VapidLinus for allowing me to use his code after he was unable to continue working on his own mod loader.
 
 Features
@@ -46,9 +44,14 @@ Then create the folder Besiege/Contents/Mods. Copy SpaarModLoader.dll and the Re
 
 That's it, the mod loader should now be installed. If you have any problems or questions, just ask on the forum and I will do my best to help.
 
+Reporting bugs and other assistance
+===
+You can report bugs and ask question using (GitHub Issues)[https://github.com/spaar/besiege-modloader/issues]. If you don't have a GitHub account and don't want to create one or can't use GitHub for other reasons, posting on the forum thread is also an option. However GitHub is preferred, so please use that if you can.
+Include your OS, your Besiege version and your mod loader version in a bug report, as well as a list of all mods you have installed. If you aren't using the newest version of both Besiege and the mod loader, please check if the bug still occurs in the newest version before reporting it.
+
 For Mod developers
 ===
-There is a basic tutorial for creating mods [here](======INSERT LINK HERE========). To get started, take a look at the [Visual Studio template](http://forum.spiderlinggames.co.uk/forum/main-forum/besiege-early-access/modding/30194-new-visual-studio-template-spaar-s-mod-loader-1-x-x-mod-development).
+There is a basic tutorial for creating mods [here](http://forum.spiderlinggames.co.uk/blogs/spaar-s-modding-thoughts/11128-introduction-to-besiege-modding). To get started, take a look at the [Visual Studio template](http://forum.spiderlinggames.co.uk/forum/main-forum/besiege-early-access/modding/30194-new-visual-studio-template-spaar-s-mod-loader-1-x-x-mod-development).
 The mod loader also has an [online documentation](http://spaar.github.io/besiege-modloader) for its various APIs.
 Lastly, as a mod developer you can PM me your email address and I will add you to the [Besiege Modding Slack team](http://forum.spiderlinggames.co.uk/forum/main-forum/besiege-early-access/modding/19322-slack-team),
 where you can ask me and many other modders for assistance.
