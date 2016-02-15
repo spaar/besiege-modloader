@@ -28,15 +28,21 @@ md %RELEASEPATH%\Normal\Resources\ModLoader
 xcopy ModLoader\Resources %RELEASEPATH%\Normal\Resources\ModLoader\ /s/h/e/k/f/c
 
 :: Assemble developer release
+md %RELEASEPATH%\Developer\DebugHelper
 copy Changelog.md %RELEASEPATH%\Developer\Changelog.txt
 copy README_enduser.md %RELEASEPATH%\Developer\README.txt
-copy README_debughelper.md %RELEASEPATH%\Developer\README_debughelper.txt
+copy README_debughelper.md %RELEASEPATH%\Developer\DebugHelper\README_debughelper.txt
 copy LICENSE %RELEASEPATH%\Developer\LICENSE
 copy Assembly-UnityScript.dll %RELEASEPATH%\Developer\Assembly-UnityScript.dll
 copy ModLoader\bin\ReleaseDeveloper\SpaarModLoader.dll %RELEASEPATH%\Developer\SpaarModLoader.dll
 md %RELEASEPATH%\Developer\Resources
 md %RELEASEPATH%\Developer\Resources\ModLoader
 xcopy ModLoader\Resources %RELEASEPATH%\Developer\Resources\ModLoader\ /s/h/e/k/f/c
+copy DebugHelper\bin\Release\DebugHelper.exe %RELEASEPATH%\Developer\DebugHelper\DebugHelper.exe
+copy DebugHelper\bin\Release\Mono.Cecil.dll %RELEASEPATH%\Developer\DebugHelper\Mono.Cecil.dll
+copy DebugHelper\bin\Release\Mono.Cecil.Mdb.dll %RELEASEPATH%\Developer\DebugHelper\Mono.Cecil.Mdb.dll
+copy DebugHelper\bin\Release\Mono.Cecil.Pdb.dll %RELEASEPATH%\Developer\DebugHelper\Mono.Cecil.Pdb.dll
+copy DebugHelper\bin\Release\Mono.Cecil.Rocks.dll %RELEASEPATH%\Developer\DebugHelper\Mono.Cecil.Rocks.dll
 
 goto :end
 
