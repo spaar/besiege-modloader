@@ -11,14 +11,33 @@ namespace spaar.ModLoader.Internal
     public bool toRemove = false;
 
     private Rigidbody rg;
+    private bool isSimulationClone = false;
+    private Transform otherBlock;
 
     private void Update()
     {
       if (rg == null) rg = GetComponent<Rigidbody>();
       rg.isKinematic = true;
-      // TODO: Prevent camera focus including the fake block
-      //transform.position = Machine.Active().Blocks[0].transform.position;
-      //transform.rotation = Machine.Active().Blocks[0].transform.rotation;
+
+      if (isSimulationClone && AddPiece.isSimulating)
+      {
+        // The camera sometimes focuses on this block after the machine was
+        // binned. Might be because it becomes Blocks[0].
+        // This doesn't prevent that, but it makes it unnoticable by moving
+        // the block to another block in the machine.
+        if (otherBlock == null)
+        {
+          foreach (Transform block in Machine.Active().SimulationMachine)
+          {
+            if (block != transform)
+            {
+              otherBlock = block;
+              break;
+            }
+          }
+        }
+        transform.position = otherBlock.position;
+      }
     }
 
     private void Awake()
@@ -33,6 +52,10 @@ namespace spaar.ModLoader.Internal
 
       if (AddPiece.isSimulating)
       {
+        isSimulationClone = true;
+        // See comment in Update; this call is necessary because otherwise the
+        // camera moves downwards before the block can be moved.
+        Update();
         // Don't delete simulation clones to avoid NREs in
         // EnemyAISimple.CheckTargetBlock
         return;
