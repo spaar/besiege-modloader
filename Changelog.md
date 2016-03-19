@@ -1,3 +1,11 @@
+1.3.3
+=====
+- Update for Besiege v0.27 compatibility
+- [Enhancement] The way the MachineData API works, changed fundamentally.
+   This should remove any and all bugs relating to the "red muscle" block.
+   It requires shipping a modified version of Assembly-CSharp-firstpass.dll
+   however, which is only a temporary measure.
+
 1.3.2
 =====
 - [BUGFIX] Fix various bugs related to the MachineData API (these are also the red springs bugs)
