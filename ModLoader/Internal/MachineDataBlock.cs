@@ -93,7 +93,7 @@ namespace spaar.ModLoader.Internal
     {
     }
 
-    public override void OnLoad(BlockXDataHolder stream)
+    public override void OnLoad(XDataHolder data)
     {
       if (toRemove)
       {
@@ -101,9 +101,9 @@ namespace spaar.ModLoader.Internal
       }
       if (AddPiece.isSimulating) return;
 
-      if (stream.HasKey("modLoader-machineData"))
+      if (data.HasKey("modLoader-machineData"))
       {
-        MachineData.LoadData(stream.ReadString("modLoader-machineData"));
+        MachineData.LoadData(data.ReadString("modLoader-machineData"));
       }
       else
       {
@@ -111,7 +111,7 @@ namespace spaar.ModLoader.Internal
       }
     }
 
-    public override void OnSave(BlockXDataHolder stream)
+    public override void OnSave(XDataHolder data)
     {
       if (toRemove)
       {
@@ -119,7 +119,7 @@ namespace spaar.ModLoader.Internal
       }
       if (AddPiece.isSimulating) return;
 
-      stream.Write("modLoader-machineData", MachineData.GetSaveData());
+      data.Write("modLoader-machineData", MachineData.GetSaveData());
     }
 
   }

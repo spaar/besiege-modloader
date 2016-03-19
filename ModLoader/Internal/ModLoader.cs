@@ -18,7 +18,7 @@ namespace spaar.ModLoader.Internal
     public override string DisplayName { get { return "spaar's Mod Loader"; } }
     public override string Author { get { return "spaar"; } }
     public override Version Version { get { return ModLoader.ModLoaderVersion; } }
-    public override string VersionExtra { get { return "test1"; } }
+    public override string VersionExtra { get { return ""; } }
     public override string BesiegeVersion { get { return ModLoader.BesiegeVersion; } }
     public override bool Preload { get { return true; } }
     public override void OnLoad() { }
@@ -30,7 +30,7 @@ namespace spaar.ModLoader.Internal
     /// <summary>
     /// The currently running Besiege version.
     /// </summary>
-    public static readonly string BesiegeVersion = "v0.25";
+    public static readonly string BesiegeVersion = "v0.27";
     public static readonly Version ModLoaderVersion = new Version(1, 3, 2);
 
     public override string Name { get { return "spaar's Mod Loader"; } }
@@ -159,7 +159,7 @@ namespace spaar.ModLoader.Internal
           return output;
 #else
           output += file.Name
-            + " contains no implementation of Mod. Not loading it."\n";
+            + " contains no implementation of Mod. Not loading it.\n";
           return output;
 #endif
         }
@@ -179,32 +179,6 @@ namespace spaar.ModLoader.Internal
         loadedMods.Add(internalMod);
 
         output += "\t" + mod.ToString() + " was loaded!\n";
-      }
-      catch (ReflectionTypeLoadException e)
-      {
-        Debug.Log("Could not load " + file.Name + ":");
-        Debug.LogException(e);
-
-        Debug.Log("Inner Exception: " + e.InnerException);
-        Debug.LogException(e.InnerException);
-
-        Debug.Log("Types:");
-        foreach (var type in e.Types)
-        {
-          Debug.Log(type.AssemblyQualifiedName + ", " + type.FullName);
-        }
-
-        Debug.Log("Loader Exceptions: ");
-        foreach (var ex in e.LoaderExceptions)
-        {
-          Debug.LogException(ex);
-        }
-
-        Debug.Log("Data: ");
-        foreach (var datum in e.Data.Keys)
-        {
-          Debug.Log(datum + " => " + e.Data[datum]);
-        }
       }
       catch (Exception exception)
       {
