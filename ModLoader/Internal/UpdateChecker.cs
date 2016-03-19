@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Security.Cryptography;
+using System.IO;
 using SimpleJSON;
 using spaar.ModLoader.UI;
 using UnityEngine;
@@ -60,10 +62,10 @@ namespace spaar.ModLoader.Internal
 
     private void DoWindow(int id)
     {
-      GUILayout.TextField("An updated version of the mod loader is available!"
-                         + "\nIt is recommended to update as soon as possible."
-                         + "\nCheck back in the forum or open the installer"
-                         + "\nagain to update!");
+        GUILayout.TextField("An updated version of the mod loader is available!"
+                           + "\nIt is recommended to update as soon as possible."
+                           + "\nCheck back in the forum or open the installer"
+                           + "\nagain to update!");
       if (GUILayout.Button("Close"))
       {
         closed = true;

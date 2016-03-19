@@ -111,23 +111,28 @@ namespace spaar.ModLoader
     private void Start()
     {
       Internal.ModLoader.MakeModule(this);
+
+      XmlLoader.OnLoad += OnLoadHandler;
+      XmlSaver.OnSave += OnSaveHandler;
     }
 
-    private void OnLevelWasLoaded(int level)
+    private void OnLoadHandler(MachineInfo info)
     {
-      MachineDataBlockPrefab = null;
-      if (Game.AddPiece)
+      var data = info.MachineData;
+      if (data.HasKey("modLoader-machineData"))
       {
-        MachineObjectTracker.Instance.AllPrefabs[(int)Prefab.StartingBlock]
-          .AddComponent<MachineDataStartingBlock>();
-
-        Machine.Active().BuildingBlocks[0].gameObject
-          .AddComponent<MachineDataStartingBlock>();
-
-        GameObject.Find(
-          "HUD/TopBar/AlignTopRight/STATS/SettingsObjects/BlockCounter")
-          .AddComponent<BlockCount>();
+        LoadData(data.ReadString("modLoader-machineData"));
+      }
+      else
+      {
+        LoadData("");
       }
     }
-  }
+
+    private void OnSaveHandler(MachineInfo info)
+    {
+      var toSave = GetSaveData();
+      info.MachineData.Write("modLoader-machineData", toSave);
+    }
+ }
 }
