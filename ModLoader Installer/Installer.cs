@@ -81,6 +81,14 @@ namespace spaar.ModLoader.Installer
           besiegeDir + "/Besiege_Data/Managed/Assembly-UnityScript.dll.original",
           besiegeDir + "/Besiege_Data/Managed/Assembly-UnityScript.dll");
 
+        if (File.Exists(besiegeDir + "/Besiege_Data/Managed/Assembly-CSharp-firstpass.dll.original"))
+        {
+          File.Delete(besiegeDir + "/Besiege_Data/Managed/Assembly-CSharp-firstpass.dll");
+          File.Move(
+            besiegeDir + "/Besiege_Data/Managed/Assembly-CSharp-firstpass.dll.original",
+            besiegeDir + "/Besiege_Data/Managed/Assembly-CSharp-firstpass.dll");
+        }
+
         // Delete SpaarModLoader.dll
         File.Delete(besiegeDir + "/Besiege_Data/Mods/SpaarModLoader.dll");
 
