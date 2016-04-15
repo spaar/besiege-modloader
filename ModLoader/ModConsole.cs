@@ -41,5 +41,16 @@ namespace spaar.ModLoader
 
       AddMessage(type, text, collapsedString);
     }
+
+    /// <summary>
+    /// Forces the serialization of the Mods/Debug/ConsoleOutput.txt file in
+    /// the developer build. Does nothing in the normal build.
+    /// </summary>
+    public static void ForceWriteToDisk()
+    {
+#if DEV_BUILD
+      Console.Instance.WriteMessagesToDisk();
+#endif
+    }
   }
 }

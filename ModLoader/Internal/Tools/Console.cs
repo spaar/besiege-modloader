@@ -319,6 +319,11 @@ namespace spaar.ModLoader.Internal.Tools
 #if DEV_BUILD
     private void OnApplicationQuit()
     {
+      WriteMessagesToDisk();
+    }
+
+    public void WriteMessagesToDisk()
+    {
       if (!Directory.Exists(Application.dataPath + "/Mods/Debug"))
       {
         Directory.CreateDirectory(Application.dataPath + "/Mods/Debug");
