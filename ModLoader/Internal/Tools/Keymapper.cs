@@ -21,6 +21,18 @@ namespace spaar.ModLoader.Internal.Tools
     private GUIStyle sectionTitleStyle;
     private GUILayoutOption buttonWidth = GUILayout.Width(110f);
 
+    private static KeyCode[] SpecialKeys =
+    {
+      KeyCode.LeftControl, KeyCode.RightControl, KeyCode.LeftShift,
+      KeyCode.RightShift, KeyCode.LeftAlt, KeyCode.RightAlt,
+      KeyCode.Backspace, KeyCode.Mouse0, KeyCode.Mouse1,
+      KeyCode.Mouse2, KeyCode.Mouse3, KeyCode.Mouse4,
+      KeyCode.Mouse5, KeyCode.Mouse6, KeyCode.Alpha0,
+      KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3,
+      KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6,
+      KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9,
+    };
+
     private void Start()
     {
       ModLoader.MakeModule(this);
@@ -56,104 +68,15 @@ namespace spaar.ModLoader.Internal.Tools
         }
 
         KeyCode keyCode = KeyCode.None;
-        #region Special Keys
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+
+        foreach (var key in SpecialKeys)
         {
-          keyCode = KeyCode.LeftControl;
+          if (Input.GetKeyDown(key))
+          {
+            keyCode = key;
+            break;
+          }
         }
-        else if (Input.GetKeyDown(KeyCode.RightControl))
-        {
-          keyCode = KeyCode.RightControl;
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-          keyCode = KeyCode.LeftShift;
-        }
-        else if (Input.GetKeyDown(KeyCode.RightShift))
-        {
-          keyCode = KeyCode.RightShift;
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftAlt))
-        {
-          keyCode = KeyCode.LeftAlt;
-        }
-        else if (Input.GetKeyDown(KeyCode.RightAlt))
-        {
-          keyCode = KeyCode.RightAlt;
-        }
-        else if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-          keyCode = KeyCode.Backspace;
-        }
-        else if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-          keyCode = KeyCode.Mouse0;
-        }
-        else if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-          keyCode = KeyCode.Mouse1;
-        }
-        else if (Input.GetKeyDown(KeyCode.Mouse2))
-        {
-          keyCode = KeyCode.Mouse2;
-        }
-        else if (Input.GetKeyDown(KeyCode.Mouse3))
-        {
-          keyCode = KeyCode.Mouse3;
-        }
-        else if (Input.GetKeyDown(KeyCode.Mouse4))
-        {
-          keyCode = KeyCode.Mouse4;
-        }
-        else if (Input.GetKeyDown(KeyCode.Mouse5))
-        {
-          keyCode = KeyCode.Mouse5;
-        }
-        else if (Input.GetKeyDown(KeyCode.Mouse6))
-        {
-          keyCode = KeyCode.Mouse6;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-          keyCode = KeyCode.Alpha0;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-          keyCode = KeyCode.Alpha1;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-          keyCode = KeyCode.Alpha2;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-          keyCode = KeyCode.Alpha3;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-          keyCode = KeyCode.Alpha4;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-          keyCode = KeyCode.Alpha5;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-          keyCode = KeyCode.Alpha6;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-          keyCode = KeyCode.Alpha7;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-          keyCode = KeyCode.Alpha8;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-          keyCode = KeyCode.Alpha9;
-        }
-        #endregion
 
         if (keyCode != KeyCode.None)
         {
