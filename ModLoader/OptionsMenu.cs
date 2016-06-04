@@ -61,7 +61,7 @@ namespace spaar.ModLoader
 
     private void OnLevelWasLoaded(int level)
     {
-      if (Application.loadedLevel == 2) // Main Menu
+      if (Application.loadedLevel == 1) // Main Menu
       {
         numRegistered = 0;
         foreach (var button in toAdd)
