@@ -63,22 +63,6 @@ namespace spaar.ModLoader
       }
     }
 
-    // TODO: v0.24
-    //private static BlockInfoController _boi;
-    ///// <summary>
-    ///// Reference to the BlockInfoController instance of the current scene.
-    ///// Null if there is no BlockInfoController in the current scene.
-    ///// </summary>
-    //public static BlockInfoController BlockInfoController
-    //{
-    //  get
-    //  {
-    //    if (_boi == null)
-    //      _boi = FindObjectOfType<BlockInfoController>();
-    //    return _boi;
-    //  }
-    //}
-
     /// <summary>
     /// Whether the game is currently simulating.
     /// </summary>
