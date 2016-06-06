@@ -1,3 +1,10 @@
+1.4.0
+=====
+- Update for Besiege v0.3 compatibility
+- [API] Add ModConsole.ForceWriteToDisk() method
+- [Enhancement] Add F1 through F15 as possibly keys in the keymapper
+
+
 1.3.3
 =====
 - Update for Besiege v0.27 compatibility
