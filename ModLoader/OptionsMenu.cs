@@ -50,7 +50,7 @@ namespace spaar.ModLoader
       };
       toAdd.Add(button);
 
-      if (Application.loadedLevel == 2)
+      if (Application.loadedLevel == 1)
         RegisterOptionsToggleInternal(button);
     }
 
