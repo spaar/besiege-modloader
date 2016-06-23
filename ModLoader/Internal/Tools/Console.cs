@@ -243,7 +243,7 @@ namespace spaar.ModLoader.Internal.Tools
         GUI.FocusControl("ConsoleInput");
       }
 
-      if (input.IndexOfAny(new char[] { '\n', '\r' }) != -1)
+      if (Event.current.isKey && Event.current.keyCode == KeyCode.Return)
       {
         commandText = "";
         Commands.HandleCommand(input.Replace("\n", "").Replace("\r", ""));
