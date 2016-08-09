@@ -1,3 +1,7 @@
+1.4.3
+=====
+- [BUGFIX] Fix update checker sometimes crashing due to a stack overflow
+
 1.4.2
 =====
 - Update for Besiege v0.32 compatibility
