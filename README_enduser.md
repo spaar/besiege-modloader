@@ -36,8 +36,10 @@ Then create the folder Besiege/Besiege_Data/Mods. Copy SpaarModLoader.dll and th
 
 Mac OS X
 ---
-Locate your Besiege installation (Besiege.app, right-click on Besiege and choose Show Package Content).
-I will from now on refer to this directory as simply Besiege in any paths.
+Locate your Besiege installation (Besiege.app).
+If you installed it via Steam, right-click Besiege in your Steam Library, click on Properties, go to Local Files and then click on Browse Local Files.
+If you did not install via Steam, find Besiege.app manually.
+Then right-click on Besiege.app and click on Show Package Content. I will from now on refer to this directory as simply Besiege in any paths.
 Copy the file Assembly-UnityScript.dll into Besiege/Contents/Data/Managed. If that does not exist, try Besiege/Contents/Resources/Data/Managed.
 When asked, choose to replace the original file. You may also want to make a backup of the original file before doing this.
 Then create the folder Besiege/Contents/Mods. Copy SpaarModLoader.dll and the Resources folder into it. You will also place any mods you install into this folder.
@@ -51,9 +53,9 @@ Include your OS, your Besiege version and your mod loader version in a bug repor
 
 For Mod developers
 ===
-There is a basic tutorial for creating mods [here](http://forum.spiderlinggames.co.uk/blogs/spaar-s-modding-thoughts/11128-introduction-to-besiege-modding). To get started, take a look at the [Visual Studio template](http://forum.spiderlinggames.co.uk/forum/main-forum/besiege-early-access/modding/30194-new-visual-studio-template-spaar-s-mod-loader-1-x-x-mod-development).
+To get started, take a look at the [Visual Studio template](http://forum.spiderlinggames.co.uk/index.php?threads/new-visual-studio-template-spaar-s-mod-loader-1-x-x-mod-development.2027/).
 The mod loader also has an [online documentation](http://spaar.github.io/besiege-modloader) for its various APIs.
-Lastly, as a mod developer you can PM me your email address and I will add you to the [Besiege Modding Slack team](http://forum.spiderlinggames.co.uk/forum/main-forum/besiege-early-access/modding/19322-slack-team),
+Lastly, as a mod developer you can PM me your email address and I will add you to the [Besiege Modding Slack team](http://forum.spiderlinggames.co.uk/index.php?threads/slack-team.1148/),
 where you can ask me and many other modders for assistance.
 
 License and Source code
