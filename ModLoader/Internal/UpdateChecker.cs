@@ -25,7 +25,7 @@ namespace spaar.ModLoader.Internal
       if (!Configuration.GetBool("enableUpdateChecker", true)) yield break;
 
       var www = new WWW(
-        "https://api.github.com/repos/spaar/besiege-modloader/releases");
+        "https://api.github.com/repos/spaar/besiege-modloader/releases/latest");
 
       yield return www;
 
@@ -37,8 +37,8 @@ namespace spaar.ModLoader.Internal
 
       string response = www.text;
 
-      var releases = JSON.Parse(response);
-      var newestVersionS = releases[0]["tag_name"];
+      var release = JSON.Parse(response);
+      var newestVersionS = release["tag_name"];
       var newestVersion = new Version(newestVersionS);
 
       var myVersion = ModLoader.ModLoaderVersion;
