@@ -1,3 +1,8 @@
+1.4.2
+=====
+- Update for Besiege v0.32 compatibility
+- [BUGFIX] Fix pressing enter not working on Macs
+
 1.4.1
 =====
 - Update for Besiege v0.3 Patch 1 compatibility
