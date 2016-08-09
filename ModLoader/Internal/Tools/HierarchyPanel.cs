@@ -2,6 +2,7 @@
 using System.Linq;
 using spaar.ModLoader.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 #if DEV_BUILD
 namespace spaar.ModLoader.Internal.Tools
@@ -30,6 +31,7 @@ namespace spaar.ModLoader.Internal.Tools
       StartCoroutine(AutoUpdate());
 
       Configuration.OnConfigurationChange += OnConfigurationChange;
+      SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnConfigurationChange(object s, ConfigurationEventArgs e)
@@ -54,7 +56,7 @@ namespace spaar.ModLoader.Internal.Tools
       }
     }
 
-    private void OnLevelWasLoaded(int level)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
       RefreshGameObjectList();
     }

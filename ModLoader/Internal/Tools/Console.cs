@@ -230,8 +230,8 @@ namespace spaar.ModLoader.Internal.Tools
         {
           var editor = (TextEditor)GUIUtility.GetStateObject(typeof(TextEditor),
             GUIUtility.keyboardControl);
-          editor.pos = commandText.Length + 1;
-          editor.selectPos = commandText.Length + 1;
+          editor.selectIndex = commandText.Length + 1;
+          editor.cursorIndex = commandText.Length + 1;
           moveCursorNextFrame = false;
           skippedFrame = false;
           GUI.FocusControl("ConsoleInput");

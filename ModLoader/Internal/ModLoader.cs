@@ -30,7 +30,7 @@ namespace spaar.ModLoader.Internal
     /// <summary>
     /// The currently running Besiege version.
     /// </summary>
-    public static readonly string BesiegeVersion = "v0.3";
+    public static readonly string BesiegeVersion = "v0.32";
     public static readonly Version ModLoaderVersion = new Version(1, 4, 1);
 
     public override string Name { get { return "spaar's Mod Loader"; } }
@@ -345,7 +345,6 @@ namespace spaar.ModLoader.Internal
     /// <param name="comp"></param>
     public static void MakeModule(Component comp)
     {
-      DontDestroyOnLoad(comp);
       comp.transform.parent = Instance.transform;
     }
 

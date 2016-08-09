@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace spaar.ModLoader
 {
@@ -70,7 +71,7 @@ namespace spaar.ModLoader
     {
       get
       {
-        return AddPiece.isSimulating;
+        return StatMaster.isSimulating;
       }
     }
 
@@ -182,11 +183,11 @@ namespace spaar.ModLoader
     public static Zone GetCurrentZone()
     {
       int index;
-      if (int.TryParse(Application.loadedLevelName, out index))
+      if (int.TryParse(SceneManager.GetActiveScene().name, out index))
       {
         return GetZone(index);
       }
-      else if (Application.loadedLevelName == "SANDBOX")
+      else if (SceneManager.GetActiveScene().name == "SANDBOX")
       {
         return GetZone(0);
       }
@@ -199,6 +200,8 @@ namespace spaar.ModLoader
     private void Start()
     {
       Internal.ModLoader.MakeModule(this);
+
+      SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
 
@@ -266,7 +269,7 @@ namespace spaar.ModLoader
       }
     }
 
-    private void OnLevelWasLoaded(int level)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
       var addPiece = AddPiece;
       if (addPiece == null) return;

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using spaar.ModLoader.Internal;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace spaar.ModLoader
 {
@@ -57,9 +58,11 @@ namespace spaar.ModLoader
     private void Start()
     {
       Internal.ModLoader.MakeModule(this);
+
+      SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnLevelWasLoaded(int level)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
       if (Game.AddPiece != null)
       {
