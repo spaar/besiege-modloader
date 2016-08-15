@@ -182,6 +182,10 @@ namespace spaar.ModLoader.Installer
       catch (Exception)
       {
         MessageBox.Show("Error installing the mod loader.");
+
+        tsLblStatus.Text = "An error occured.";
+
+        return;
       }
 
       tsLblStatus.Text = "Done";
