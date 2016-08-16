@@ -79,7 +79,7 @@ namespace spaar.ModLoader.Internal
       console.EnableInterface();
 
       var blockLoaderInfo = new TheGuysYouDespise.BlockLoaderInfo();
-      blockLoaderInfo.OnLoad();
+      blockLoaderInfo.LoadBlockLoader();
 
       LoadMods();
 
