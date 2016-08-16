@@ -78,6 +78,9 @@ namespace spaar.ModLoader.Internal
       // for the correct keys to use.
       console.EnableInterface();
 
+      var blockLoaderInfo = new TheGuysYouDespise.BlockLoaderInfo();
+      blockLoaderInfo.OnLoad();
+
       LoadMods();
 
       RegisterModManagementCommands();

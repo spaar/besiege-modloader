@@ -72,7 +72,7 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
+   <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
@@ -91,8 +91,20 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(BESIEGE_LOCATION)Besiege_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="DynamicText, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(BESIEGE_LOCATION)Besiege_Data\Managed\DynamicText.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlockLoader\BlockButtonControlExtended.cs" />
+    <Compile Include="BlockLoader\BlockLoader.cs" />
+    <Compile Include="BlockLoader\BlockMod.cs" />
+    <Compile Include="BlockLoader\BlockScript.cs" />
+    <Compile Include="BlockLoader\BlockTabSearchButtonExtended.cs" />
+    <Compile Include="BlockLoader\GhostTriggerExtended.cs" />
+    <Compile Include="BlockLoader\ModHealthBar.cs" />
+    <Compile Include="BlockLoader\SearchFieldExtended.cs" />
     <Compile Include="Commands.cs" />
     <Compile Include="Compat\CommandsCompat.cs" />
     <Compile Include="Configuration.cs" />
