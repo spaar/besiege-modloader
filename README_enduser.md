@@ -1,6 +1,9 @@
 spaar's Mod Loader is currently the only Besiege mod loader out there and enables you to use many mods at once.
 
-Many thanks to everyone who made this possible, especially @VapidLinus for allowing me to use his code after he was unable to continue working on his own mod loader.
+Many thanks to everyone who made this possible and contributed.
+Special thanks go to:
+	- @VapidLinus for allowing me to use his code after he was unable to continue working on his own mod loader.
+	- @TheGuysYouDespise for allowing me to integrate his block loader into the mod loader.
 
 Features
 ===
@@ -11,7 +14,7 @@ Features
 - Update checker that will notify you about new updates.
 - A graphical installer for Windows
 
-- Many APIs to make developing mods much easier and to make mods more compatible to each other.
+- Many APIs to make developing mods much easier and to make mods more compatible to each other, including an API to add custom blocks.
 - An in-game object explorer with many features such as showing the GameObject hierarchy and changing some values in Components. (Only in the Developer build, Open with Ctrl+O by default)
 
 How to install
