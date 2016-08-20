@@ -91,8 +91,9 @@ public class GhostTriggerExtended : GhostTrigger
 
     if (!col)
       return true;
-    if (col.attachedRigidbody == transform.parent.GetComponent<Rigidbody>())
-      return true;
+    if (transform.parent)
+      if (col.attachedRigidbody == transform.parent.GetComponent<Rigidbody>())
+        return true;
     if (ignoreBase)
       if (col.attachedRigidbody?.gameObject == AddPiece.Instance?.mouseHit.rigidbody?.gameObject)
         return true;
