@@ -1,3 +1,6 @@
+[![](https://img.shields.io/github/release/spaar/besiege-modloader.svg?maxAge=2592000&style=flat-square)]()
+[![](https://img.shields.io/github/downloads/spaar/besiege-modloader/latest/total.svg?maxAge=2592000&style=flat-square)]()
+
 Project Structure
 =================
 The mod loader currently consists of three projects:
