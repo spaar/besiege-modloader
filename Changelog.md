@@ -1,3 +1,8 @@
+1.5.0
+=====
+- Update for Besiege v0.32 Hotfix B compatibility
+- [Feature] Integrate the block loader by TheGuysYouDespise into the mod loader
+
 1.4.4
 =====
 - Update for Besiege v0.32 Patch 1 compatibility
