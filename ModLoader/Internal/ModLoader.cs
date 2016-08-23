@@ -99,7 +99,8 @@ namespace spaar.ModLoader.Internal
       foreach (var fileInfo in files)
       {
         if (!fileInfo.Name.EndsWith(".no.dll", StringComparison.CurrentCulture)
-          && fileInfo.Name != "SpaarModLoader.dll")
+          && fileInfo.Name != "SpaarModLoader.dll"
+          && fileInfo.Name != "BlockLoader.dll")
         {
           loadingOutput += LoadMod(fileInfo);
         }
