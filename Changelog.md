@@ -1,3 +1,7 @@
+1.5.1
+=====
+- Fix missing block loader resources
+
 1.5.0
 =====
 - Update for Besiege v0.32 Hotfix B compatibility

@@ -35,7 +35,7 @@ Locate your Besiege installation. If you installed Besiege via Steam, this will 
 I will from now on refer to this directory as simply Besiege in any paths.
 Copy the file Assembly-UnityScript.dll into Besiege/Besiege_Data/Managed.
 When asked, choose to replace the original file. You may also want to make a backup of the original file before doing this.
-Then create the folder Besiege/Besiege_Data/Mods. Copy SpaarModLoader.dll and the Resources folder into it. You will also place any mods you install into this folder.
+Then create the folder Besiege/Besiege_Data/Mods. Copy SpaarModLoader.dll, the Resources folder and the Blocks folder into it. You will also place any mods you install into this folder.
 
 Mac OS X
 ---
@@ -45,7 +45,7 @@ If you did not install via Steam, find Besiege.app manually.
 Then right-click on Besiege.app and click on Show Package Content. I will from now on refer to this directory as simply Besiege in any paths.
 Copy the file Assembly-UnityScript.dll into Besiege/Contents/Data/Managed. If that does not exist, try Besiege/Contents/Resources/Data/Managed.
 When asked, choose to replace the original file. You may also want to make a backup of the original file before doing this.
-Then create the folder Besiege/Contents/Mods. Copy SpaarModLoader.dll and the Resources folder into it. You will also place any mods you install into this folder.
+Then create the folder Besiege/Contents/Mods. Copy SpaarModLoader.dll, the Resources and the Blocks folder into it. You will also place any mods you install into this folder.
 
 That's it, the mod loader should now be installed. If you have any problems or questions, just ask on the forum and I will do my best to help.
 
