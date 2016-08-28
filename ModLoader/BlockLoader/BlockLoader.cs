@@ -1096,7 +1096,9 @@ namespace TheGuysYouDespise
     {
       foreach (BlockPrefab prefab in PrefabMaster.BlockPrefabs.Values)
       {
-        ReplaceGhostTrigger(prefab.ghost.GetComponent<GhostTrigger>());
+        GhostTrigger trigger = prefab.ghost.GetComponent<GhostTrigger>();
+        if (trigger is GhostPinTrigger) continue;
+        ReplaceGhostTrigger(trigger);
       }
     }
     private void ReplaceGhostTrigger(GhostTrigger gt, bool ignoreBase = false)
