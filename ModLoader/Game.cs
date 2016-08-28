@@ -127,6 +127,10 @@ namespace spaar.ModLoader
 
     public static event OnBlockRemoved OnBlockRemoved;
 
+    private static Zone barrenExpanse = new Zone(-1, 36, "Barren Expanse",
+      Island.Sandbox);
+    private static Zone oldSandbox = new Zone(-2, 35, "Old Sandbox",
+      Island.Sandbox);
     private static Zone[] zones = {
       new Zone(0, 34, "Sandbox", Island.Sandbox),
 
@@ -165,13 +169,16 @@ namespace spaar.ModLoader
 
     /// <summary>
     /// Gets a Zone object representing the specified zone.
-    /// The Sandbox is Zone 0, all other zones are numbered as shown in the
-    /// level select screens.
+    /// The Sandbox is Zone 0, Barren Expanse is Zone -1
+    /// and the old sandbox is -2,
+    /// all other zones are numbered as shown in the level select screens.
     /// </summary>
     /// <param name="index">Index of the zone</param>
     /// <returns>Zone object for the specified zone.</returns>
     public static Zone GetZone(int index)
     {
+      if (index == -2) return oldSandbox;
+      if (index == -1) return barrenExpanse;
       return zones[index];
     }
 
@@ -190,6 +197,14 @@ namespace spaar.ModLoader
       else if (SceneManager.GetActiveScene().name == "SANDBOX")
       {
         return GetZone(0);
+      }
+      else if (SceneManager.GetActiveScene().name == "BARREN EXPANSE")
+      {
+        return GetZone(-1);
+      }
+      else if (SceneManager.GetActiveScene().name == "SANDBOX OLD")
+      {
+        return GetZone(-2);
       }
       else
       {
