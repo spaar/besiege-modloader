@@ -53,6 +53,8 @@ public class BlockScript : GenericBlock
   public static AudioClip FlipSound;
   public List<GameObject> Colliders = new List<GameObject>();
   public List<GameObject> Visuals = new List<GameObject>();
+  public List<Vector3> colliderStartPositions = new List<Vector3>();
+  public List<Quaternion> colliderStartRotations = new List<Quaternion>();
   private FireController fireController;
   private static Texture damagedTexture, burnedTexture;
   private bool lastSimulateState = false;
@@ -132,7 +134,9 @@ public class BlockScript : GenericBlock
   protected void Awake()
   {
     if (Colliders.Count > 0 && Visuals.Count > 0)
+    {
       SafeAwake();
+    }
   }
 
   protected void Start()
@@ -316,6 +320,75 @@ public class BlockScript : GenericBlock
     audioSource.volume = 0.32f;
     audioSource.pitch = 2f;
     audioSource.Play();
+  }
+
+  public void MirrorVisuals(Axes axis, bool mirrored)
+  {
+    if (StatMaster.isSimulating)
+      return;
+    Vector3 mirrorVector = axis == Axes.x ? Vector3.right : axis == Axes.y ? Vector3.up : Vector3.forward;
+    mirrorVector *= mirrored ? -1 : 1;
+    foreach (var vis in Visuals)
+    {
+      vis.transform.localScale += mirrorVector * vis.transform.localScale.x * 2f;
+    }
+  }
+
+  public void MirrorColliders(Axes axis, bool mirrored)
+  {
+    if (StatMaster.isSimulating)
+      return;
+    if (colliderStartPositions.Count != Colliders.Count)
+    {
+      for (int i = 0; i < Colliders.Count; i++)
+      {
+        colliderStartPositions.Add(Colliders[i].transform.localPosition);
+        colliderStartRotations.Add(Colliders[i].transform.rotation);
+      }
+    }
+    for (int i = 0; i < Colliders.Count; i++)
+    {
+      GameObject go = new GameObject("ColMirrorHelper");
+      if (Colliders[i] != null)
+      {
+        go.transform.parent = Colliders[i].transform.parent;
+        go.transform.position = Colliders[i].transform.position;
+        go.transform.rotation = Colliders[i].transform.rotation;
+        Colliders[i].transform.parent = go.transform;
+
+        switch (axis)
+        {
+          case Axes.x:
+            go.transform.localPosition = new Vector3((mirrored ? -1f : 1f) * colliderStartPositions[i].x, go.transform.localPosition.y, go.transform.localPosition.z);
+            go.transform.rotation = new Quaternion(colliderStartRotations[i].x,
+                                                   (mirrored ? -1f : 1f) * colliderStartRotations[i].y,
+                                                   (mirrored ? -1f : 1f) * colliderStartRotations[i].z,
+                                                   colliderStartRotations[i].w);
+            break;
+          case Axes.y:
+            go.transform.localPosition = new Vector3(go.transform.localPosition.x, (mirrored ? -1f : 1f) * colliderStartPositions[i].y, go.transform.localPosition.z);
+            go.transform.rotation = new Quaternion((mirrored ? -1f : 1f) * colliderStartRotations[i].x,
+                                                   colliderStartRotations[i].y,
+                                                   (mirrored ? -1f : 1f) * colliderStartRotations[i].z,
+                                                   colliderStartRotations[i].w);
+            if (go.transform.rotation != colliderStartRotations[i])
+              Colliders[i].transform.localEulerAngles += Vector3.forward * 180f;
+            break;
+          case Axes.z:
+            go.transform.localPosition = new Vector3(go.transform.localPosition.x, go.transform.localPosition.y, (mirrored ? -1f : 1f) * colliderStartPositions[i].z);
+
+            go.transform.rotation = new Quaternion((mirrored ? -1f : 1f) * colliderStartRotations[i].x,
+                                                   (mirrored ? -1f : 1f) * colliderStartRotations[i].y,
+                                                   colliderStartRotations[i].z,
+                                                   colliderStartRotations[i].w);
+            if (go.transform.rotation != colliderStartRotations[i])
+              Colliders[i].transform.localEulerAngles += Vector3.right * 180f + Vector3.forward * 180f;
+            break;
+        }
+        Colliders[i].transform.parent = go.transform.parent;
+      }
+      Destroy(go);
+    }
   }
 
   public void MirrorVisual(GameObject visual)
