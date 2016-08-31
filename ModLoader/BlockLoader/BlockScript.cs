@@ -422,17 +422,6 @@ public class BlockScript : GenericBlock
     }
   }
 
-  /*TODO:?
-  public override void OnSave(BlockXDataHolder data)
-  {
-      SaveMapperValues(data);
-  }
-
-  public override void OnLoad(BlockXDataHolder data)
-  {
-      LoadMapperValues(data);
-  }*/
-
   protected string GetResourcePathOf(string name)
   {
     return Application.dataPath + "/Mods/Blocks/Resources/" + name;
