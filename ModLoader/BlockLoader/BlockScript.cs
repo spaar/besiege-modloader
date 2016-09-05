@@ -53,6 +53,9 @@ public class BlockScript : GenericBlock
   public static AudioClip FlipSound;
   public List<GameObject> Colliders = new List<GameObject>();
   public List<GameObject> Visuals = new List<GameObject>();
+  public List<Vector3> visStartScales = new List<Vector3>();
+  public List<Vector3> visStartPositions = new List<Vector3>();
+  public List<Quaternion> visStartRotations = new List<Quaternion>();
   public List<Vector3> colliderStartPositions = new List<Vector3>();
   public List<Quaternion> colliderStartRotations = new List<Quaternion>();
   private FireController fireController;
@@ -326,11 +329,60 @@ public class BlockScript : GenericBlock
   {
     if (StatMaster.isSimulating)
       return;
+    if (visStartScales.Count != Visuals.Count)
+    {
+      for (int i = 0; i < Visuals.Count; i++)
+      {
+        visStartScales.Add(Visuals[i].transform.localScale);
+        visStartPositions.Add(Visuals[i].transform.localPosition);
+        visStartRotations.Add(Visuals[i].transform.rotation);
+      }
+    }
     Vector3 mirrorVector = axis == Axes.x ? Vector3.right : axis == Axes.y ? Vector3.up : Vector3.forward;
     mirrorVector *= mirrored ? -1 : 1;
-    foreach (var vis in Visuals)
+    for (int i = 0; i < Visuals.Count; i++)
     {
-      vis.transform.localScale += mirrorVector * vis.transform.localScale.x * 2f;
+      Visuals[i].transform.localScale = new Vector3(visStartScales[i].x * mirrorVector.x, visStartScales[i].y * mirrorVector.y, visStartScales[i].z * mirrorVector.z);
+      GameObject go = new GameObject("VisMirrorHelper");
+      if (Visuals[i] != null)
+      {
+        go.transform.parent = Visuals[i].transform.parent;
+        go.transform.position = Visuals[i].transform.position;
+        go.transform.rotation = Visuals[i].transform.rotation;
+        Visuals[i].transform.parent = go.transform;
+
+        switch (axis)
+        {
+          case Axes.x:
+            go.transform.localPosition = new Vector3((mirrored ? -1f : 1f) * visStartPositions[i].x, go.transform.localPosition.y, go.transform.localPosition.z);
+            go.transform.rotation = new Quaternion(visStartRotations[i].x,
+                                                   (mirrored ? -1f : 1f) * visStartRotations[i].y,
+                                                   (mirrored ? -1f : 1f) * visStartRotations[i].z,
+                                                   visStartRotations[i].w);
+            break;
+          case Axes.y:
+            go.transform.localPosition = new Vector3(go.transform.localPosition.x, (mirrored ? -1f : 1f) * visStartPositions[i].y, go.transform.localPosition.z);
+            go.transform.rotation = new Quaternion((mirrored ? -1f : 1f) * visStartRotations[i].x,
+                                                   visStartRotations[i].y,
+                                                   (mirrored ? -1f : 1f) * visStartRotations[i].z,
+                                                   visStartRotations[i].w);
+            if (go.transform.rotation != visStartRotations[i])
+              Visuals[i].transform.localEulerAngles += Vector3.forward * 180f;
+            break;
+          case Axes.z:
+            go.transform.localPosition = new Vector3(go.transform.localPosition.x, go.transform.localPosition.y, (mirrored ? -1f : 1f) * visStartPositions[i].z);
+
+            go.transform.rotation = new Quaternion((mirrored ? -1f : 1f) * visStartRotations[i].x,
+                                                   (mirrored ? -1f : 1f) * visStartRotations[i].y,
+                                                   visStartRotations[i].z,
+                                                   visStartRotations[i].w);
+            if (go.transform.rotation != visStartRotations[i])
+              Visuals[i].transform.localEulerAngles += Vector3.right * 180f + Vector3.forward * 180f;
+            break;
+        }
+        Visuals[i].transform.parent = go.transform.parent;
+      }
+      Destroy(go);
     }
   }
 
