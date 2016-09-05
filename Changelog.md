@@ -1,3 +1,10 @@
+1.5.2
+=====
+- Update for Besiege v0.32 Hotfix C compatibility
+- [BUGFIX] Fix pin blocks always displaying interception warning
+- [BUGFIX] Include Old Sandbox and Barren Expanse in zone handling API
+- [API] Add MirrorVisuals and MirrorColliders method to BlockScript
+
 1.5.1
 =====
 - Fix missing block loader resources
