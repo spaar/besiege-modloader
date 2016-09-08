@@ -165,6 +165,10 @@ namespace spaar.ModLoader
       new Zone(28, 31, "Surrounded", Island.Tolbrynd),
       new Zone(29, 32, "Sacred Flame", Island.Tolbrynd),
       new Zone(30, 33, "Argus' Grounds", Island.Tolbrynd),
+      new Zone(31, 34, "The Duke's Knowledge", Island.Tolbrynd),
+      new Zone(32, 35, "The Venerated Heart", Island.Tolbrynd),
+      new Zone(33, 36, "Shattered Field", Island.Tolbrynd),
+      new Zone(34, 37, "Aras' Refuge", Island.Tolbrynd),
     };
 
     /// <summary>
