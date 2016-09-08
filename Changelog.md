@@ -1,3 +1,7 @@
+1.5.3
+=====
+- Update for Besiege v0.35 compatibility
+
 1.5.2
 =====
 - Update for Besiege v0.32 Hotfix C compatibility
