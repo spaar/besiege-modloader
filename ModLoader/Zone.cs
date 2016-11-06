@@ -7,7 +7,8 @@
   {
     Sandbox,
     Ipsilon,
-    Tolbrynd
+    Tolbrynd,
+    Valfross
   }
 
   /// <summary>
