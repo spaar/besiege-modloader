@@ -1,3 +1,8 @@
+1.5.4
+=====
+- Update for Besiege v0.4 compatibility
+- [BUGFIX] Numpad keys can now be used in the key mapper
+
 1.5.3
 =====
 - Update for Besiege v0.35 compatibility
