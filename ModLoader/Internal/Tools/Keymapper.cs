@@ -34,7 +34,10 @@ namespace spaar.ModLoader.Internal.Tools
       KeyCode.F1, KeyCode.F2, KeyCode.F3, KeyCode.F4,
       KeyCode.F5, KeyCode.F6, KeyCode.F7, KeyCode.F8,
       KeyCode.F9, KeyCode.F10, KeyCode.F11, KeyCode.F12,
-      KeyCode.F13, KeyCode.F14, KeyCode.F15,
+      KeyCode.F13, KeyCode.F14, KeyCode.F15, KeyCode.Keypad0,
+      KeyCode.Keypad1, KeyCode.Keypad2, KeyCode.Keypad3,
+      KeyCode.Keypad4, KeyCode.Keypad5, KeyCode.Keypad6,
+      KeyCode.Keypad7, KeyCode.Keypad8, KeyCode.Keypad9
     };
 
     private void Start()
