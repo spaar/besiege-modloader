@@ -7,16 +7,30 @@ using UnityEngine.SceneManagement;
 namespace spaar.ModLoader
 {
     /// <summary>
-    /// Callback delegate for a toggle setting.
+    ///     Callback delegate for a toggle setting.
     /// </summary>
     /// <param name="active">Whether the toggle is active</param>
     public delegate void SettingsToggle(bool active);
 
     /// <summary>
-    ///  
     /// </summary>
     public class SettingsButton
     {
+        private bool _created;
+        private int _fontSize;
+
+        private string _text;
+        private bool _value;
+
+        internal Action OnDestroy;
+        internal Action<int> OnFontSizeChange;
+        internal Action<string> OnTextChange;
+
+        /// <summary>
+        ///     Called on Value change.
+        /// </summary>
+        public SettingsToggle OnToggle;
+
         public string Text
         {
             get { return _text; }
@@ -36,6 +50,7 @@ namespace spaar.ModLoader
                 _fontSize = value;
             }
         }
+
         public bool Value
         {
             get { return _value; }
@@ -45,20 +60,6 @@ namespace spaar.ModLoader
                 _value = value;
             }
         }
-
-        private string _text;
-        private int _fontSize;
-        private bool _value;
-        private bool _created;
-
-        /// <summary>
-        /// Called on Value change.
-        /// </summary>
-        public SettingsToggle OnToggle;
-
-        internal Action OnDestroy;
-        internal Action<int> OnFontSizeChange;
-        internal Action<string> OnTextChange;
 
         public void Create()
         {
@@ -79,37 +80,41 @@ namespace spaar.ModLoader
     }
 
     /// <summary>
-    /// SettingsMenu contains methods for adding a setting (toggle button) to the
-    /// settings drop-down of Besiege.
+    ///     SettingsMenu contains methods for adding a setting (toggle button) to the
+    ///     settings drop-down of Besiege.
     /// </summary>
     public class SettingsMenu : SingleInstance<SettingsMenu>
     {
-        public override string Name { get { return "spaar's Mod Loader: Settings Utility"; } }
+        private static int _numRegistered;
 
-        private static int numRegistered = 0;
+        private static readonly List<SettingsButton> ToAdd = new List<SettingsButton>();
 
-        private static List<SettingsButton> toAdd = new List<SettingsButton>();
+        private static Transform _modSection;
+
+        public override string Name => "spaar's Mod Loader: Settings Utility";
 
         /// <summary>
-        /// Registers a new toggle button. It will be placed below all others
-        /// that are currently registered.
+        ///     Registers a new toggle button. It will be placed below all others
+        ///     that are currently registered.
         /// </summary>
         /// <param name="text">The text to display on the button</param>
         /// <param name="cb">Callback to call when the button is clicked</param>
         /// <param name="defaultValue">Starting state of the toggle</param>
         /// <param name="fontSize">Font size of the text on the button</param>
-        [Obsolete("RegisterSettingsButton is deprecated. Please initialize SettingsButton class instead and call it's Create method.")]
+        [Obsolete(
+            "RegisterSettingsButton is deprecated. Please initialize SettingsButton class instead and call it's Create method."
+        )]
         public static void RegisterSettingsButton(string text, SettingsToggle cb,
-          bool defaultValue = false, int fontSize = 0)
+            bool defaultValue = false, int fontSize = 0)
         {
-            var button = new SettingsButton()
+            var button = new SettingsButton
             {
                 Text = text,
                 OnToggle = cb,
                 Value = defaultValue,
                 FontSize = fontSize
             };
-            toAdd.Add(button);
+            ToAdd.Add(button);
 
             if (Game.AddPiece != null)
                 RegisterSettingsButtonInternal(button);
@@ -117,7 +122,7 @@ namespace spaar.ModLoader
 
         internal static void RegisterSettingsButton(SettingsButton button)
         {
-            toAdd.Add(button);
+            ToAdd.Add(button);
 
             if (Game.AddPiece != null)
                 RegisterSettingsButtonInternal(button);
@@ -134,24 +139,20 @@ namespace spaar.ModLoader
         {
             if (Game.AddPiece != null)
             {
-                numRegistered = 0;
-                foreach (var button in toAdd)
-                {
+                _numRegistered = 0;
+                foreach (var button in ToAdd)
                     RegisterSettingsButtonInternal(button);
-                }
             }
         }
-
-        private static Transform modSection;
 
         private static void RegisterSettingsButtonInternal(SettingsButton button)
         {
             var settingsObjects = GameObject.Find("Settings").transform
-              .FindChild("SettingsObjects");
+                .FindChild("SettingsObjects");
             var bottomDefaultSetting = settingsObjects.FindChild("GOD/INFINITE AMMO");
-            Vector3 SettingSize = new Vector3(0.748f, 0.375f);
+            var settingSize = new Vector3(0.748f, 0.375f);
 
-            if (modSection == null)
+            if (_modSection == null)
             {
                 // Create a MODS section
                 var settings = settingsObjects.FindChild("SETTINGS");
@@ -160,13 +161,12 @@ namespace spaar.ModLoader
                 modsPos.y = bottomDefaultSetting.position.y - 1.2f;
                 modsPos.z = 7.0f; // Prevent blocks GUI from being over the toggles
 
-                modSection = (Transform)Instantiate(settings, modsPos,
-                  settings.rotation);
-                modSection.parent = settingsObjects;
-                modSection.name = "MOD SETTINGS";
+                _modSection = (Transform) Instantiate(settings, modsPos,
+                    settings.rotation);
+                _modSection.parent = settingsObjects;
+                _modSection.name = "MOD SETTINGS";
 
-                foreach (Transform child in modSection)
-                {
+                foreach (Transform child in _modSection)
                     if (child.name == "GENERAL")
                     {
                         child.GetComponent<TextMesh>().text = "M O D S";
@@ -176,7 +176,6 @@ namespace spaar.ModLoader
                     {
                         Destroy(child.gameObject);
                     }
-                }
 
                 // Adjust background to include mods section title
                 var bg = settingsObjects.FindChild("BG");
@@ -197,25 +196,25 @@ namespace spaar.ModLoader
                 pos.z = 15.0f; // Put collider behind all settings items
                 scrollCollider.position = pos;
                 scrollCollider.gameObject.AddComponent<ScrollSettingsMenu>()
-                  .settingsObjects = settingsObjects;
+                    .settingsObjects = settingsObjects;
             }
             var settingPos = bottomDefaultSetting.position;
 
-            settingPos.x += (numRegistered % 2) * SettingSize.x;
-            settingPos.y -= 1.25f + (numRegistered / 2) * SettingSize.y;
+            settingPos.x += _numRegistered % 2 * settingSize.x;
+            settingPos.y -= 1.25f + _numRegistered / 2 * settingSize.y;
             settingPos.z = 7.0f; // Prevent blocks GUI from being over any toggles
 
             var fxaa = settingsObjects.FindChild("SETTINGS/FXAA");
 
-            var newSetting = (Transform)Instantiate(fxaa, settingPos, fxaa.rotation);
-            newSetting.parent = modSection;
+            var newSetting = (Transform) Instantiate(fxaa, settingPos, fxaa.rotation);
+            newSetting.parent = _modSection;
 
-            if (numRegistered % 2 == 0)
+            if (_numRegistered % 2 == 0)
             {
                 // Expand background to include new toggle
                 var background = settingsObjects.FindChild("BG");
                 var backgroundScale = background.localScale;
-                backgroundScale.y += SettingSize.y * 2;
+                backgroundScale.y += settingSize.y * 2;
                 background.localScale = backgroundScale;
 
                 // Expand the scrolling object to the same size
@@ -225,12 +224,10 @@ namespace spaar.ModLoader
 
                 // Check whether the new element row is outside of the screen
                 // and enable scrolling if it is
-                var lowestPoint = newSetting.position - SettingSize;
+                var lowestPoint = newSetting.position - settingSize;
                 var cam = GameObject.Find("HUD Cam").GetComponent<Camera>();
                 if (cam.WorldToViewportPoint(lowestPoint).y < 0.0f)
-                {
                     scrolling.GetComponent<ScrollSettingsMenu>().scrollingEnabled = true;
-                }
             }
 
             var newSettingButton = newSetting.FindChild("AA BUTTON");
@@ -243,7 +240,7 @@ namespace spaar.ModLoader
             textMesh.fontSize = button.FontSize;
 
             var settingsComponent
-              = newSettingButton.gameObject.AddComponent<SettingsComponent>();
+                = newSettingButton.gameObject.AddComponent<SettingsComponent>();
 
             var fxaaToggle = newSettingButton.gameObject.GetComponent<ToggleAA>();
             settingsComponent.darkMaterial = fxaaToggle.darkMaterial;
@@ -266,10 +263,10 @@ namespace spaar.ModLoader
             button.OnDestroy += () =>
             {
                 Destroy(newSetting.gameObject);
-                numRegistered--;
+                _numRegistered--;
             };
 
-            numRegistered++;
+            _numRegistered++;
         }
     }
 }
