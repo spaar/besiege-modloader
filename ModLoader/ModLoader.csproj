@@ -11,8 +11,7 @@
     <AssemblyName>SpaarModLoader</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,7 +24,6 @@
     <DocumentationFile>bin\SpaarModLoader.XML</DocumentationFile>
     <CodeAnalysisRuleSet>ModLoader.ruleset</CodeAnalysisRuleSet>
     <NoWarn>1591</NoWarn>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,7 +35,6 @@
     <DocumentationFile>bin\SpaarModLoader.XML</DocumentationFile>
     <CodeAnalysisRuleSet>ModLoader.ruleset</CodeAnalysisRuleSet>
     <NoWarn>1591</NoWarn>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build and Install|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -48,7 +45,6 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ModLoader.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\SpaarModLoader.XML</DocumentationFile>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugDeveloper|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -60,7 +56,6 @@
     <CodeAnalysisRuleSet>ModLoader.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\SpaarModLoader.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseDeveloper|AnyCPU'">
     <OutputPath>bin\ReleaseDeveloper\</OutputPath>
@@ -72,7 +67,6 @@
     <CodeAnalysisRuleSet>ModLoader.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\SpaarModLoader.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
