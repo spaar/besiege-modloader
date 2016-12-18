@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using spaar.ModLoader.Internal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,36 +13,68 @@ namespace spaar.ModLoader
     public delegate void SettingsToggle(bool active);
 
     /// <summary>
-    /// 
+    ///  
     /// </summary>
     public class SettingsButton
     {
-        public string Text;
+        public string Text
+        {
+            get { return _text; }
+            set
+            {
+                OnTextChange?.Invoke(value);
+                _text = value;
+            }
+        }
 
+        public int FontSize
+        {
+            get { return _fontSize; }
+            set
+            {
+                OnFontSizeChange?.Invoke(value);
+                _fontSize = value;
+            }
+        }
         public bool Value
         {
             get { return _value; }
             set
             {
-                settingsComponent?.SetOn(value);
                 OnToggle?.Invoke(value);
                 _value = value;
             }
         }
 
-        public int FontSize;
+        private string _text;
+        private int _fontSize;
+        private bool _value;
+        private bool _created;
 
         /// <summary>
         /// Called on Value change.
         /// </summary>
         public SettingsToggle OnToggle;
 
-        private bool _value;
-        internal SettingsComponent settingsComponent;
+        internal Action OnDestroy;
+        internal Action<int> OnFontSizeChange;
+        internal Action<string> OnTextChange;
+
+        public void Create()
+        {
+            if (_created) return;
+            SettingsMenu.RegisterSettingsButton(this);
+            _created = true;
+        }
 
         public void Destroy()
         {
-            Object.Destroy(settingsComponent.gameObject);
+            OnDestroy?.Invoke();
+            OnToggle = null;
+            OnDestroy = null;
+            OnFontSizeChange = null;
+            OnTextChange = null;
+            _created = false;
         }
     }
 
@@ -65,6 +98,7 @@ namespace spaar.ModLoader
         /// <param name="cb">Callback to call when the button is clicked</param>
         /// <param name="defaultValue">Starting state of the toggle</param>
         /// <param name="fontSize">Font size of the text on the button</param>
+        [Obsolete("RegisterSettingsButton is deprecated. Please initialize SettingsButton class instead and call it's Create method.")]
         public static void RegisterSettingsButton(string text, SettingsToggle cb,
           bool defaultValue = false, int fontSize = 0)
         {
@@ -81,7 +115,7 @@ namespace spaar.ModLoader
                 RegisterSettingsButtonInternal(button);
         }
 
-        public static void RegisterSettingsButton(SettingsButton button)
+        internal static void RegisterSettingsButton(SettingsButton button)
         {
             toAdd.Add(button);
 
@@ -219,8 +253,21 @@ namespace spaar.ModLoader
             settingsComponent.SetCallback(button.OnToggle);
             settingsComponent.SetOn(button.Value);
 
-            // Pass settings component reference to button.
-            button.settingsComponent = settingsComponent;
+            // Change material on button OnToggle
+            button.OnToggle += value => settingsComponent.SetOn(value);
+
+            // Change textMesh on Text property change
+            button.OnTextChange += value => textMesh.text = value;
+
+            // Change font size on FontSize property change
+            button.OnFontSizeChange += value => textMesh.fontSize = value;
+
+            // Set button OnDestroy method
+            button.OnDestroy += () =>
+            {
+                Destroy(newSetting.gameObject);
+                numRegistered--;
+            };
 
             numRegistered++;
         }
