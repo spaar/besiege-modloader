@@ -228,8 +228,8 @@ namespace TheGuysYouDespise
       p.ID = block.id;
       p.gameObject = block.gameObject;
       p.ghost = block.ghost;
-      p.visController = block.gameObject.GetComponent<BlockVisualController>();
-      p.visController.SkinCanBeChanged = block.objs.Count <= 1;
+      p.VisualController = block.gameObject.GetComponent<BlockVisualController>();
+      p.VisualController.SkinCanBeChanged = block.objs.Count <= 1;
       p.blockVisControllers = new List<BlockVisualController>();
       p.SetGameObject(block.gameObject).SetNameFromGameObject();
       block.prefab = p;
