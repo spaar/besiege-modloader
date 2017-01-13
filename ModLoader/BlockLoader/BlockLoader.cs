@@ -123,7 +123,6 @@ namespace TheGuysYouDespise
           }
           StartCoroutine(NewBlockPrefab(ModBlocks[key]));
         }
-        StartCoroutine(ReplaceSearchField());
         StartCoroutine(createModBlocksTab());
         UpdateIgnoreForLayers();
       }
@@ -875,34 +874,6 @@ namespace TheGuysYouDespise
           }
         }
       }
-      yield break;
-    }
-
-    //replacing search field to work with modded blocks
-    private IEnumerator ReplaceSearchField()
-    {
-      //Replace Search Field
-      SearchField sf = GameObject.Find("SearchField").GetComponent<SearchField>();
-      SearchFieldExtended sfe = sf.gameObject.AddComponent<SearchFieldExtended>();
-      DestroyImmediate(sf);
-      BlockTabSearchButton btsb = sfe.transform.parent.FindChild("TAB BUTTONS/7 - SEARCH").GetComponent<BlockTabSearchButton>();
-      BlockTabSearchButtonExtended btsbe = btsb.gameObject.AddComponent<BlockTabSearchButtonExtended>();
-      btsbe.controller = btsb.controller;
-      btsbe.myIndex = btsb.myIndex;
-      btsbe.iconRenderer = btsb.iconRenderer;
-      btsbe.onMaterial = btsb.onMaterial;
-      btsbe.offMaterial = btsb.offMaterial;
-      btsbe.bgRendy = btsb.bgRendy;
-      btsbe.searchField = sfe;
-      DestroyImmediate(btsb);
-
-      BlockTabController btc = FindObjectOfType<BlockTabController>();
-      btc.tabs[7] = sfe.transform.parent.FindChild("BLOCK BUTTONS/t_SEARCH");
-      btc.buttons[7] = btsbe;
-
-      yield return null;
-      sfe.Awake();
-      sfe.Start();
       yield break;
     }
 
