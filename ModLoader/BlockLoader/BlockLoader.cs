@@ -142,7 +142,6 @@ namespace TheGuysYouDespise
     {
       ModBlocks[block.name] = block;
       block.loading = true;
-      loadingResources.Add(block, new List<Coroutine>());
       float timeKeeper = Time.realtimeSinceStartup;
 
       if (block.id < 100)
@@ -159,6 +158,7 @@ namespace TheGuysYouDespise
       }
 
       //Add needed resources
+      loadingResources.Add(block, new List<Coroutine>());
       if (block.neededResources != null)
         foreach (NeededResource resource in block.neededResources)
         {
@@ -847,6 +847,7 @@ namespace TheGuysYouDespise
 
     private IEnumerator AddComponentsAndMore(Block block)
     {
+      Debug.Log("AddComponentsAndMore");
       foreach (var coroutine in loadingResources[block])
         yield return coroutine;
       loadingResources.Remove(block);
