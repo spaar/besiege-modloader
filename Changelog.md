@@ -1,3 +1,8 @@
+1.6.1
+=====
+- Update for Besiege v0.42 Hotfix A compatibility
+- [BUGFIX] Fix the block loader throwing an ArgumentException under certain circumstances.
+
 1.6.0
 =====
 - Update for Besiege v0.42 compatibility
