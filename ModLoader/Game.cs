@@ -127,53 +127,53 @@ namespace spaar.ModLoader
 
     public static event OnBlockRemoved OnBlockRemoved;
 
-    private static Zone barrenExpanse = new Zone(-1, 7, "Barren Expanse",
+    private static Zone barrenExpanse = new Zone(-1, 43, "Barren Expanse",
       Island.Sandbox);
-    private static Zone oldSandbox = new Zone(-2, 6, "Old Sandbox",
+    private static Zone oldSandbox = new Zone(-2, 44, "Old Sandbox",
       Island.Sandbox);
     private static Zone[] zones = {
-      new Zone(0, 5, "Sandbox", Island.Sandbox),
+      new Zone(0, 45, "Sandbox", Island.Sandbox),
 
-      new Zone(1, 8, "Southern Cottage", Island.Ipsilon),
-      new Zone(2, 9, "Mill", Island.Ipsilon),
-      new Zone(3, 10, "Old Howl Battlefield", Island.Ipsilon),
-      new Zone(4, 11, "Perimeter Wall", Island.Ipsilon),
-      new Zone(5, 12, "The Queen's Fodder", Island.Ipsilon),
-      new Zone(6, 13, "Old Mining Site", Island.Ipsilon),
-      new Zone(7, 14, "Standing Stone", Island.Ipsilon),
-      new Zone(8, 15, "Thinside Fort", Island.Ipsilon),
-      new Zone(9, 16, "Midlands Encampment", Island.Ipsilon),
-      new Zone(10, 17, "Lyre Peak", Island.Ipsilon),
-      new Zone(11, 18, "Highland Tower", Island.Ipsilon),
-      new Zone(12, 19, "Pine Lumber Site", Island.Ipsilon),
-      new Zone(13, 20, "Solomon's Flock", Island.Ipsilon),
-      new Zone(14, 21, "Marksman's Pass", Island.Ipsilon),
-      new Zone(15, 22, "Wynnfrith's Keep", Island.Ipsilon),
+      new Zone(1, 5, "Southern Cottage", Island.Ipsilon),
+      new Zone(2, 16, "Mill", Island.Ipsilon),
+      new Zone(3, 27, "Old Howl Battlefield", Island.Ipsilon),
+      new Zone(4, 37, "Perimeter Wall", Island.Ipsilon),
+      new Zone(5, 38, "The Queen's Fodder", Island.Ipsilon),
+      new Zone(6, 39, "Old Mining Site", Island.Ipsilon),
+      new Zone(7, 40, "Standing Stone", Island.Ipsilon),
+      new Zone(8, 41, "Thinside Fort", Island.Ipsilon),
+      new Zone(9, 42, "Midlands Encampment", Island.Ipsilon),
+      new Zone(10, 6, "Lyre Peak", Island.Ipsilon),
+      new Zone(11, 7, "Highland Tower", Island.Ipsilon),
+      new Zone(12, 8, "Pine Lumber Site", Island.Ipsilon),
+      new Zone(13, 9, "Solomon's Flock", Island.Ipsilon),
+      new Zone(14, 10, "Marksman's Pass", Island.Ipsilon),
+      new Zone(15, 11, "Wynnfrith's Keep", Island.Ipsilon),
 
-      new Zone(16, 23, "The Duke's Plea", Island.Tolbrynd),
-      new Zone(17, 24, "Southern Shrine", Island.Tolbrynd),
-      new Zone(18, 25, "Scouts of Tolbrynd", Island.Tolbrynd),
-      new Zone(19, 26, "The Duke's Prototypes", Island.Tolbrynd),
-      new Zone(20, 27, "The Duke's Dear Freighers", Island.Tolbrynd),
-      new Zone(21, 28, "Grand Crystal", Island.Tolbrynd),
-      new Zone(22, 29, "Farmer Gascoigne", Island.Tolbrynd),
-      new Zone(23, 30, "Village of Diom", Island.Tolbrynd),
-      new Zone(24, 31, "Midland Patrol", Island.Tolbrynd),
-      new Zone(25, 32, "Valley of the Wind", Island.Tolbrynd),
-      new Zone(26, 33, "Odd Contraption", Island.Tolbrynd),
-      new Zone(27, 34, "Diom Well", Island.Tolbrynd),
-      new Zone(28, 35, "Surrounded", Island.Tolbrynd),
-      new Zone(29, 36, "Sacred Flame", Island.Tolbrynd),
-      new Zone(30, 37, "Argus' Grounds", Island.Tolbrynd),
-      new Zone(31, 38, "The Duke's Knowledge", Island.Tolbrynd),
-      new Zone(32, 39, "The Venerated Heart", Island.Tolbrynd),
-      new Zone(33, 40, "Shattered Field", Island.Tolbrynd),
-      new Zone(34, 41, "Aras' Refuge", Island.Tolbrynd),
+      new Zone(16, 12, "The Duke's Plea", Island.Tolbrynd),
+      new Zone(17, 13, "Southern Shrine", Island.Tolbrynd),
+      new Zone(18, 14, "Scouts of Tolbrynd", Island.Tolbrynd),
+      new Zone(19, 15, "The Duke's Prototypes", Island.Tolbrynd),
+      new Zone(20, 17, "The Duke's Dear Freighers", Island.Tolbrynd),
+      new Zone(21, 18, "Grand Crystal", Island.Tolbrynd),
+      new Zone(22, 19, "Farmer Gascoigne", Island.Tolbrynd),
+      new Zone(23, 20, "Village of Diom", Island.Tolbrynd),
+      new Zone(24, 21, "Midland Patrol", Island.Tolbrynd),
+      new Zone(25, 22, "Valley of the Wind", Island.Tolbrynd),
+      new Zone(26, 23, "Odd Contraption", Island.Tolbrynd),
+      new Zone(27, 24, "Diom Well", Island.Tolbrynd),
+      new Zone(28, 25, "Surrounded", Island.Tolbrynd),
+      new Zone(29, 26, "Sacred Flame", Island.Tolbrynd),
+      new Zone(30, 28, "Argus' Grounds", Island.Tolbrynd),
+      new Zone(31, 29, "The Duke's Knowledge", Island.Tolbrynd),
+      new Zone(32, 30, "The Venerated Heart", Island.Tolbrynd),
+      new Zone(33, 31, "Shattered Field", Island.Tolbrynd),
+      new Zone(34, 32, "Aras' Refuge", Island.Tolbrynd),
 
-      new Zone(35, 42, "The Frozen Path", Island.Valfross),
-      new Zone(36, 43, "The Awakening Bells", Island.Valfross),
-      new Zone(37, 44, "Peculiar Clearing", Island.Valfross),
-      new Zone(38, 45, "The Martyr Knights", Island.Valfross),
+      new Zone(35, 33, "The Frozen Path", Island.Valfross),
+      new Zone(36, 34, "The Awakening Bells", Island.Valfross),
+      new Zone(37, 35, "Peculiar Clearing", Island.Valfross),
+      new Zone(38, 36, "The Martyr Knights", Island.Valfross),
     };
 
     /// <summary>
@@ -299,6 +299,10 @@ namespace spaar.ModLoader
       if (addPiece == null) return;
 
       addPiece.sendSimulateMessage.Add(transform);
+
+      /*Debug.Log("Loaded scene: " + scene.name + " ("
+        + Application.loadedLevelName + ") with index " + scene.buildIndex
+        + " (" + Application.loadedLevel + ")");*/
 
       var global = GameObject.Find("GLOBAL");
       if (global != null)
