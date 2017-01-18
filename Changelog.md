@@ -1,3 +1,7 @@
+1.6.2
+=====
+- Update for Besiege v0.42 Hotfix B compatibility
+
 1.6.1
 =====
 - Update for Besiege v0.42 Hotfix A compatibility
