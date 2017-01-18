@@ -847,7 +847,6 @@ namespace TheGuysYouDespise
 
     private IEnumerator AddComponentsAndMore(Block block)
     {
-      Debug.Log("AddComponentsAndMore");
       foreach (var coroutine in loadingResources[block])
         yield return coroutine;
       loadingResources.Remove(block);
