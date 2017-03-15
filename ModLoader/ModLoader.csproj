@@ -36,6 +36,7 @@
     <DocumentationFile>bin\SpaarModLoader.XML</DocumentationFile>
     <CodeAnalysisRuleSet>ModLoader.ruleset</CodeAnalysisRuleSet>
     <NoWarn>1591</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build and Install|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -57,6 +58,7 @@
     <CodeAnalysisRuleSet>ModLoader.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\SpaarModLoader.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseDeveloper|AnyCPU'">
     <OutputPath>bin\ReleaseDeveloper\</OutputPath>
@@ -68,6 +70,7 @@
     <CodeAnalysisRuleSet>ModLoader.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\SpaarModLoader.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
