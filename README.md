@@ -22,5 +22,5 @@ Check the README_enduser.md file for information about installing the mod loader
 License
 =======
 The mod loader is licensed under the MIT license.
-It is using the Mono.Cecil library, which is licensed under a similiar license.
-The full license text can be found in the LICENSE file.
+It is using the Mono.Cecil and Harmony libraries, which are licensed under a similiar license.
+The full license text for the mod loader and each library can be found in the LICENSE file.
