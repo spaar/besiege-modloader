@@ -85,6 +85,13 @@ namespace Harmony
 			return _root;
 		}
 
+		public T GetValue<T>()
+		{
+			var value = GetValue();
+			if (value == null) return default(T);
+			return (T)value;
+		}
+
 		public object GetValue(params object[] arguments)
 		{
 			if (_method == null)
@@ -92,24 +99,11 @@ namespace Harmony
 			return _method.Invoke(_root, arguments);
 		}
 
-		public object GetValue<T>(params object[] arguments)
+		public T GetValue<T>(params object[] arguments)
 		{
 			if (_method == null)
 				throw new Exception("cannot get method value without method");
 			return (T)_method.Invoke(_root, arguments);
-		}
-
-		Traverse Resolve()
-		{
-			if (_root == null && _type != null) return this;
-			return new Traverse(GetValue());
-		}
-
-		public T GetValue<T>()
-		{
-			var value = GetValue();
-			if (value == null) return default(T);
-			return (T)value;
 		}
 
 		public Traverse SetValue(object value)
@@ -121,6 +115,12 @@ namespace Harmony
 			if (_method != null)
 				throw new Exception("cannot set value of a method");
 			return this;
+		}
+
+		Traverse Resolve()
+		{
+			if (_root == null && _type != null) return this;
+			return new Traverse(GetValue());
 		}
 
 		public Traverse Type(string name)
@@ -159,9 +159,9 @@ namespace Harmony
 			var resolved = Resolve();
 			if (resolved._type == null) return new Traverse();
 			var types = AccessTools.GetTypes(arguments);
-			_method = Cache.GetMethodInfo(resolved._type, name, types);
-			if (_method == null) return new Traverse();
-			return new Traverse(resolved._root, (MethodInfo)_method, arguments);
+			var method = Cache.GetMethodInfo(resolved._type, name, types);
+			if (method == null) return new Traverse();
+			return new Traverse(resolved._root, (MethodInfo)method, arguments);
 		}
 
 		public Traverse Method(string name, Type[] paramTypes, object[] arguments = null)
@@ -169,9 +169,9 @@ namespace Harmony
 			if (name == null) throw new Exception("name cannot be null");
 			var resolved = Resolve();
 			if (resolved._type == null) return new Traverse();
-			_method = Cache.GetMethodInfo(resolved._type, name, paramTypes);
-			if (_method == null) return new Traverse();
-			return new Traverse(resolved._root, (MethodInfo)_method, arguments);
+			var method = Cache.GetMethodInfo(resolved._type, name, paramTypes);
+			if (method == null) return new Traverse();
+			return new Traverse(resolved._root, (MethodInfo)method, arguments);
 		}
 
 		public static void IterateFields(object source, Action<Traverse> action)

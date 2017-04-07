@@ -130,7 +130,6 @@
     <Compile Include="Harmony\ILCopying\ILInstruction.cs" />
     <Compile Include="Harmony\ILCopying\Memory.cs" />
     <Compile Include="Harmony\ILCopying\MethodCopier.cs" />
-    <Compile Include="Harmony\ILCopying\MonoInternals.cs" />
     <Compile Include="Harmony\MethodPatcher.cs" />
     <Compile Include="Harmony\Patch.cs" />
     <Compile Include="Harmony\PatchFunctions.cs" />
@@ -247,7 +246,9 @@
   <ItemGroup>
     <None Include="Resources\UI\thumb-vertical.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Harmony\Harmony.csproj" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetPath)" "%25BESIEGE_LOCATION%25Besiege_Data\Mods\SpaarModLoader.dll"</PostBuildEvent>
