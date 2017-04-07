@@ -302,9 +302,11 @@ namespace spaar.ModLoader
 
       addPiece.sendSimulateMessage.Add(transform);
 
+#if DEBUG
       Debug.Log("Loaded scene: " + scene.name + " ("
         + Application.loadedLevelName + ") with index " + scene.buildIndex
         + " (" + Application.loadedLevel + ")");
+#endif
 
       var global = GameObject.Find("GLOBAL");
       if (global != null)
