@@ -1,3 +1,9 @@
+1.7.0
+=====
+- Update for Besiege v0.45 compatibility
+- [Feature, API] Thanks to @Pixali, a library called "Harmony" that allows runtime patching of game code is now integrated into the mod loader
+- Notice for modders: The game contains a class called `OptionsMenu` now, so to access the mod loader one you'll need to use `ModLoader.OptionsMenu`
+
 1.6.2
 =====
 - Update for Besiege v0.42 Hotfix B compatibility
