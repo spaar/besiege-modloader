@@ -219,7 +219,7 @@ namespace spaar.ModLoader.Internal.Tools
       }
 
       GUI.SetNextControlName("ConsoleInput");
-      string input = GUILayout.TextField(commandText, 100, GUI.skin.textField);
+      string input = GUILayout.TextField(commandText, 500, GUI.skin.textField);
       if (moveCursorNextFrame)
       {
         if (!skippedFrame)
