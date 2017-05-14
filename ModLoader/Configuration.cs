@@ -446,29 +446,45 @@ namespace spaar.ModLoader
 
     private static void LoadFile(string fileName)
     {
-      string path = Application.dataPath + "/Mods/Config/" + fileName;
-      string modName = fileName.Replace(".json", "");
-
-      string fileContents = "";
-      using (var reader = new StreamReader(path))
+      try
       {
-        fileContents = reader.ReadToEnd();
-      }
+        string path = Application.dataPath + "/Mods/Config/" + fileName;
+        string modName = fileName.Replace(".json", "");
 
-      var root = JSON.Parse(fileContents);
-
-      configs[modName] = new Dictionary<string, Value>();
-      var config = configs[modName];
-      
-      foreach (var elem in root.Children)
-      {
-        var key = elem["key"].Value;
-        var value = new Value()
+        string fileContents = "";
+        using (var reader = new StreamReader(path))
         {
-          type = elem["value"]["type"].Value,
-          value = elem["value"]["value"].Value
-        };
-        config[key] = value;
+          Debug.Log($"Reader: {reader}");
+          fileContents = reader.ReadToEnd();
+        }
+
+        var root = JSON.Parse(fileContents);
+
+        if (root == null)
+        {
+          // Configuration file does not contain valid JSON
+          Debug.LogWarning($"Config for {modName} is invalid.");
+          return;
+        }
+
+        configs[modName] = new Dictionary<string, Value>();
+        var config = configs[modName];
+
+        foreach (var elem in root.Children)
+        {
+          var key = elem["key"].Value;
+          var value = new Value()
+          {
+            type = elem["value"]["type"].Value,
+            value = elem["value"]["value"].Value
+          };
+          config[key] = value;
+        }
+      }
+      catch (Exception e)
+      {
+        Debug.LogError($"Error loading config at {fileName}.");
+        Debug.LogException(e);
       }
     }
 
