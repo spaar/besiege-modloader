@@ -454,7 +454,6 @@ namespace spaar.ModLoader
         string fileContents = "";
         using (var reader = new StreamReader(path))
         {
-          Debug.Log($"Reader: {reader}");
           fileContents = reader.ReadToEnd();
         }
 
