@@ -1,3 +1,9 @@
+1.7.1
+=====
+- Update for Besiege v0.45a compatibility
+- Improve error handling in Configuration loading
+- Increase maximum length of console commands
+
 1.7.0
 =====
 - Update for Besiege v0.45 compatibility
