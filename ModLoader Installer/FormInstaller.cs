@@ -179,9 +179,13 @@ namespace spaar.ModLoader.Installer
         Installer.InstallModLoader(txtBesiegeLocation.Text,
           (ModLoaderVersion) cobVersion.SelectedItem, cbDeveloper.Checked);
       }
-      catch (Exception)
+      catch (Exception ex)
       {
-        MessageBox.Show("Error installing the mod loader.");
+        var result = MessageBox.Show("Error installing the mod loader. Copy error message to clipboard?", "Error", MessageBoxButtons.YesNo);
+        if (result == DialogResult.Yes)
+        {
+          Clipboard.SetText($"{ex.Message}:{Environment.NewLine}{ex.StackTrace}");
+        }
 
         tsLblStatus.Text = "An error occured.";
 
