@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Security;
 using System.Text.RegularExpressions;
@@ -172,12 +173,31 @@ namespace spaar.ModLoader.Installer
     {
       SetPath(txtBesiegeLocation.Text);
 
-      tsLblStatus.Text = "Downloading and Installing mod loader. This may take while...";
+      tsLblStatus.Text = "Downloading and Installing mod loader. This may take a while...";
 
       try
       {
         Installer.InstallModLoader(txtBesiegeLocation.Text,
-          (ModLoaderVersion) cobVersion.SelectedItem, cbDeveloper.Checked);
+          (ModLoaderVersion)cobVersion.SelectedItem, cbDeveloper.Checked);
+      }
+      catch (Exception ex) when (ex is SecurityException || ex is UnauthorizedAccessException)
+      {
+        // Start a new instance of the installer requesting administrator rights and try with that
+        var proc = new Process();
+        proc.StartInfo.FileName = Application.ExecutablePath;
+        var version = (ModLoaderVersion)cobVersion.SelectedItem;
+        proc.StartInfo.Arguments =
+          $"'{txtBesiegeLocation.Text}' '{version.Name}' '{(cbDeveloper.Checked ? version.DeveloperDownload : version.NormalDownload)}' '{cbDeveloper.Checked}'";
+        proc.StartInfo.UseShellExecute = true;
+        proc.StartInfo.Verb = "runas";
+        proc.Start();
+        proc.WaitForExit();
+        if (proc.ExitCode != 0)
+        {
+          MessageBox.Show($"An error has occured while installing the mod loader. ({proc.ExitCode})");
+          tsLblStatus.Text = "An error occured.";
+          return;
+        }
       }
       catch (Exception ex)
       {
