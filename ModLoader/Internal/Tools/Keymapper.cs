@@ -68,15 +68,23 @@ namespace spaar.ModLoader.Internal.Tools
           // that is a special case down below
           && !Input.inputString.Contains('\u0008' + ""))
         {
-          if (currentlyModifier)
+          var key = KeyCode.None;
+          try
           {
-            currentKeyToMap.Modifier = (KeyCode)Enum.Parse(typeof(KeyCode),
+            key = (KeyCode) Enum.Parse(typeof(KeyCode),
               (Input.inputString[0] + "").ToUpper());
-          }
-          else
+          } catch (Exception e) { }
+
+          if (key != KeyCode.None)
           {
-            currentKeyToMap.Trigger = (KeyCode)Enum.Parse(typeof(KeyCode),
-              (Input.inputString[0] + "").ToUpper());
+            if (currentlyModifier)
+            {
+              currentKeyToMap.Modifier = key;
+            }
+            else
+            {
+              currentKeyToMap.Trigger = key;
+            }
           }
         }
 
