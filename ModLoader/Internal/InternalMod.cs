@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace spaar.ModLoader.Internal
 {
@@ -66,6 +67,9 @@ namespace spaar.ModLoader.Internal
 
     public void Disable()
     {
+      // The mod loader pseudo-mod cannot be disabled.
+      if (Mod is LoaderMod) return;
+
       if (!IsEnabled) return;
 
       IsEnabled = false;
