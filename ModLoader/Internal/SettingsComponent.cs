@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace spaar.ModLoader.Internal
 {
@@ -19,13 +20,17 @@ namespace spaar.ModLoader.Internal
     public void SetOn(bool on)
     {
       isOn = on;
-      if (isOn)
+      try
       {
-        GetComponent<Renderer>().material = redMaterial;
+        GetComponent<Renderer>().material = isOn ? redMaterial : darkMaterial;
       }
-      else
+      catch (NullReferenceException e)
       {
-        GetComponent<Renderer>().material = darkMaterial;
+        // There are reports of an NRE occasionally happening in `GetComponent` here.
+        // No idea how or why and not able to reproduce so far.
+        // This should at least prevent this from breaking anything important.
+        Debug.LogError("[SettingsComponent] Caught an NRE in SetOn!");
+        Debug.LogException(e);
       }
     }
 
