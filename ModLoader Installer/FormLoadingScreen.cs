@@ -16,7 +16,7 @@ namespace spaar.ModLoader.Installer
 
     private void FormLoadingScreen_Load(object sender, EventArgs e)
     {
-      ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
+      ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
       var client = new WebClient();
       client.DownloadStringCompleted += DownloadComplete;
       // GitHub does not return correct results if no user agent is set
