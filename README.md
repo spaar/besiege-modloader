@@ -6,6 +6,8 @@ This mod loader is deprecated. Besiege now contains an official mod loader out o
 
 The last supported version of Besiege is v0.45a, which is before the release of multiplayer. If you want to continue using an old Besiege version, this repository and all downloads are still available, but there won't be any more bug fixes or feature improvements.
 
+Thank you to everyone who has contributed code, bug reports and other help over the life of this project, as well as all modders who have created some awesome projects and provided much useful feedback that helped create the better in-game mod loader.
+
 [![](https://img.shields.io/github/release/spaar/besiege-modloader.svg?maxAge=2592000&style=flat-square)]()
 [![](https://img.shields.io/github/downloads/spaar/besiege-modloader/latest/total.svg?maxAge=2592000&style=flat-square)]()
 
